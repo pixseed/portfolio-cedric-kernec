@@ -1,0 +1,43 @@
+name: "Feature"
+description: "Ajouter une fonctionnalité"
+title: "[FEATURE]: "
+labels: ["feature"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Décrire clairement la fonctionnalité à développer.
+      placeholder: "En tant que visiteur, je souhaite..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: objectives
+    attributes:
+      label: Objectifs
+      description: Quels sont les objectifs de cette fonctionnalité ?
+      placeholder: |
+        - Objectif 1
+        - Objectif 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critères d'acceptation
+      description: Quelles conditions doivent être remplies pour considérer la fonctionnalité terminée ?
+      placeholder: |
+        - [ ] Critère 1
+        - [ ] Critère 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical
+    attributes:
+      label: Notes techniques
+      description: Informations ou contraintes techniques utiles.
+    validations:
+      required: false

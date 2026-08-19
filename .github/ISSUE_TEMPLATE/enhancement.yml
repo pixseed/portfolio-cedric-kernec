@@ -1,0 +1,46 @@
+name: "Enhancement"
+description: "Faire évoluer une fonctionnalité"
+title: "[ENHANCEMENT]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Élément à améliorer
+      description: Décrire clairement la fonctionnalité à améliorer.
+      placeholder: "Section Projets, navigation principale, formulaire de contact..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Limite actuelle
+      description: Quels sont les limites actuelles de la fonctionnalité à améliorer ?
+      placeholder: |
+        - Limite 1
+        - Limite 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: enhancement
+    attributes:
+      label: Amélioration proposée
+      description: Quel est l'amélioration proposée pour cette fonctionnalité ?
+      placeholder: |
+        - Amélioration 1
+        - Amélioration 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critères d'acceptation
+      description: Quelles conditions doivent être remplies pour considérer l'amélioration terminée ?
+      placeholder: |
+        - [ ] Critère 1
+        - [ ] Critère 2
+    validations:
+      required: true
