@@ -1,0 +1,42 @@
+name: "Chore"
+description: "Maintenance, configuration et tâches technique"
+title: "[CHORE]: "
+labels: ["chore"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Décrire clairement la tâche à effectuer.
+    validations:
+      required: true
+
+  - type: textarea
+    id: objectives
+    attributes:
+      label: Objectifs
+      description: Quels sont les objectifs de cette tâche ?
+      placeholder: |
+        - Objectif 1
+        - Objectif 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critères d'acceptation
+      description: Quelles conditions doivent être remplies pour considérer la tâche terminée ?
+      placeholder: |
+        - [ ] Critère 1
+        - [ ] Critère 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical
+    attributes:
+      label: Notes techniques
+      description: Informations ou contraintes techniques utiles.
+    validations:
+      required: false
