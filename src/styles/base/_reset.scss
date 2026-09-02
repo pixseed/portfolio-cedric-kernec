@@ -1,0 +1,301 @@
+/* ==========================================
+ * Reset
+ * ========================================== */
+
+/* ----------------------------
+ * Modèle de boîte
+ * ---------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ----------------------------
+ * Document global
+ * ---------------------------- */
+
+html {
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    interpolate-size: allow-keywords;
+    scrollbar-gutter: stable;
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    hanging-punctuation: first allow-end last;
+}
+
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100svh;
+    margin: 0;
+    overflow-x: clip;
+    line-height: 1.5;
+    text-rendering: optimizespeed;
+}
+
+/* ----------------------------
+ * États des éléments
+ * ---------------------------- */
+
+:focus-visible {
+    outline: 2px solid currentcolor;
+    outline-offset: 2px;
+}
+
+:disabled {
+    opacity: 70%;
+    cursor: not-allowed;
+}
+
+/* ----------------------------
+ * Liens et ancres
+ * ---------------------------- */
+
+:target {
+    scroll-margin-block: 1rem;
+}
+
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* ----------------------------
+ * Typographie
+ * ---------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+input,
+label {
+    line-height: 1.1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote {
+    text-wrap: balance;
+}
+
+p,
+li,
+figcaption {
+    text-wrap: pretty;
+}
+
+q {
+    quotes: "«\00A0" "\00A0»";
+}
+
+/* ----------------------------
+ * Listes
+ * ---------------------------- */
+
+ul,
+ol {
+    padding-inline-start: 1em;
+    list-style-position: outside;
+
+    &[role="list"] {
+        margin: 0;
+        padding-inline-start: 0;
+        list-style: none;
+    }
+
+    & li {
+        margin-block: 0.1em;
+    }
+}
+
+/* ----------------------------
+ * Médias et contenus
+ * ---------------------------- */
+
+img,
+picture,
+table,
+td,
+blockquote,
+pre,
+code,
+input,
+textarea,
+select,
+video,
+svg,
+iframe {
+    max-width: 100%;
+}
+
+img,
+picture,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+    display: block;
+}
+
+:where(img, picture):where(:not([src$=".svg"])) {
+    height: auto;
+}
+
+figure {
+    margin: 0;
+}
+
+/* ----------------------------
+ * Formulaires
+ * ---------------------------- */
+
+input,
+button,
+textarea,
+select {
+    margin: 0;
+    background-color: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    vertical-align: middle;
+}
+
+form,
+fieldset {
+    border: none;
+}
+
+fieldset {
+    margin: 0;
+    padding: 1em 0;
+}
+
+legend {
+    max-width: 100%;
+    border: 0;
+    color: inherit;
+    white-space: normal;
+}
+
+label {
+    display: inline-block;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+textarea {
+    overflow: auto;
+    vertical-align: top;
+    white-space: pre-wrap;
+    resize: vertical;
+}
+
+/* ----------------------------
+ * Éléments préformatés
+ * ---------------------------- */
+
+pre,
+code {
+    font-size: 1em;
+}
+
+pre {
+    overflow: auto;
+    font-family: ui-monospace, monospace;
+    line-height: normal;
+    white-space: pre-wrap;
+    tab-size: 2;
+}
+
+/* ----------------------------
+ * SVG
+ * ---------------------------- */
+
+svg:not([fill]) {
+    fill: currentcolor;
+}
+
+svg {
+    overflow: visible;
+}
+
+svg * {
+    transform-box: fill-box;
+}
+
+svg:has(symbol) {
+    display: none;
+}
+
+/* ----------------------------
+ * Accessibilité ARIA
+ * ---------------------------- */
+
+[aria-busy="true"] {
+    cursor: progress;
+}
+
+[aria-controls] {
+    cursor: pointer;
+}
+
+[aria-disabled="true"],
+[disabled] {
+    cursor: not-allowed;
+}
+
+/* ----------------------------
+ * Masquage visuel accessible
+ * ---------------------------- */
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    clip-path: inset(50%) !important;
+}
+
+/* ----------------------------
+ * Préférences animations
+ * ---------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+        animation-duration: 1ms !important;
+        animation-delay: -1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        scroll-behavior: auto !important;
+    }
+}

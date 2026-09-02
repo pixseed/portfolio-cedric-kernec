@@ -1,0 +1,35 @@
+// Brand colors
+$primary: #f5085f;
+$secondary: #c174ff;
+$accent: #f9f786;
+
+// Neutral colors
+$neutral-100: #eaeaea;
+$neutral-300: #7d889f;
+$neutral-500: #3d4453;
+$neutral-800: #2a2f38;
+$neutral-900: #22262e;
+
+// Semantic colors
+$background-primary: $neutral-800;
+$background-secondary: $neutral-900;
+
+$text-primary: $neutral-100;
+$text-secondary: $neutral-300;
+
+$border-default: $neutral-500;
+
+$action-primary: $primary;
+$action-secondary: $secondary;
+$action-accent: $accent;
+
+// Spacing
+
+$spacing-1: 0.25rem;
+$spacing-2: 0.5rem;
+$spacing-3: 0.75rem;
+$spacing-4: 1rem;
+$spacing-6: 1.5rem;
+$spacing-8: 2rem;
+$spacing-12: 3rem;
+$spacing-16: 4rem;
