@@ -1,0 +1,19 @@
+/* ==========================================
+ * Styles globaux
+ * ========================================== */
+
+@use "../abstracts/variables" as vars;
+
+body {
+    background-color: vars.$background-primary;
+    color: vars.$text-primary;
+}
+
+a {
+    color: vars.$action-primary;
+    text-decoration: none;
+
+    &:hover {
+        color: vars.$action-secondary;
+    }
+}
