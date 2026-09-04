@@ -1,0 +1,36 @@
+@use "../../styles/abstracts/variables" as vars;
+
+/* ==========================================
+ * Styles du lien de réseau social
+ * ========================================== */
+
+.socialLink {
+    border: vars.$border-width-default solid vars.$border-default;
+    border-radius: vars.$radius-sm;
+    color: vars.$neutral-100;
+    background: linear-gradient(230deg, vars.$neutral-700, transparent);
+    padding: vars.$spacing-2;
+
+    svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    transition: 
+        transform vars.$transition-duration-fast vars.$transition-easing-default,
+        border-color vars.$transition-duration-fast vars.$transition-easing-default,
+        color vars.$transition-duration-fast vars.$transition-easing-default,
+        background vars.$transition-duration-fast vars.$transition-easing-default;
+
+    &:hover {
+        transform: scale(1.04);
+        color: vars.$neutral-100;
+        border-color: vars.$neutral-100;
+        background: linear-gradient(230deg, vars.$neutral-600, transparent);
+    }
+
+    &:active {
+        transform: scale(.98);
+        border-color: vars.$neutral-100;
+    }
+}
