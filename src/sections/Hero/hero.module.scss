@@ -1,0 +1,250 @@
+@use "../../styles/abstracts/variables" as vars;
+
+/* ==========================================
+ * Styles Hero
+ * ========================================== */
+.section {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70%;
+
+        background-image: url("../../assets/images/hero-bg.png");
+        background-size: cover;
+        background-position: 100% top;
+        background-repeat: no-repeat;
+
+        z-index: 0;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset-inline: 0;
+        bottom: 0;
+        height: 75%;
+
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            vars.$neutral-950 35%,
+            vars.$neutral-950 100%
+        );
+
+        pointer-events: none;
+        z-index: 2;
+    }
+}
+
+.hero {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    min-height: 100svh;
+}
+
+.content {
+    position: relative;
+    z-index: 3;
+
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-3;
+    padding-bottom: vars.$spacing-6;
+}
+
+.identity {
+    display: flex;
+    flex-direction: row;
+    gap: vars.$spacing-3;
+    text-transform: uppercase;
+    line-height: 0.9;
+    font-size: clamp(2rem, 8vw, 4rem);
+
+    .lastname,
+    .firstname {
+        width: fit-content;
+    }
+
+    .lastname {
+        background: linear-gradient(to right, vars.$primary, vars.$accent);
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-4;
+
+    color: vars.$secondary;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: 0.2rem;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+
+    &::after {
+        content: "";
+        height: 5px;
+        width: 20%;
+        background: linear-gradient(60deg, vars.$primary, vars.$accent);
+        border-radius: vars.$radius-lg;
+    }
+}
+
+.avatar {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    justify-content: center;
+
+    img {
+        width: min(280px, 100%);
+        height: auto;
+    }
+}
+
+.cta {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-4;
+    margin-block: vars.$spacing-4;
+
+    > a {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.socialMedia {
+    display: flex;
+    gap: vars.$spacing-4;
+}
+
+/* ==========================================
+ * Styles Hero - MOBILE <-> TABLETTE
+ * ========================================== */
+@media (min-width: 560px) {
+    .cta {
+        flex-direction: row;
+    }
+
+    .section::after {
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            vars.$neutral-950 40%,
+            vars.$neutral-950 100%
+        );
+    }
+}
+
+/* ==========================================
+ * Styles Hero - TABLETTE
+ * ========================================== */
+@media (min-width: 768px) {
+    .section::before {
+        height: 75%;
+    }
+
+    .section::after {
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            vars.$neutral-950 50%,
+            vars.$neutral-950 100%
+        );
+    }
+
+    .content {
+        max-width: 75%;
+        padding-bottom: vars.$spacing-8;
+    }
+
+    .identity {
+        justify-content: center;
+    }
+
+    .title,
+    .description {
+        text-align: center;
+    }
+
+    .title::after {
+        align-self: center;
+    }
+
+    .avatar {
+        img {
+            width: min(360px, 100%);
+        }
+    }
+
+    .socialMedia {
+        justify-content: center;
+    }
+}
+
+/* ==========================================
+ * Styles Hero - DESKTOP
+ * ========================================== */
+@media (min-width: 1080px) {
+    .section::before {
+        height: 100%;
+        background-position: center;
+    }
+
+    .section::after {
+        display: none;
+    }
+
+    .hero {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .content {
+        flex: 1;
+        min-width: 0;
+        max-width: none;
+        padding-bottom: 0;
+    }
+
+    .identity {
+        flex-direction: column;
+    }
+
+    .title,
+    .description {
+        text-align: left;
+    }
+
+    .title::after {
+        align-self: flex-start;
+    }
+
+    .socialMedia {
+        justify-content: flex-start;
+    }
+
+    .avatar {
+        flex-shrink: 0;
+        align-self: flex-end;
+
+        img {
+            width: clamp(540px, 48vw, 600px);
+            max-width: none;
+            height: auto;
+        }
+    }
+}
