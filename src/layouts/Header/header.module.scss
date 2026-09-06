@@ -1,0 +1,31 @@
+@use "../../styles/abstracts/variables" as vars;
+
+/* ==========================================
+ * Styles Header
+ * ========================================== */
+
+.header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo  {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+
+        img {
+            display: block;
+            height: 40px;
+            width: auto;
+            max-width: none;
+        }
+    }
+}

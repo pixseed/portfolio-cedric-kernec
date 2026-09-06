@@ -42,6 +42,7 @@ $spacing-16: 4rem;
 $radius-sm: 4px;
 $radius-md: 8px;
 $radius-lg: 16px;
+$radius-full: 999px;
 
 // Borders
 $border-width-default: 1.5px;
@@ -52,3 +53,6 @@ $container-max-width: 1200px;
 // Motion
 $transition-duration-fast: 0.2s;
 $transition-easing-default: ease;
+
+// Components
+$bubble-size: 72px;

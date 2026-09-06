@@ -1,0 +1,38 @@
+@use "./variables" as vars;
+
+/* ==========================================
+ * Mixins
+ * ========================================== */
+
+/**
+ * Applique une surface glassmorphism composée de deux couches.
+ *
+ * ::before : couche extérieure translucide et saturée.
+ * ::after  : couche intérieure sombre et floutée.
+ */
+@mixin glass-surface($radius: vars.$radius-lg) {
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        border-radius: $radius;
+    }
+
+    &::before {
+        inset: 0;
+        z-index: -2;
+
+        background: rgba(vars.$neutral-100, 0.1);
+        backdrop-filter: blur(18px) saturate(2);
+        -webkit-backdrop-filter: blur(18px) saturate(2);
+    }
+
+    &::after {
+        inset: 1.5px;
+        z-index: -1;
+
+        background: rgba(vars.$neutral-800, 0.65);
+        backdrop-filter: blur(8px) saturate(1.2);
+        -webkit-backdrop-filter: blur(8px) saturate(1.2);
+    }
+}
