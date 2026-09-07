@@ -1,6 +1,8 @@
 import styles from "./navbar.module.scss";
 
+import pixelsLogo from "../../assets/images/logos/pixseed-logo-pixels.png";
 import logo from "../../assets/images/logos/pixseed-logo-icon.png";
+
 import {
   ListIcon,
   XIcon,
@@ -15,6 +17,7 @@ import { useEffect, useState, useRef } from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
   const navbarRef = useRef<HTMLElement>(null);
 
   function handleMenuToggle() {
@@ -57,6 +60,30 @@ export default function Navbar() {
       document.removeEventListener("keydown", handleEscapeKey);
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    const sections = document.querySelectorAll("section");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        threshold: 0.5,
+      },
+    );
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <nav
@@ -115,6 +142,45 @@ export default function Navbar() {
           <a href="#skills" onClick={handleLinkClick}>
             <CodeIcon />
             <span>Compétences</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul className={styles.desktopMenu}>
+        <li>
+          <a href="#home" className={activeSection === "home" ? styles.active : ""}>
+            {activeSection === "home" && <img src={pixelsLogo} alt="" />}
+            Accueil
+          </a>
+        </li>
+        <li>
+          <a href="#about" className={activeSection === "about" ? styles.active : ""}>
+            {activeSection === "about" && <img src={pixelsLogo} alt="" />}
+            À propos
+          </a>
+        </li>
+        <li>
+          <a href="#journey" className={activeSection === "journey" ? styles.active : ""}>
+            {activeSection === "journey" && <img src={pixelsLogo} alt="" />}
+            Parcours
+          </a>
+        </li>
+        <li>
+          <a href="#projects" className={activeSection === "projects" ? styles.active : ""}>
+            {activeSection === "projects" && <img src={pixelsLogo} alt="" />}
+            Projets
+          </a>
+        </li>
+        <li>
+          <a href="#skills" className={activeSection === "skills" ? styles.active : ""}>
+            {activeSection === "skills" && <img src={pixelsLogo} alt="" />}
+            Compétences
+          </a>
+        </li>
+        <li>
+          <a href="#contact" className={activeSection === "contact" ? styles.active : ""}>
+            {activeSection === "contact" && <img src={pixelsLogo} alt="" />}
+            Contact
           </a>
         </li>
       </ul>

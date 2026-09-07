@@ -2,7 +2,7 @@
 @use "../../styles/abstracts/mixins" as mixins;
 
 /* ==========================================
- * Styles globaux
+ * Styles communs
  * ========================================== */
 .menu a,
 .menuToggle,
@@ -23,7 +23,7 @@
 .navbar {
     position: fixed;
     bottom: vars.$spacing-4;
-    inset-inline: vars.$spacing-8;
+    inset-inline: vars.$container-padding-inline;
 
     display: flex;
     align-items: center;
@@ -69,8 +69,7 @@
     pointer-events: none;
     list-style: none;
 
-    transition:
-        visibility 0s linear 0.5s;
+    transition: visibility 0s linear 0.5s;
 
     li {
         position: absolute;
@@ -188,7 +187,7 @@
 }
 
 /* ==========================================
- * Lien principaux
+ * Liens principaux
  * ========================================== */
 .mainLink {
     display: flex;
@@ -200,5 +199,102 @@
     img {
         height: 2rem;
         width: auto;
+    }
+}
+
+/* ==========================================
+ * Navbar desktop
+ * ========================================== */
+.desktopMenu {
+    display: none;
+    align-items: center;
+    gap: vars.$spacing-8;
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+@media (min-width: 1080px) {
+    .navbar {
+        position: relative;
+        inset: auto;
+        padding: 0;
+        font-size: initial;
+
+        padding-inline: vars.$spacing-6;
+
+        &::before,
+        &::after {
+            mask: none;
+        }
+    }
+
+    .desktopMenu {
+        display: flex;
+
+        a,
+        a:hover {
+            color: vars.$neutral-100;
+        }
+
+        a {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            gap: vars.$spacing-2;
+
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: -8px;
+
+                height: 5px;
+                width: 100%;
+                border-radius: vars.$radius-full;
+
+                background: linear-gradient(
+                    to right,
+                    vars.$primary,
+                    vars.$accent
+                );
+
+                transform: scaleX(0);
+                transition: transform 0.25s ease-in-out;
+            }
+
+            img {
+                height: 16px;
+                width: auto;
+            }
+
+            &.active {
+                padding: vars.$spacing-2 vars.$spacing-4;
+
+                border: vars.$border-width-default solid vars.$border-default;
+                border-radius: vars.$radius-full;
+
+                background: rgba(vars.$neutral-700, 0.35);
+
+                backdrop-filter: blur(6px) saturate(1.4);
+                -webkit-backdrop-filter: blur(6px) saturate(1.4);
+
+                box-shadow: 0 6px 8px vars.$neutral-800;
+            }
+        }
+
+        a:focus-visible {
+            outline: none;
+        }
+
+        a:not(.active):hover::after,
+        a:not(.active):focus-visible::after {
+            transform: scaleX(1);
+        }
+    }
+    .mainLink,
+    .menuToggle,
+    .menu {
+        display: none;
     }
 }
