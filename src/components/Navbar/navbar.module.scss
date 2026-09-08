@@ -1,6 +1,9 @@
 @use "../../styles/abstracts/variables" as vars;
 @use "../../styles/abstracts/mixins" as mixins;
 
+$desktop-link-height: 40px;
+$mobile-bubble-size: 72px;
+
 /* ==========================================
  * Styles communs
  * ========================================== */
@@ -59,7 +62,7 @@
 .menu {
     position: absolute;
     left: 50%;
-    bottom: calc(100% - (vars.$bubble-size / 2));
+    bottom: calc(100% - ($mobile-bubble-size / 2));
     transform: translateX(-50%);
 
     width: 300px;
@@ -69,24 +72,28 @@
     pointer-events: none;
     list-style: none;
 
-    transition: visibility 0s linear 0.5s;
+    transition: visibility 0s linear vars.$transition-duration-slow;
 
     li {
         position: absolute;
         left: 50%;
         bottom: 0;
 
-        width: vars.$bubble-size;
-        height: vars.$bubble-size;
+        width: $mobile-bubble-size;
+        height: $mobile-bubble-size;
 
         transform: translateX(-50%) scale(0.7);
         opacity: 0;
 
         transition:
-            left 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-            bottom 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-            transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-            opacity 0.2s ease;
+            left vars.$transition-duration-default
+                vars.$transition-easing-smooth,
+            bottom vars.$transition-duration-default
+                vars.$transition-easing-smooth,
+            transform vars.$transition-duration-default
+                vars.$transition-easing-smooth,
+            opacity vars.$transition-duration-fast
+                vars.$transition-easing-default;
     }
 
     a {
@@ -99,7 +106,7 @@
         height: 100%;
         gap: vars.$spacing-1;
 
-        color: vars.$neutral-100;
+        color: vars.$text-primary;
 
         @include mixins.glass-surface($radius: vars.$radius-full);
     }
@@ -141,14 +148,14 @@
 
     li:nth-child(2) {
         left: 34.6%;
-        bottom: calc(100% - vars.$bubble-size);
+        bottom: calc(100% - $mobile-bubble-size);
 
         transition-delay: 0.05s;
     }
 
     li:nth-child(3) {
         left: 65.4%;
-        bottom: calc(100% - vars.$bubble-size);
+        bottom: calc(100% - $mobile-bubble-size);
 
         transition-delay: 0.1s;
     }
@@ -175,10 +182,10 @@
     align-items: center;
     justify-content: center;
 
-    height: vars.$bubble-size;
-    width: vars.$bubble-size;
+    height: $mobile-bubble-size;
+    width: $mobile-bubble-size;
 
-    color: vars.$neutral-100;
+    color: vars.$text-primary;
     border: none;
 
     z-index: 2;
@@ -194,7 +201,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: vars.$neutral-100;
+    color: vars.$text-primary;
 
     img {
         height: 2rem;
@@ -207,19 +214,22 @@
  * ========================================== */
 .desktopMenu {
     display: none;
+    position: relative;
+
     align-items: center;
-    gap: vars.$spacing-8;
+    gap: vars.$spacing-4;
+
     list-style: none;
     padding-inline-start: 0;
 }
 
-@media (min-width: 1080px) {
+@media (min-width: vars.$breakpoint-desktop) {
     .navbar {
         position: relative;
         inset: auto;
-        padding: 0;
         font-size: initial;
 
+        padding-block: 0;
         padding-inline: vars.$spacing-6;
 
         &::before,
@@ -233,7 +243,7 @@
 
         a,
         a:hover {
-            color: vars.$neutral-100;
+            color: vars.$text-primary;
         }
 
         a {
@@ -241,57 +251,96 @@
 
             display: flex;
             align-items: center;
-            gap: vars.$spacing-2;
 
-            &::after {
-                content: "";
-                position: absolute;
-                left: 0;
-                bottom: -8px;
+            height: $desktop-link-height;
+            padding-block: vars.$spacing-2;
+            padding-inline: vars.$spacing-4;
 
-                height: 5px;
-                width: 100%;
-                border-radius: vars.$radius-full;
+            border-bottom: vars.$border-width-default solid transparent;
+            border-radius: vars.$radius-full;
 
-                background: linear-gradient(
-                    to right,
-                    vars.$primary,
-                    vars.$accent
-                );
+            line-height: 1;
+            font-size: 0.95rem;
 
-                transform: scaleX(0);
-                transition: transform 0.25s ease-in-out;
-            }
-
-            img {
-                height: 16px;
-                width: auto;
-            }
+            transition:
+                border-color vars.$transition-duration-fast
+                    vars.$transition-easing-default,
+                background vars.$transition-duration-fast
+                    vars.$transition-easing-default,
+                font-size vars.$transition-duration-default
+                    vars.$transition-easing-default;
 
             &.active {
-                padding: vars.$spacing-2 vars.$spacing-4;
+                font-size: 1.02rem;
+            }
 
-                border: vars.$border-width-default solid vars.$border-default;
-                border-radius: vars.$radius-full;
+            &:not(.active):hover,
+            &:not(.active):focus-visible {
+                border-color: vars.$border-default;
+                background: linear-gradient(
+                    to top,
+                    rgba(vars.$neutral-100, 0.2) 0%,
+                    rgba(vars.$neutral-100, 0.15) 10%,
+                    rgba(vars.$neutral-100, 0.1) 30%,
+                    transparent 60%
+                );
+            }
 
-                background: rgba(vars.$neutral-700, 0.35);
-
-                backdrop-filter: blur(6px) saturate(1.4);
-                -webkit-backdrop-filter: blur(6px) saturate(1.4);
-
-                box-shadow: 0 6px 8px vars.$neutral-800;
+            &:focus-visible {
+                outline: none;
             }
         }
-
-        a:focus-visible {
-            outline: none;
-        }
-
-        a:not(.active):hover::after,
-        a:not(.active):focus-visible::after {
-            transform: scaleX(1);
-        }
     }
+
+    .pixelsLogo {
+        width: 0;
+        height: 1rem;
+        margin-inline-end: 0;
+
+        opacity: 0;
+        overflow: hidden;
+        flex-shrink: 0;
+
+        transform: scale(0.6);
+
+        transition:
+            width vars.$transition-duration-default
+                vars.$transition-easing-default,
+            opacity vars.$transition-duration-fast
+                vars.$transition-easing-default,
+            transform vars.$transition-duration-default
+                vars.$transition-easing-default;
+    }
+
+    .active .pixelsLogo {
+        width: 1rem;
+        margin-inline-end: vars.$spacing-2;
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .activeIndicator {
+        position: absolute;
+
+        height: $desktop-link-height;
+
+        border: vars.$border-width-default solid vars.$border-light;
+        border-radius: vars.$radius-full;
+
+        background: rgba(vars.$neutral-700, 0.35);
+
+        backdrop-filter: blur(6px) saturate(1.4);
+        -webkit-backdrop-filter: blur(6px) saturate(1.4);
+
+        box-shadow: 0 6px 8px vars.$neutral-800;
+
+        transition:
+            left 1s vars.$transition-easing-smooth,
+            width 0.8s vars.$transition-easing-smooth;
+
+        pointer-events: none;
+    }
+
     .mainLink,
     .menuToggle,
     .menu {

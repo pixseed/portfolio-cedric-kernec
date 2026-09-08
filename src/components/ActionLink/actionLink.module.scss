@@ -28,27 +28,27 @@
 }
 
 .primary {
-    color: vars.$primary;
-    border-color: vars.$primary;
+    color: vars.$action-primary;
+    border-color: vars.$action-primary;
     background: linear-gradient(
         230deg,
-        rgba(vars.$primary, 0.3),
+        rgba(vars.$action-primary, 0.3),
         transparent
     );
 
     &:hover {
-        color: vars.$secondary;
-        border-color: vars.$secondary;
+        color: vars.$action-secondary;
+        border-color: vars.$action-secondary;
         background: linear-gradient(
             230deg,
-            rgba(vars.$secondary, 0.3),
+            rgba(vars.$action-secondary, 0.3),
             transparent
         );
     }
 
     &:active {
-        color: vars.$neutral-100;
-        border-color: vars.$neutral-100;
+        color: vars.$text-primary;
+        border-color: vars.$border-light;
     }
 }
 
@@ -57,13 +57,13 @@
     border-color: vars.$accent;
 
     &:hover {
-        color: vars.$accent;
-        border-color: vars.$accent;
-        background-color: rgba(vars.$accent, $alpha: 0.15);
+        color: vars.$action-accent;
+        border-color: vars.$action-accent;
+        background-color: rgba(vars.$action-accent, $alpha: 0.15);
     }
 
     &:active {
-        color: vars.$neutral-100;
-        border-color: vars.$neutral-100;
+        color: vars.$text-primary;
+        border-color: vars.$border-light;
     }
 }

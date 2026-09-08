@@ -28,7 +28,7 @@
     }
 
     &::after {
-        inset: 1.5px;
+        inset: vars.$border-width-default;
         z-index: -1;
 
         background: rgba(vars.$neutral-800, 0.65);

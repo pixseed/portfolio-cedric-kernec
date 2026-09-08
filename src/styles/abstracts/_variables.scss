@@ -23,6 +23,7 @@ $text-primary: $neutral-100;
 $text-secondary: $neutral-300;
 
 $border-default: $neutral-500;
+$border-light: $neutral-300;
 
 $action-primary: $primary;
 $action-secondary: $secondary;
@@ -52,9 +53,19 @@ $container-max-width: 1200px;
 $container-padding-inline: $spacing-6;
 $layout-padding-block: $spacing-6;
 
+// Typography
+$font-primary: "Sora", sans-serif;
+$font-code: "JetBrains Mono", monospace;
+
+// Breakpoints
+$breakpoint-mobile-lg: 560px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1080px;
+
 // Motion
 $transition-duration-fast: 0.2s;
-$transition-easing-default: ease;
+$transition-duration-default: 0.35s;
+$transition-duration-slow: 0.5s;
 
-// Components
-$bubble-size: 72px;
+$transition-easing-default: ease;
+$transition-easing-smooth: cubic-bezier(0.22, 1, 0.36, 1);
