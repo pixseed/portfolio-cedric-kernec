@@ -1,3 +1,5 @@
+@use "../abstracts/variables" as vars;
+
 /* ==========================================
  * Typographies
  * ========================================== */
@@ -46,11 +48,8 @@
 
 /* ========================================== */
 
-$font-primary: "Sora", sans-serif;
-$font-code: "JetBrains Mono", monospace;
-
 body {
-    font-family: $font-primary;
+    font-family: vars.$font-primary;
     font-size: 1rem;
     font-weight: 400;
 }
@@ -99,5 +98,5 @@ small {
 }
 
 code {
-    font-family: $font-code;
+    font-family: vars.$font-code;
 }

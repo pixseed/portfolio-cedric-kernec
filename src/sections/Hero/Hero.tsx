@@ -1,6 +1,6 @@
 import styles from './hero.module.scss';
 
-import avatar from '../../assets/images/hero-avatar.png';
+import avatar from '../../assets/images/hero/hero-avatar.png';
 
 import ActionLink from '../../components/ActionLink/ActionLink';
 import SocialLink from '../../components/SocialLink/SocialLink';
