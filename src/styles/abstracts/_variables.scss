@@ -59,8 +59,9 @@ $font-code: "JetBrains Mono", monospace;
 
 // Breakpoints
 $breakpoint-mobile-lg: 560px;
-$breakpoint-tablet: 768px;
-$breakpoint-desktop: 1080px;
+$breakpoint-tablet: 675px;
+$breakpoint-tablet-lg: 850px;
+$breakpoint-desktop: 1024px;
 
 // Motion
 $transition-duration-fast: 0.2s;
