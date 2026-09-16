@@ -28,3 +28,7 @@ a {
     margin-inline: auto;
     padding-inline: vars.$container-padding-inline;
 }
+
+.section-content {
+    padding-block: vars.$flow-section;
+}

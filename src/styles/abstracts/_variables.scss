@@ -51,7 +51,13 @@ $border-width-default: 1.5px;
 // Layout
 $container-max-width: 1200px;
 $container-padding-inline: $spacing-6;
-$layout-padding-block: $spacing-6;
+
+// Flow
+$flow-element: $spacing-3;
+$flow-group: $spacing-4;
+$flow-section: $spacing-6;
+
+$flow-action : $spacing-4;
 
 // Typography
 $font-primary: "Sora", sans-serif;
