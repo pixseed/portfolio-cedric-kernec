@@ -1,0 +1,119 @@
+@use "../../../styles/abstracts/variables" as vars;
+
+$axis-padding-bottom: vars.$spacing-12;
+
+/* ==========================================
+ * Styles AboutAxis
+ * ========================================== */
+
+.axis {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "icon number"
+        "content content";
+    align-content: start;
+
+    padding-inline: vars.$spacing-6;
+    padding-block: vars.$spacing-6 $axis-padding-bottom;
+    gap: vars.$spacing-4;
+
+    border: vars.$border-width-default solid
+        color-mix(in srgb, var(--axis-color) 75%, transparent);
+    border-radius: vars.$radius-lg;
+
+    box-shadow: 0 0 12px color-mix(in srgb, var(--axis-color) 60%, transparent);
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: calc($axis-padding-bottom / 2);
+
+        height: vars.$decoration-line-thickness;
+        width: 25%;
+        border-radius: 0 vars.$radius-full vars.$radius-full 0;
+
+        background-color: var(--axis-color);
+    }
+
+    &:nth-child(1) {
+        --axis-color: #{vars.$primary};
+    }
+
+    &:nth-child(2) {
+        --axis-color: #{vars.$accent};
+    }
+
+    &:nth-child(3) {
+        --axis-color: #{vars.$secondary};
+    }
+
+    .axisNumber {
+        grid-area: number;
+        color: var(--axis-color);
+    }
+
+    svg {
+        grid-area: icon;
+
+        height: 48px;
+        width: 48px;
+
+        padding: vars.$spacing-2;
+
+        color: var(--axis-color);
+        background-color: color-mix(
+            in srgb,
+            var(--axis-color) 15%,
+            transparent
+        );
+
+        border: vars.$border-width-default solid var(--axis-color);
+        border-radius: vars.$radius-md;
+    }
+
+    .axisContent {
+        grid-area: content;
+
+        display: flex;
+        flex-direction: column;
+        gap: vars.$flow-element;
+    }
+}
+
+/* ==========================================
+ * Styles About - TABLET
+ * ========================================== */
+@media (min-width: vars.$breakpoint-tablet-lg) {
+    .axis {
+        flex: 1;
+        
+        &::after {
+            width: 35%;
+        }
+    }
+
+}
+
+/* ==========================================
+ * Styles About - DESKTOP
+ * ========================================== */
+@media (min-width: vars.$breakpoint-desktop) {
+    .axis {
+        grid-template-columns: auto 1fr auto;
+        grid-template-areas: "icon content number";
+        column-gap: vars.$spacing-6;
+
+        container-type: inline-size;
+
+        .axisTitle {
+            font-size: clamp(1rem, 8cqw, 2rem);
+        }
+
+        &::after {
+            width: 20%;
+        }
+    }
+}

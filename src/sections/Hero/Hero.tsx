@@ -1,37 +1,39 @@
-import styles from './hero.module.scss';
+import styles from "./hero.module.scss";
 
-import avatar from '../../assets/images/hero/hero-avatar.png';
+import avatar from "../../assets/images/hero/hero-avatar.png";
 
-import ActionLink from '../../components/ActionLink/ActionLink';
-import SocialLink from '../../components/SocialLink/SocialLink';
+import ActionLink from "../../components/ActionLink/ActionLink";
+import SocialLink from "../../components/SocialLink/SocialLink";
 
 import {
   DownloadSimpleIcon,
   ArrowRightIcon,
   LinkedinLogoIcon,
   GithubLogoIcon,
-} from '@phosphor-icons/react';
+} from "@phosphor-icons/react";
 
 export default function Hero() {
   return (
     <section id="home" className={`${styles.section} page-section`}>
       <div className={`${styles.hero} container`}>
         <div className={styles.content}>
-          <h1 className={styles.identity}>
-            <span className={styles.firstname}>Cédric</span>
-            <span className={styles.lastname}>Kernec</span>
-          </h1>
-          <h2 className={styles.title}>Développeur Web & Web Mobile</h2>
-          <p className={styles.description}>
-            Je conçois des applications modernes et fonctionnelles, avec une
-            attention particulière portée à l'expérience utilisateur et à la
-            qualité du code.
-          </p>
+          <div className={styles.presentation}>
+            <h1 className={styles.identity}>
+              <span className={styles.firstname}>Cédric</span>
+              <span className={`${styles.lastname} gradient-text`}>Kernec</span>
+            </h1>
+            <h2 className={styles.title}>Développeur Web & Web Mobile</h2>
+            <p className={styles.description}>
+              Je conçois des applications modernes et fonctionnelles, avec une
+              attention particulière portée à l'expérience utilisateur et à la
+              qualité du code.
+            </p>
+          </div>
           <div className={styles.cta}>
             <ActionLink
               label="Télécharger mon CV"
               href="/documents/cv-cedric-kernec.pdf"
-              download='CV-Cedric-Kernec'
+              download="CV-Cedric-Kernec"
               icon={DownloadSimpleIcon}
             />
             <ActionLink

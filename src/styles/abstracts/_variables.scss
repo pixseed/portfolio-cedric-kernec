@@ -16,7 +16,7 @@ $neutral-900: #0b0b24;
 $neutral-950: #000018;
 
 // Semantic colors
-$background-primary: $neutral-800;
+$background-primary: $neutral-950;
 $background-secondary: $neutral-900;
 
 $text-primary: $neutral-100;
@@ -28,6 +28,9 @@ $border-light: $neutral-300;
 $action-primary: $primary;
 $action-secondary: $secondary;
 $action-accent: $accent;
+
+// Gradients
+$gradient-primary: linear-gradient(to right, $primary, $accent);
 
 // Spacing
 $spacing-1: 0.25rem;
@@ -51,7 +54,14 @@ $border-width-default: 1.5px;
 // Layout
 $container-max-width: 1200px;
 $container-padding-inline: $spacing-6;
-$layout-padding-block: $spacing-6;
+
+// Flow
+$flow-element: $spacing-3; // Entre éléments directement liés
+$flow-content: $spacing-6; // Entre un repère/titre et son contenu
+$flow-group: $spacing-6; // Entre groupes de contenu distincts
+$flow-section: $spacing-6; // Entre les limites d'une section et son contenu
+
+$flow-action: $spacing-4; // Entre plusieurs actions associées
 
 // Typography
 $font-primary: "Sora", sans-serif;
@@ -70,3 +80,6 @@ $transition-duration-slow: 0.5s;
 
 $transition-easing-default: ease;
 $transition-easing-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+// Decorations
+$decoration-line-thickness: 5px;
