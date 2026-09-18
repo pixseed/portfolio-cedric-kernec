@@ -20,7 +20,7 @@ export default function Hero() {
           <div className={styles.presentation}>
             <h1 className={styles.identity}>
               <span className={styles.firstname}>Cédric</span>
-              <span className={styles.lastname}>Kernec</span>
+              <span className={`${styles.lastname} gradient-text`}>Kernec</span>
             </h1>
             <h2 className={styles.title}>Développeur Web & Web Mobile</h2>
             <p className={styles.description}>

@@ -1,0 +1,91 @@
+@use "../../styles/abstracts/variables" as vars;
+
+$axis-padding-bottom: vars.$spacing-12;
+
+/* ==========================================
+ * Styles About
+ * ========================================== */
+
+.section {
+    display: flex;
+    align-items: stretch;
+    background-color: vars.$background-secondary;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$flow-group;
+    height: 100%;
+}
+
+.introduction {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$flow-content;
+}
+
+.title {
+    display: flex;
+    align-items: stretch;
+    gap: vars.$spacing-2;
+
+    font-size: 1rem;
+    font-weight: 400;
+
+    &::before {
+        content: "";
+        width: 6px;
+        background-color: vars.$primary;
+        transform: skew(-12deg);
+    }
+}
+
+.introContent {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$flow-element;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$flow-element;
+}
+
+.axes {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$flow-group;
+}
+
+/* ==========================================
+ * Styles About - TABLETTE
+ * ========================================== */
+@media (min-width: vars.$breakpoint-tablet-lg) {
+    .content {
+        gap: vars.$spacing-6;
+    }
+
+    .axes {
+        flex-direction: row;
+    }
+}
+
+/* ==========================================
+ * Styles About - DESKTOP
+ * ========================================== */
+@media (min-width: vars.$breakpoint-desktop) {
+    .content {
+        flex-direction: row;
+    }
+
+    .introduction {
+        flex: 0 0 28%;
+    }
+
+    .axes {
+        flex: 1;
+        flex-direction: column;
+    }
+}

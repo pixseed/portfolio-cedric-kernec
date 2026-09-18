@@ -79,12 +79,6 @@
     .firstname {
         width: fit-content;
     }
-
-    .lastname {
-        background: linear-gradient(to right, vars.$primary, vars.$accent);
-        background-clip: text;
-        color: transparent;
-    }
 }
 
 .title {
@@ -100,9 +94,9 @@
 
     &::after {
         content: "";
-        height: 5px;
+        height: vars.$decoration-line-thickness;
         width: 20%;
-        background: linear-gradient(60deg, vars.$primary, vars.$accent);
+        background: vars.$gradient-primary;
         border-radius: vars.$radius-lg;
     }
 }
