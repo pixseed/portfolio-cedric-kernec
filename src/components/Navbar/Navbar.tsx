@@ -19,7 +19,7 @@ import pixelsLogo from "../../assets/images/logos/pixseed-logo-pixels.png";
 import styles from "./navbar.module.scss";
 
 // ===============================================================
-// Navigation data
+// Navigation types and data
 // ===============================================================
 
 /*
@@ -39,9 +39,17 @@ type NavigationItem = {
 };
 
 /*
+ * Représente la disposition responsive actuelle de la navigation.
+ *
+ * Cette valeur permet à la logique React de rester synchronisée
+ * avec les changements de disposition définis dans les styles.
+ */
+type NavigationLayout = "tablet" | "tablet-large" | "desktop";
+
+/*
  * Source unique des données de navigation.
  *
- * Chaque entrée correspond à une section de la page dont l'id
+ * Chaque entrée correspond à une section de la page dont l'attribut `id`
  * doit correspondre à la propriété `id` définie ici.
  */
 const navigationItems: NavigationItem[] = [
@@ -96,7 +104,7 @@ const navigationItems: NavigationItem[] = [
 ];
 
 /*
- * Recherche une élément de navigation à partir de son identifiant.
+ * Recherche un élément de navigation à partir de son identifiant.
  *
  * Une erreur explicite est levée si l'identifiant demandé n'existe pas,
  * afin d'éviter de manipuler une valeur `undefined`.
@@ -121,17 +129,33 @@ const HomeIcon = homeItem.icon;
 const ContactIcon = contactItem.icon;
 
 /*
- * Crée la media query correspondant au breakpoint `tablet-lg`.
+ * Crée une media query à partir d'un breakpoint exposé par les styles.
  *
  * La valeur est récupérée depuis une custom property CSS afin de conserver
- * une source de vérité commune entre les styles Sass et la logique React.
+ * une source de vérité commune entre Sass et la logique React.
  */
-function getTabletLargeMediaQuery(): MediaQueryList {
-  const breakpoint = getComputedStyle(document.documentElement)
-    .getPropertyValue("--breakpoint-tablet-lg")
+function getMediaQuery(breakpoint: string): MediaQueryList {
+  const breakpointValue = getComputedStyle(document.documentElement)
+    .getPropertyValue(breakpoint)
     .trim();
 
-  return window.matchMedia(`(min-width: ${breakpoint})`);
+  return window.matchMedia(`(min-width: ${breakpointValue})`);
+}
+
+/*
+ * Détermine la disposition actuelle de la navigation à partir
+ * des breakpoints responsive, du plus large au plus petit.
+ */
+function getNavigationLayout(): NavigationLayout {
+  if (getMediaQuery("--breakpoint-desktop").matches) {
+    return "desktop";
+  }
+
+  if (getMediaQuery("--breakpoint-tablet-lg").matches) {
+    return "tablet-large";
+  }
+
+  return "tablet";
 }
 
 export default function Navbar() {
@@ -142,9 +166,8 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTabletDropdownOpen, setIsTabletDropdownOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [isTabletLarge, setIsTabletLarge] = useState(
-    () => getTabletLargeMediaQuery().matches,
-  );
+  const [navigationLayout, setNavigationLayout] =
+    useState<NavigationLayout>(getNavigationLayout);
 
   /*
    * Position et dimensions des indicateurs visuels de section active.
@@ -167,7 +190,7 @@ export default function Navbar() {
   // ===============================================================
 
   /*
-   * Référence vers les élements du DOM nécessaires aux calculs
+   * Référence vers les éléments du DOM nécessaires aux calculs
    * de position et à la détection des clics extérieurs.
    */
   const navbarRef = useRef<HTMLElement>(null);
@@ -178,7 +201,7 @@ export default function Navbar() {
    * Mémorise temporairement la section ciblée après un clic.
    *
    * Pendant le scroll automatique vers cette section, l'IntersectionObserver
-   * ignore les séctions intermédiaires afin d'éviter que l'indicateur actif
+   * ignore les sections intermédiaires afin d'éviter que l'indicateur actif
    * se déplace brièvement vers un autre lien.
    *
    * `null` signifie qu'aucune navigation par clic n'est en cours.
@@ -190,18 +213,21 @@ export default function Navbar() {
   // ===============================================================
 
   /*
-   * Détermine si la section active est actuellement affichée
-   * dans le dropdown tablette.
+   * Détermine si la section active appartient actuellement
+   * au dropdown de navigation tablette.
    *
-   * Un élément `tabletOptional` quitte le dropdown à partir du breakpoint
-   * tablet-lg pour apparaître directement dans le menu principal.
-   * Dans ce cas, le bouton "+" ne doit plus être considéré comme actif.
+   * En mode `tablet-large`, les éléments `tabletOptional` rejoignent
+   * le menu principal. En mode `desktop`, le dropdown disparaît entièrement.
+   *
+   * Cette information permet notamment de déterminer si l'indicateur
+   * du menu principal doit cibler le bouton "+" ou le lien actif.
    */
   const isDropdownSectionActive = navigationItems.some(
     (item) =>
       item.tabletDropdown &&
       item.id === activeSection &&
-      (!item.tabletOptional || !isTabletLarge),
+      navigationLayout !== "desktop" &&
+      (navigationLayout === "tablet" || !item.tabletOptional),
   );
 
   // ===============================================================
@@ -239,8 +265,11 @@ export default function Navbar() {
   // ===============================================================
 
   /*
-   * Ferme le menu mobile au clic extérieur
+   * Ferme les menus de navigation ouverts lors d'un clic extérieur
    * ou lorsque l'utilisateur appuie sur Escape.
+   *
+   * Les écouteurs ne sont actifs que lorsqu'au moins un menu est ouvert
+   * et sont supprimés dès qu'ils ne sont plus nécessaires.
    */
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -324,7 +353,7 @@ export default function Navbar() {
    * Positionne l'indicateur sous l'élément actif du menu principal.
    *
    * Si la section active appartient au dropdown tablette, l'indicateur
-   * cible le bouton "+" plutôt qu'un lien masqué.
+   * cible le bouton "+" plutôt que le lien correspondant masqué.
    *
    * Le ResizeObserver recalcule sa position lorsque la largeur de l'élément
    * actif évolue, notamment lors de l'apparition du logo et du changement
@@ -400,25 +429,31 @@ export default function Navbar() {
   }, [activeSection, isTabletDropdownOpen, isDropdownSectionActive]);
 
   /*
-   * Synchronise React avec le breakpoint `tablet-lg`.
+   * Synchronise la disposition de la navigation avec les breakpoints
+   * `tablet-lg` et `desktop`.
    *
-   * Cette information permet d'adapter la logique de navigation lorsqu'un
-   * élément optionnel quitte le dropdown pour rejoindre le menu principal.
+   * Lorsqu'un breakpoint est franchi, la disposition active est recalculée
+   * afin que la logique React reste cohérente avec l'affichage défini en CSS.
    *
-   * L'écouteur est supprimé au démontage du composant afin d'éviter
-   * de conserver un événement devenu inutile.
+   * Les écouteurs sont supprimés au démontage du composant.
    */
   useEffect(() => {
-    const mediaQuery = getTabletLargeMediaQuery();
+    const mediaQueryTabletLarge = getMediaQuery("--breakpoint-tablet-lg");
+    const mediaQueryDesktop = getMediaQuery("--breakpoint-desktop");
 
-    function handleMediaQueryChange(event: MediaQueryListEvent) {
-      setIsTabletLarge(event.matches);
+    function handleMediaQueryChange() {
+      setNavigationLayout(getNavigationLayout());
     }
 
-    mediaQuery.addEventListener("change", handleMediaQueryChange);
+    mediaQueryTabletLarge.addEventListener("change", handleMediaQueryChange);
+    mediaQueryDesktop.addEventListener("change", handleMediaQueryChange);
 
     return () => {
-      mediaQuery.removeEventListener("change", handleMediaQueryChange);
+      mediaQueryTabletLarge.removeEventListener(
+        "change",
+        handleMediaQueryChange,
+      );
+      mediaQueryDesktop.removeEventListener("change", handleMediaQueryChange);
     };
   }, []);
 
@@ -451,14 +486,13 @@ export default function Navbar() {
   // ===============================================================
 
   /*
-   * Retourne la classe responsive nécessaire à chaque lien.
+   * Retourne la classe responsive nécessaire à chaque lien du menu principal.
    *
-   * - "À propos" reste visible sur certaines largeurs tablette.
-   * - "Parcours" et "Compétences" sont réservés au menu desktop.
-   * - Les autres liens restent visibles par défaut.
+   * Les éléments `tabletOptional` apparaissent dans le menu principal
+   * à partir du layout `tablet-large`, tandis que les autres éléments
+   * `tabletDropdown` n'y apparaissent qu'en desktop.
    *
-   * Les liens masqués du menu principal sont accessibles via
-   * le dropdown tablette.
+   * Les liens masqués restent accessibles via le dropdown tablette.
    */
   function getPrimaryMenuItemClass(item: NavigationItem) {
     if (item.tabletOptional) {
