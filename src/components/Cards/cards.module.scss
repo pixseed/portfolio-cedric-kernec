@@ -1,0 +1,142 @@
+@use "../../styles/abstracts/variables" as vars;
+
+$card-padding-bottom: vars.$spacing-12;
+
+/* ==========================================
+ * Styles Card
+ * ========================================== */
+
+.card {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "icon number"
+        "content content";
+    align-content: start;
+
+    padding-inline: vars.$spacing-6;
+    padding-block: vars.$spacing-6 $card-padding-bottom;
+    gap: vars.$spacing-4;
+
+    border: vars.$border-width-default solid var(--card-color);
+    border-radius: vars.$radius-lg;
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: calc($card-padding-bottom / 2);
+
+        height: vars.$decoration-line-thickness;
+        width: 25%;
+        border-radius: 0 vars.$radius-full vars.$radius-full 0;
+
+        background-color: var(--card-color);
+    }
+
+    &:nth-child(1) {
+        --card-color: #{vars.$primary};
+    }
+
+    &:nth-child(2) {
+        --card-color: #{vars.$accent};
+    }
+
+    &:nth-child(3) {
+        --card-color: #{vars.$secondary};
+    }
+
+    .cardNumber {
+        grid-area: number;
+        color: var(--card-color);
+    }
+
+    svg {
+        grid-area: icon;
+
+        width: vars.$icon-size-xxl;
+        height: vars.$icon-size-xxl;
+
+        padding: vars.$spacing-2;
+
+        color: var(--card-color);
+        background-color: color-mix(
+            in srgb,
+            var(--card-color) 15%,
+            transparent
+        );
+
+        border: vars.$border-width-default solid var(--card-color);
+        border-radius: vars.$radius-md;
+    }
+
+    .cardContent {
+        grid-area: content;
+
+        display: flex;
+        flex-direction: column;
+        gap: vars.$flow-element;
+    }
+
+    &.compact {
+        padding: vars.$spacing-4;
+        gap: vars.$spacing-3;
+
+        &::after {
+            display: none;
+        }
+
+        svg {
+            width: vars.$icon-size-xl;
+            height: vars.$icon-size-xl;
+            padding: vars.$spacing-2;
+        }
+
+        .cardContent {
+            gap: vars.$spacing-2;
+        }
+    }
+}
+
+/* ==========================================
+ * Styles Card - TABLET LARGE
+ * ========================================== */
+@media (min-width: vars.$breakpoint-tablet-lg) {
+    .card {
+        // Répartit équitablement les cartes lorsqu'elles sont utilisées dans un conteneur flex.
+        flex: 1;
+        
+        &::after {
+            width: 35%;
+        }
+    }
+}
+
+/* ==========================================
+ * Styles Card - DESKTOP
+ * ========================================== */
+@media (min-width: vars.$breakpoint-desktop) {
+    .card {
+        grid-template-columns: auto 1fr auto;
+        grid-template-areas: "icon content number";
+        column-gap: vars.$spacing-6;
+
+        container-type: inline-size;
+
+        .cardTitle {
+            font-size: clamp(1rem, 8cqw, 2rem);
+        }
+
+        &::after {
+            width: 20%;
+        }
+
+        &.compact {
+            grid-template-columns: 1fr;
+            grid-template-areas:
+                "icon"
+                "content";
+        }
+    }
+}

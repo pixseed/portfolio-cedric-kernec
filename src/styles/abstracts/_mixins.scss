@@ -1,4 +1,5 @@
 @use "./variables" as vars;
+@use "sass:color";
 
 /* ==========================================
  * Mixins
@@ -9,6 +10,8 @@
  *
  * ::before : couche extérieure translucide et saturée.
  * ::after  : couche intérieure sombre et floutée.
+ *
+ * @param $radius ─ Rayon appliqué aux deux couches de la surface.
  */
 @mixin glass-surface($radius: vars.$radius-lg) {
     &::before,
@@ -37,6 +40,10 @@
     }
 }
 
+/**
+ * Applique un état interactif aux éléments de navigation inactifs.
+ * L'effet est partagé entre le survol et la navigation au clavier.
+ */
 @mixin navigation-hover {
     &:not(.active):hover,
     &:not(.active):focus-visible {
@@ -49,4 +56,40 @@
             transparent 60%
         );
     }
+}
+
+/**
+ * Applique un dégradé au texte en utilisant le fond
+ * comme source de couleur.
+ *
+ * @param $gradient Dégradé CSS à appliquer au texte.
+ */
+@mixin gradient-text($gradient) {
+    background: $gradient;
+    background-clip: text;
+    color: transparent;
+}
+
+/**
+ * Crée un fond avec une bordure en dégradé à partir
+ * d'une couleur principale.
+ *
+ * La première couche constitue le fond du composant,
+ * tandis que la seconde est affichée dans la zone de bordure.
+ *
+ * @param $color Couleur utilisée comme point de départ des dégradés.
+ */
+@mixin gradient-border-background($color) {
+    background:
+        linear-gradient(
+            to right,
+            color.mix($color, vars.$background-primary, 35%) 0%,
+            vars.$neutral-800 40%
+        ) padding-box,
+        linear-gradient(
+            to right,
+            $color 0%,
+            vars.$neutral-800 35%,
+            vars.$neutral-700 100%
+        ) border-box;
 }
