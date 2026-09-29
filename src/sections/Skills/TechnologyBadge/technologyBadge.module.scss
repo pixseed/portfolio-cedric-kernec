@@ -1,0 +1,53 @@
+@use "../../../styles/abstracts/variables" as vars;
+
+/* ==========================================
+ * Styles Technology Badge
+ * ========================================== */
+
+.badge {
+    display: flex;
+    align-items: stretch;
+
+    color: vars.$neutral-100;
+
+    width: fit-content;
+
+    border: vars.$border-width-default solid var(--technology-border-color, vars.$border-default);
+    border-radius: vars.$radius-md;
+
+    overflow: hidden;
+
+    transition: color vars.$transition-duration-fast
+        vars.$transition-easing-default;
+
+    &:hover,
+    &:focus-visible {
+        color: var(--technology-border-color);
+    }
+}
+
+.label,
+.icon {
+    padding: vars.$spacing-1 vars.$spacing-2;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+
+    background-color: var(--technology-color);
+
+    svg {
+        height: vars.$icon-size-sm;
+        width: auto;
+    }
+}
+
+.externalLinkIcon {
+    display: flex;
+    align-items: center;
+
+    padding-right: vars.$spacing-1;
+
+    color: vars.$text-secondary;
+}

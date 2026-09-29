@@ -1,7 +1,5 @@
 @use "../../styles/abstracts/variables" as vars;
 
-$axis-padding-bottom: vars.$spacing-12;
-
 /* ==========================================
  * Styles About
  * ========================================== */
@@ -23,22 +21,6 @@ $axis-padding-bottom: vars.$spacing-12;
     display: flex;
     flex-direction: column;
     gap: vars.$flow-content;
-}
-
-.title {
-    display: flex;
-    align-items: stretch;
-    gap: vars.$spacing-2;
-
-    font-size: 1rem;
-    font-weight: 400;
-
-    &::before {
-        content: "";
-        width: 6px;
-        background-color: vars.$primary;
-        transform: skew(-12deg);
-    }
 }
 
 .introContent {

@@ -1,0 +1,377 @@
+@use "../../styles/abstracts/variables" as vars;
+@use "../../styles/abstracts/mixins";
+
+/* ==========================================
+ * Styles Skills
+ * ========================================== */
+
+.skillsInterface {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$flow-content;
+}
+
+// Navigation
+.domainNavigationWrapper {
+    position: relative;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+
+        top: 0;
+
+        width: 64px;
+        height: 100%;
+
+        pointer-events: none;
+
+        opacity: 0;
+        z-index: 1;
+
+        transition: opacity vars.$transition-duration-default
+            vars.$transition-easing-smooth;
+    }
+
+    &::before {
+        left: 0;
+
+        background: linear-gradient(
+            to left,
+            transparent,
+            vars.$background-primary
+        );
+    }
+
+    &::after {
+        right: 0;
+
+        background: linear-gradient(
+            to right,
+            transparent,
+            vars.$background-primary
+        );
+    }
+
+    &.showLeftFade {
+        &::before {
+            opacity: 1;
+        }
+    }
+
+    &.showRightFade {
+        &::after {
+            opacity: 1;
+        }
+    }
+}
+
+.scrollLeftButton,
+.scrollRightButton {
+    position: absolute;
+    top: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 100%;
+
+    background: transparent;
+    border: none;
+    color: vars.$neutral-100;
+
+    cursor: pointer;
+    z-index: 2;
+}
+
+.scrollLeftButton {
+    left: 0;
+}
+
+.scrollRightButton {
+    right: 0;
+}
+
+.domainNavigation {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    button {
+        position: relative;
+        white-space: nowrap;
+
+        color: vars.$text-secondary;
+        background: transparent;
+
+        padding: vars.$spacing-1 vars.$spacing-2;
+
+        border: none;
+        border-bottom: vars.$border-width-default solid vars.$border-default;
+
+        cursor: pointer;
+
+        transition:
+            color vars.$transition-duration-default
+                vars.$transition-easing-default,
+            border-bottom-color vars.$transition-duration-default
+                vars.$transition-easing-smooth;
+
+        &::after {
+            content: "";
+            position: absolute;
+
+            height: 4px;
+            width: 100%;
+
+            bottom: 0;
+            left: 0;
+
+            background: vars.$gradient-primary;
+
+            transform: scaleX(0);
+            transform-origin: center;
+
+            transition: transform vars.$transition-duration-default
+                vars.$transition-easing-smooth;
+        }
+
+        &.active {
+            @include mixins.gradient-text(vars.$gradient-primary);
+            font-weight: 700;
+            border-bottom-color: transparent;
+
+            &::after {
+                transform: scaleX(1);
+            }
+        }
+
+        &:focus-visible {
+            outline-offset: -2px;
+        }
+    }
+}
+
+.domainIcon {
+    display: none;
+}
+
+// Contenu
+.domainContent {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$flow-group;
+}
+
+.domainHeader {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$flow-element;
+}
+
+.domainLabel {
+    text-transform: uppercase;
+    color: vars.$neutral-300;
+    font-size: 0.875rem;
+    letter-spacing: 2px;
+}
+
+.technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: vars.$spacing-2;
+}
+
+.domainIllustration {
+    display: none;
+}
+
+.cards {
+    display: grid;
+    gap: vars.$spacing-3;
+}
+
+/* ==========================================
+ * Styles Skills - TABLET
+ * ========================================== */
+@media (min-width: vars.$breakpoint-tablet) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==========================================
+ * Styles Skills - TABLET LARGE
+ * ========================================== */
+@media (min-width: vars.$breakpoint-tablet-lg) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ==========================================
+ * Styles Skills - DESKTOP
+ * ========================================== */
+@media (min-width: vars.$breakpoint-desktop) {
+    .skillsInterface {
+        display: grid;
+        grid-template-columns: 240px minmax(0, 1fr);
+        gap: vars.$spacing-8;
+    }
+
+    // Navigation
+    .domainNavigationWrapper {
+        &::before,
+        &::after {
+            display: none;
+        }
+    }
+
+    .domainNavigation {
+        flex-direction: column;
+        overflow-x: visible;
+        gap: vars.$spacing-2;
+
+        button {
+            display: flex;
+            align-items: center;
+            gap: vars.$spacing-4;
+
+            width: 100%;
+            text-align: left;
+
+            padding: vars.$spacing-3 vars.$spacing-4;
+
+            border: vars.$border-width-lg solid transparent;
+            border-radius: vars.$radius-md;
+
+            transition: color vars.$transition-duration-slow
+                vars.$transition-easing-smooth;
+
+            &::after {
+                display: none;
+            }
+
+            &.active {
+                color: vars.$text-primary;
+                @include mixins.gradient-border-background(vars.$primary);
+            }
+
+            &:hover:not(.active) {
+                color: vars.$text-primary;
+                @include mixins.gradient-border-background(vars.$secondary);
+            }
+
+            &:focus-visible {
+                outline-offset: 2px;
+            }
+        }
+    }
+
+    .scrollLeftButton,
+    .scrollRightButton {
+        display: none;
+    }
+
+    .domainIcon {
+        display: block;
+        width: vars.$icon-size-lg;
+        height: vars.$icon-size-lg;
+        flex-shrink: 0;
+    }
+
+    // Contenu
+    .domainContent {
+        // Référence au positionnement de l'illustration.
+        position: relative;
+    }
+
+    .domainHeader,
+    .technologies {
+        max-width: 52%;
+    }
+
+    .technologies {
+        gap: vars.$spacing-3;
+    }
+
+    .cards {
+        gap: vars.$spacing-4;
+    }
+
+    .domainIllustration {
+        display: block;
+        position: absolute;
+
+        top: -40px;
+        right: 0;
+
+        width: 56%;
+        height: auto;
+
+        pointer-events: none;
+    }
+
+    // Ajustement spécifique à chaque domaine
+    .frontend {
+        .technologies {
+            max-width: 80%;
+        }
+    }
+
+    .backend {
+        .technologies {
+            max-width: 60%;
+        }
+    }
+
+    .database {
+        .domainIllustration {
+            width: 54%;
+        }
+
+        .technologies {
+            max-width: 60%;
+        }
+    }
+
+    .design {
+        .domainIllustration {
+            top: -10px;
+            width: 49%;
+        }
+
+        .technologies {
+            max-width: 75%;
+        }
+    }
+
+    .tools {
+        .domainIllustration {
+            top: -10px;
+            width: 46%;
+        }
+
+        .technologies {
+            max-width: 59%;
+        }
+    }
+
+    .deployment {
+        .domainIllustration {
+            top: -10px;
+            width: 46%;
+        }
+
+        .technologies {
+            max-width: 70%;
+        }
+    }
+}

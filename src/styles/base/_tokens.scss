@@ -3,4 +3,9 @@
 :root {
   --breakpoint-tablet-lg: #{vars.$breakpoint-tablet-lg};
   --breakpoint-desktop: #{vars.$breakpoint-desktop};
+
+  --color-text-light: #{vars.$neutral-100};
+  --color-text-dark: #{vars.$neutral-800};
+
+  --border-default: #{vars.$border-default};
 }

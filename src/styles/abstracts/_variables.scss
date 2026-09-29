@@ -50,6 +50,7 @@ $radius-full: 999px;
 
 // Borders
 $border-width-default: 1.5px;
+$border-width-lg: 3px;
 
 // Layout
 $container-max-width: 1200px;
@@ -83,3 +84,10 @@ $transition-easing-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 
 // Decorations
 $decoration-line-thickness: 5px;
+
+// Icon sizes
+$icon-size-sm: 1rem;
+$icon-size-md: 1.5rem;
+$icon-size-lg: 2rem;
+$icon-size-xl: 2.5rem;
+$icon-size-xxl: 3rem;

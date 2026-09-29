@@ -36,8 +36,18 @@ a {
     padding-block: vars.$flow-section;
 }
 
-.gradient-text {
-    background: vars.$gradient-primary;
-    background-clip: text;
-    color: transparent;
+.section-title {
+    display: flex;
+    align-items: stretch;
+    gap: vars.$spacing-2;
+
+    font-size: 1rem;
+    font-weight: 400;
+
+    &::before {
+        content: "";
+        width: 6px;
+        background-color: vars.$primary;
+        transform: skew(-12deg);
+    }
 }
