@@ -1,0 +1,150 @@
+@use "../../styles/abstracts/variables" as vars;
+@use "../../styles/abstracts/mixins";
+
+/* ==========================================
+ * Styles Dropdown
+ * ========================================== */
+
+// Conteneur principal
+.dropdown {
+    position: relative;
+}
+
+// Bouton de sélection
+.trigger {
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-3;
+
+    width: 100%;
+    padding: vars.$spacing-2 vars.$spacing-4;
+
+    border: none;
+    border-radius: vars.$radius-lg;
+
+    @include mixins.glass-surface();
+
+    &[aria-expanded="true"] {
+        .chevron {
+            transform: rotate(180deg);
+        }
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+// Liste des options
+.listbox {
+    position: absolute;
+    isolation: isolate;
+
+    top: calc(100% + vars.$spacing-2);
+    left: 0;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-1;
+
+    padding: vars.$spacing-2;
+    border-radius: vars.$radius-lg;
+
+    z-index: 10;
+
+    @include mixins.glass-surface();
+
+    animation: dropdownSlide vars.$transition-duration-fast ease-out both;
+
+    [role="option"] {
+        display: flex;
+        align-items: center;
+        gap: vars.$spacing-3;
+
+        padding: vars.$spacing-3;
+        border-radius: vars.$radius-md;
+
+        cursor: pointer;
+
+        transition:
+            background-color vars.$transition-duration-fast
+                vars.$transition-easing-default,
+            box-shadow vars.$transition-duration-fast
+                vars.$transition-easing-default;
+
+        animation: dropdownFade vars.$transition-duration-fast ease-out both;
+
+        &:hover {
+            background-color: rgba(vars.$secondary, 0.25);
+        }
+
+        &[aria-selected="true"] {
+            font-weight: 600;
+        }
+
+        &.active {
+            background-color: rgba(vars.$secondary, 0.45);
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.2),
+                inset 0 0 0 1px rgba(vars.$secondary, 0.3);
+        }
+    }
+}
+
+// Icône d'ouverture
+.chevron {
+    margin-left: auto;
+    transition: transform vars.$transition-duration-fast
+        vars.$transition-easing-default;
+}
+
+// Indicateur de sélection
+.checkIcon {
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* ==========================================
+ * Animations
+ * ========================================== */
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes dropdownSlide {
+    from {
+        transform: translateY(-8px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================
+ * Accessibilité
+ * ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .listbox,
+    .listbox [role="option"] {
+        animation: none;
+    }
+
+    .chevron,
+    .listbox [role="option"] {
+        transition: none;
+    }
+}

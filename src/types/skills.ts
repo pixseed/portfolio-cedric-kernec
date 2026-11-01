@@ -1,18 +1,11 @@
 import type { Icon } from "@phosphor-icons/react";
-import type { SimpleIcon } from "simple-icons";
-
-export type Technology = {
-  name: string;
-  icon?: SimpleIcon;
-  iconLabel?: string;
-  color?: string;
-  link: string;
-};
+import type { Technology } from "./technology";
 
 export type SkillCard = {
   icon: Icon;
   title: string;
   description: string;
+  accent: "primary" | "secondary" | "accent";
 };
 
 export type SkillDomainId =

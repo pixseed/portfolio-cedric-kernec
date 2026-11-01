@@ -1,0 +1,169 @@
+@use "../../../styles/abstracts/variables" as vars;
+@use "../../../styles/abstracts/mixins";
+
+$card-background: vars.$background-primary;
+
+/* ==========================================
+ * Styles ProjectDetails
+ * ========================================== */
+
+.projectDetails {
+    min-width: 0;
+}
+
+.projectLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: vars.$spacing-4;
+}
+
+.projectOverview,
+.projectTechnical {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-4;
+    min-width: 0;
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-3;
+
+    svg {
+        flex-shrink: 0;
+    }
+}
+
+.projectInformations {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$flow-element;
+}
+
+.projectChallenge {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: vars.$spacing-3;
+
+    > * {
+        background-color: $card-background;
+    }
+}
+
+.projectTechnicalPoints {
+    display: flex;
+    flex-direction: column;
+
+    @include mixins.surface-card($background: $card-background, $padding: 0);
+
+    .cardBody {
+        display: flex;
+        flex-direction: column;
+        gap: vars.$flow-element;
+    }
+
+    .technicalPoint {
+        display: flex;
+        gap: vars.$spacing-3;
+
+        svg {
+            flex-shrink: 0;
+            width: vars.$icon-size-sm;
+            height: vars.$icon-size-sm;
+            color: vars.$secondary;
+        }
+
+        .technicalPointContent {
+            display: flex;
+            flex-direction: column;
+            gap: vars.$spacing-1;
+
+            .technicalPointTitle {
+                color: vars.$text-primary;
+            }
+
+            .technicalPointDescription {
+                color: vars.$text-secondary;
+            }
+        }
+    }
+}
+
+.projectTechnologies {
+    display: flex;
+    flex-direction: column;
+
+    @include mixins.surface-card($background: $card-background, $padding: 0);
+
+    .technologyList {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        align-content: flex-start;
+        gap: vars.$spacing-2;
+    }
+}
+
+.projectLinks {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: vars.$flow-action;
+    
+    > * {
+        width: fit-content;
+    }
+}
+
+.projectCategory {
+    @include mixins.project-category;
+}
+
+.cardHeader {
+    padding: vars.$spacing-3 vars.$spacing-4;
+    border-bottom: vars.$border-width-default solid vars.$border-default;
+    background-color: vars.$background-secondary;
+}
+
+.cardBody {
+    padding: vars.$spacing-4;
+}
+
+.projectTechnicalPoints,
+.projectTechnologies {
+    overflow: hidden;
+}
+
+/* ==========================================
+ * Styles ProjectDetails - TABLET
+ * ========================================== */
+@media (min-width: vars.$breakpoint-tablet) {
+    .projectPresentation {
+        grid-template-columns: minmax(0, 1fr) minmax(180px, 0.65fr);
+        align-items: start;
+    }
+
+    .projectChallenge {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* ==========================================
+ * Styles ProjectDetails - DESKTOP
+ * ========================================== */
+@media (min-width: vars.$breakpoint-desktop) {
+    .projectLayout {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    }
+
+    .projectPresentation,
+    .projectChallenge {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .projectTechnicalPoints,
+    .projectTechnologies {
+        flex-grow: 1;
+    }
+}

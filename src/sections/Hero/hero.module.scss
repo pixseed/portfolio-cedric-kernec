@@ -97,13 +97,7 @@
     letter-spacing: 0.2rem;
     font-size: clamp(1rem, 2vw, 1.5rem);
 
-    &::after {
-        content: "";
-        height: vars.$decoration-line-thickness;
-        width: 20%;
-        background: vars.$gradient-primary;
-        border-radius: vars.$radius-lg;
-    }
+    @include mixins.decoration-line();
 }
 
 .avatar {

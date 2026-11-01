@@ -1,12 +1,13 @@
 import type { CSSProperties } from "react";
 import { ArrowSquareOutIcon } from "@phosphor-icons/react";
 
-import type { Technology } from "../../../types/skills";
+import type { Technology } from "../../types/technology";
 
 import styles from "./technologyBadge.module.scss";
 
 type TechnologyBadgeProps = {
   technology: Technology;
+  variant?: "default" | "compact";
 };
 
 // ===============================================================
@@ -40,31 +41,36 @@ function getContrastColor(hex: string) {
 }
 
 /**
- * Renforce la bordure des technologies dont la couleur
- * est trop sombre pour rester visible sur le fond du portfolio.
+ * Adapte la couleur d'une technologie afin qu'elle reste visible
+ * sur le fond sombre du portfolio.
+ *
+ * Les couleurs suffisamment lumineuses sont conservées, tandis que
+ * les couleurs trop sombres sont remplacées par une couleur claire.
  */
-function getBorderColor(hex: string) {
+function getVisibleTechnologyColor(hex: string) {
   const luminance = getLuminance(hex);
 
-  if (luminance < 50) {
-    return "var(--border-default)";
+  if (luminance < 40) {
+    return "var(--color-text-light)";
   }
 
   return `#${hex}`;
 }
 
-export default function TechnologyBadge({ technology }: TechnologyBadgeProps) {
+export default function TechnologyBadge({ technology, variant = "default" }: TechnologyBadgeProps) {
   // Utilise la couleur de Simple Icons ou la couleur personnalisée de la technologie.
-  const technologyColor = technology.icon
-    ? technology.icon.hex
-    : technology.color;
-
+  const technologyColor =
+    technology.icon?.hex ??
+    technology.color;
+  
   // Transmet les couleurs calculées au module SCSS via des propriétés CSS personnalisées.
   const badgeStyle = {
     ...(technologyColor && {
       "--technology-color": `#${technologyColor}`,
       "--technology-icon-color": getContrastColor(technologyColor),
-      "--technology-border-color": getBorderColor(technologyColor),
+      "--technology-visible-color": getVisibleTechnologyColor(
+          technology.displayColor ?? technologyColor
+      ),
     }),
   } as CSSProperties;
 
@@ -73,7 +79,7 @@ export default function TechnologyBadge({ technology }: TechnologyBadgeProps) {
       href={technology.link}
       target="_blank"
       rel="noopener noreferrer"
-      className={styles.badge}
+      className={`${styles.badge} ${styles[variant]}`}
       style={badgeStyle}
     >
       {(technology.icon || technology.iconLabel) && (
@@ -81,7 +87,7 @@ export default function TechnologyBadge({ technology }: TechnologyBadgeProps) {
           {technology.icon ? (
             <svg
               viewBox="0 0 24 24"
-              fill="var(--technology-icon-color)"
+              fill="currentColor"
               aria-hidden="true"
             >
               <path d={technology.icon.path} />

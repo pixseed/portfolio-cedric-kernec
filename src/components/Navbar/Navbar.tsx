@@ -130,7 +130,7 @@ export default function Navbar() {
   const navigationTargetRef = useRef<string | null>(null);
 
   // ===============================================================
-  // Derived state
+  // Derived data
   // ===============================================================
 
   /*

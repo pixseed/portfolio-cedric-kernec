@@ -1,0 +1,105 @@
+@use "../../styles/abstracts/variables" as vars;
+@use "../../styles/abstracts/mixins";
+
+/* ==========================================
+ * Styles Modal
+ * ========================================== */
+
+.dialog {
+    width: min(1000px, calc(100% - 2rem));
+    max-width: none;
+    max-height: calc(100dvh - 2rem);
+
+    padding: 0;
+
+    background-color: vars.$background-secondary;
+    color: vars.$text-primary;
+
+    border: vars.$border-width-default solid vars.$border-default;
+    border-radius: vars.$radius-lg;
+
+    overflow: hidden;
+
+    &[open] {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &.large {
+        width: min(1200px, calc(100% - 2rem));
+    }
+
+    .dialogHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: vars.$spacing-3;
+
+        flex-shrink: 0;
+
+        padding: vars.$spacing-3 vars.$spacing-4;
+
+        border-bottom: vars.$border-width-default solid vars.$border-default;
+
+        .headerContent {
+            display: flex;
+            align-items: center;
+            gap: vars.$spacing-3;
+
+            width: 100%;
+            min-width: 0;
+        }
+
+        .closeButton {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            width: 36px;
+            height: 36px;
+
+            color: vars.$text-primary;
+            background-color: vars.$background-primary;
+
+            border: vars.$border-width-default solid vars.$border-default;
+            border-radius: vars.$radius-md;
+
+            cursor: pointer;
+
+            transition:
+                color vars.$transition-duration-fast
+                    vars.$transition-easing-default,
+                border-color vars.$transition-duration-fast
+                    vars.$transition-easing-default;
+
+            &:hover {
+                color: vars.$action-accent;
+                border-color: vars.$action-accent;
+            }
+
+            &:focus-visible {
+                outline: 2px solid vars.$action-accent;
+                outline-offset: 3px;
+            }
+
+            svg {
+                width: vars.$icon-size-md;
+                height: vars.$icon-size-md;
+            }
+        }
+    }
+
+    .dialogContent {
+        min-height: 0;
+        overflow-y: auto;
+        padding: vars.$spacing-4;
+
+        @include mixins.custom-scrollbar;
+    }
+
+    &::backdrop {
+        background-color: rgb(0 0 0 / 70%);
+    }
+}

@@ -13,46 +13,11 @@
 
 // Navigation
 .domainNavigationWrapper {
-    position: relative;
-
-    &::before,
-    &::after {
-        content: "";
-        position: absolute;
-
-        top: 0;
-
-        width: 64px;
-        height: 100%;
-
-        pointer-events: none;
-
-        opacity: 0;
-        z-index: 1;
-
-        transition: opacity vars.$transition-duration-default
-            vars.$transition-easing-smooth;
-    }
-
-    &::before {
-        left: 0;
-
-        background: linear-gradient(
-            to left,
-            transparent,
-            vars.$background-primary
-        );
-    }
-
-    &::after {
-        right: 0;
-
-        background: linear-gradient(
-            to right,
-            transparent,
-            vars.$background-primary
-        );
-    }
+    @include mixins.scroll-fade(
+        $direction: horizontal,
+        $color: vars.$background-primary,
+        $size: 172px
+    );
 
     &.showLeftFade {
         &::before {
@@ -203,7 +168,7 @@
  * ========================================== */
 @media (min-width: vars.$breakpoint-tablet) {
     .cards {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -212,7 +177,7 @@
  * ========================================== */
 @media (min-width: vars.$breakpoint-tablet-lg) {
     .cards {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 
@@ -249,7 +214,7 @@
 
             padding: vars.$spacing-3 vars.$spacing-4;
 
-            border: vars.$border-width-lg solid transparent;
+            border: none;
             border-radius: vars.$radius-md;
 
             transition: color vars.$transition-duration-slow

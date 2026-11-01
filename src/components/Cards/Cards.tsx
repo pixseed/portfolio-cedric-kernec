@@ -7,6 +7,8 @@ type CardProps = {
   title: string;
   description: string;
   variant?: "default" | "compact";
+  iconPosition?: "top" | "inline";
+  accent?: "primary" | "secondary" | "accent";
 };
 
 export default function Card({
@@ -15,19 +17,29 @@ export default function Card({
   title,
   description,
   variant = "default",
+  iconPosition = "top",
+  accent = "primary",
 }: CardProps) {
   const Icon = icon;
 
   return (
-    <article
-      className={`${styles.card} ${variant === "compact" ? styles.compact : ""}`}
-    >
-      <Icon aria-hidden="true"/>
+    <article className={`${styles.card} ${styles[variant]} ${styles[accent]}`}>
+      {number && <span className={styles.cardNumber}>{number}</span>}
+
+      {iconPosition === "top" && <Icon aria-hidden="true" />}
+
       <div className={styles.cardContent}>
-        <h4 className={styles.cardTitle}>{title}</h4>
+        {iconPosition === "inline" ? (
+          <div className={styles.cardHeading}>
+            <Icon aria-hidden="true" />
+            <h4 className={styles.cardTitle}>{title}</h4>
+          </div>
+        ) : (
+          <h4 className={styles.cardTitle}>{title}</h4>
+        )}
+
         <p className={styles.cardDescription}>{description}</p>
       </div>
-      {number && <div className={styles.cardNumber}>{number}</div>}
     </article>
   );
 }
