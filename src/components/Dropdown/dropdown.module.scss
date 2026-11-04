@@ -39,27 +39,32 @@
     }
 }
 
-// Liste des options
-.listbox {
+.listboxSurface{
     position: absolute;
     isolation: isolate;
 
     top: calc(100% + vars.$spacing-2);
     left: 0;
     width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    gap: vars.$spacing-1;
-
-    padding: vars.$spacing-2;
-    border-radius: vars.$radius-lg;
-
     z-index: 10;
+
+    border-radius: vars.$radius-lg;
 
     @include mixins.glass-surface();
 
     animation: dropdownSlide vars.$transition-duration-fast ease-out both;
+}
+
+.listbox {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-1;
+
+    max-height: 40dvh;
+    overflow-y: auto;
+
+    padding: vars.$spacing-2;
+    border-radius: inherit;
 
     [role="option"] {
         display: flex;
@@ -138,6 +143,7 @@
  * ========================================== */
 
 @media (prefers-reduced-motion: reduce) {
+    .listboxSurface,
     .listbox,
     .listbox [role="option"] {
         animation: none;

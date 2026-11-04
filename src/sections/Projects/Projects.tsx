@@ -30,7 +30,7 @@ export default function Projects() {
   const [galleryCategory, setGalleryCategory] =
     useState<ProjectCategory | null>(null);
   const [lastGalleryProjectId, setLastGalleryProjectId] = useState<
-    string | null
+    Project["id"] | null
   >(null);
 
   // ===============================================================
@@ -52,8 +52,24 @@ export default function Projects() {
   // Derived Data
   // ===============================================================
 
+  /**
+   * Détermine les projets à parcourir selon le filtre de la galerie.
+   * Depuis le carrousel ou sans filtre, conserve tous les projets.
+   */
+  const navigableProjects =
+    isGalleryOpen && galleryCategory !== null
+      ? projects.filter((project) => project.category === galleryCategory)
+      : projects;
+
+  /**
+   * Recherche la position du projet sélectionné dans la liste à parcourir.
+   * Sert au compteur affiché dans la modale.
+   * Vaut -1 sans sélection ou si le projet est absent de cette liste.
+   */
   const selectedProjectIndex = selectedProject
-    ? projects.findIndex((project) => project.id === selectedProject.id)
+    ? navigableProjects.findIndex(
+        (project) => project.id === selectedProject.id,
+      )
     : -1;
 
   // ===============================================================
@@ -96,7 +112,36 @@ export default function Projects() {
     setIsGalleryOpen(true);
   }
 
+  /**
+   * Ferme la modale et réinitialise les états de consultation.
+   *
+   * Si la fiche provient du carrousel, positionne celui-ci sur le dernier
+   * projet consulté, puis replace le focus sur son bouton « En savoir plus ».
+   * Le focus est différé à la prochaine frame pour intervenir après
+   * le traitement de fermeture, sans provoquer de défilement de la page.
+   *
+   * Si la consultation provient de la galerie, conserve le comportement
+   * de retour du focus existant, sans repositionner le carrousel.
+   */
   function handleCloseModal() {
+    if (!isGalleryOpen && selectedProject) {
+      const index = projects.findIndex(
+        (project) => project.id === selectedProject.id,
+      );
+
+      if (index !== -1 && emblaApi) {
+        emblaApi?.scrollTo(index, true);
+
+        const button = emblaApi
+          .slideNodes()[index]
+          ?.querySelector<HTMLButtonElement>("[data-project-action] button");
+
+        requestAnimationFrame(() => {
+          button?.focus({ preventScroll: true });
+        });
+      }
+    }
+
     setSelectedProject(null);
     setIsGalleryOpen(false);
     setGalleryCategory(null);
@@ -106,14 +151,13 @@ export default function Projects() {
   /**
    * Navigue entre les projets avec une boucle circulaire.
    *
-   * @param direction
-   * @returns
+   * @param direction ─ Sens de navigation : -1 pour précédent, 1 pour suivant.
    */
   const handleNavigateProject = useCallback(
     (direction: -1 | 1) => {
-      if (!selectedProject || projects.length === 0) return;
+      if (!selectedProject || navigableProjects.length <= 1) return;
 
-      const currentIndex = projects.findIndex(
+      const currentIndex = navigableProjects.findIndex(
         (project) => project.id === selectedProject.id,
       );
 
@@ -122,12 +166,12 @@ export default function Projects() {
       const nextIndex = getCircularIndex(
         currentIndex,
         direction,
-        projects.length,
+        navigableProjects.length,
       );
 
-      setSelectedProject(projects[nextIndex]);
+      setSelectedProject(navigableProjects[nextIndex]);
     },
-    [selectedProject],
+    [selectedProject, navigableProjects],
   );
 
   // ===============================================================
@@ -139,7 +183,7 @@ export default function Projects() {
    * avec les flèches gauche et droite du clavier.
    */
   useEffect(() => {
-    if (!selectedProject) return;
+    if (!selectedProject || navigableProjects.length <= 1) return;
 
     function handleKeyDown(event: KeyboardEvent) {
       // La lightbox est prioritaire sur la navigation entre projets.
@@ -180,7 +224,7 @@ export default function Projects() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [selectedProject, handleNavigateProject]);
+  }, [selectedProject, handleNavigateProject, navigableProjects]);
 
   // ===============================================================
   // Return
@@ -216,7 +260,7 @@ export default function Projects() {
               aria-label="Projet précédent"
               onClick={handlePrevious}
             >
-              <CaretLeftIcon />
+              <CaretLeftIcon aria-hidden="true" />
             </button>
 
             {/* Carrousel des projets */}
@@ -241,7 +285,7 @@ export default function Projects() {
               aria-label="Projet suivant"
               onClick={handleNext}
             >
-              <CaretRightIcon />
+              <CaretRightIcon aria-hidden="true" />
             </button>
           </div>
 
@@ -266,11 +310,19 @@ export default function Projects() {
         isOpen={isGalleryOpen || selectedProject !== null}
         onClose={handleCloseModal}
         size="large"
+        ariaLabel={
+          selectedProject
+            ? `Détails du projet ${selectedProject.title}`
+            : "Tous mes projets"
+        }
         header={
           selectedProject ? (
             <div className={styles.modalNavigation}>
               <button
                 type="button"
+                aria-label={
+                  isGalleryOpen ? "Retour aux projets" : "Voir tous les projets"
+                }
                 className={styles.modalBackButton}
                 onClick={handleShowGallery}
               >
@@ -280,14 +332,7 @@ export default function Projects() {
                   <SquaresFourIcon aria-hidden="true" />
                 )}
 
-                <span
-                  className={styles.modalBackLabel}
-                  aria-label={
-                    isGalleryOpen
-                      ? "Retour aux projets"
-                      : "Voir tous les projets"
-                  }
-                >
+                <span className={styles.modalBackLabel}>
                   <span
                     className={styles.modalBackLabelMobile}
                     aria-hidden="true"
@@ -305,37 +350,48 @@ export default function Projects() {
                 </span>
               </button>
 
-              <div className={styles.modalProjectNavigation}>
-                <button
-                  ref={previousProjectButtonRef}
-                  type="button"
-                  onClick={() => handleNavigateProject(-1)}
-                  aria-label="Projet précédent"
-                  className={styles.modalNavigationButton}
-                >
-                  <CaretLeftIcon aria-hidden="true" />
-                  <span className={styles.modalProjectLabel} aria-hidden="true">
-                    Projet précédent
-                  </span>
-                </button>
+              {navigableProjects.length > 1 && (
+                <div className={styles.modalProjectNavigation}>
+                  <button
+                    ref={previousProjectButtonRef}
+                    type="button"
+                    onClick={() => handleNavigateProject(-1)}
+                    aria-label="Projet précédent"
+                    className={styles.modalNavigationButton}
+                  >
+                    <CaretLeftIcon aria-hidden="true" />
+                    <span
+                      className={styles.modalProjectLabel}
+                      aria-hidden="true"
+                    >
+                      Projet précédent
+                    </span>
+                  </button>
 
-                <span className={styles.modalProjectCounter} aria-live="polite">
-                  {selectedProjectIndex + 1} / {projects.length}
-                </span>
-
-                <button
-                  ref={nextProjectButtonRef}
-                  type="button"
-                  onClick={() => handleNavigateProject(1)}
-                  aria-label="Projet suivant"
-                  className={styles.modalNavigationButton}
-                >
-                  <span className={styles.modalProjectLabel} aria-hidden="true">
-                    Projet suivant
+                  <span
+                    className={styles.modalProjectCounter}
+                    aria-live="polite"
+                  >
+                    {selectedProjectIndex + 1} / {navigableProjects.length}
                   </span>
-                  <CaretRightIcon aria-hidden="true" />
-                </button>
-              </div>
+
+                  <button
+                    ref={nextProjectButtonRef}
+                    type="button"
+                    onClick={() => handleNavigateProject(1)}
+                    aria-label="Projet suivant"
+                    className={styles.modalNavigationButton}
+                  >
+                    <span
+                      className={styles.modalProjectLabel}
+                      aria-hidden="true"
+                    >
+                      Projet suivant
+                    </span>
+                    <CaretRightIcon aria-hidden="true" />
+                  </button>
+                </div>
+              )}
             </div>
           ) : null
         }

@@ -6,7 +6,6 @@ $carousel-side-spacing: vars.$spacing-12;
 /* ==========================================
  * Styles Projects
  * ========================================== */
-
 .section {
     background-color: vars.$background-secondary;
 }
@@ -217,7 +216,7 @@ $carousel-side-spacing: vars.$spacing-12;
 }
 
 /* ==========================================
- * Styles Projects - LARGE TABLET
+ * Styles Projects - TABLETTE LARGE
  * ========================================== */
 @media (min-width: vars.$breakpoint-tablet-lg) {
     .modalBackLabelMobile {

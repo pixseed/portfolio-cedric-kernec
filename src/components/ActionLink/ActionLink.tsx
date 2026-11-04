@@ -31,14 +31,19 @@ export default function ActionLink({
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
     >
-      {iconPosition === "left" && Icon && <Icon />}
+      {iconPosition === "left" && Icon && <Icon aria-hidden="true" />}
       {label}
-      {iconPosition === "right" && Icon && <Icon />}
+      {iconPosition === "right" && Icon && <Icon aria-hidden="true" />}
       {showExternalIcon && external && (
         <ArrowSquareOutIcon
           className={styles.externalIcon}
           aria-hidden="true"
         />
+      )}
+      {external && (
+        <span className="visually-hidden">
+        (ouvre dans un nouvel onglet)
+        </span>
       )}
     </a>
   );

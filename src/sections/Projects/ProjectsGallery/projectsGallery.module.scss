@@ -4,7 +4,6 @@
 /* ==========================================
  * Styles ProjectsGallery
  * ========================================== */
-
 .gallery {
     display: flex;
     flex-direction: column;
@@ -30,28 +29,6 @@
         display: flex;
         flex-direction: column;
         gap: vars.$spacing-2;
-
-        .selectWrapper {
-            position: relative;
-            isolation: isolate;
-
-            border-radius: vars.$radius-md;
-
-            @include mixins.glass-surface($radius: vars.$radius-md);
-        }
-
-        select {
-            display: block;
-            width: 100%;
-            min-height: 44px;
-            padding: vars.$spacing-3 vars.$spacing-4;
-
-            background: transparent;
-            border: none;
-            border-radius: inherit;
-
-            appearance: none;
-        }
     }
 
     .desktopFilter {
@@ -90,6 +67,9 @@
     }
 }
 
+/* ==========================================
+ * Styles Projects - TABLETTE
+ * ========================================== */
 @media (min-width: vars.$breakpoint-tablet) {
     .galleryFilter {
         .mobileFilter {

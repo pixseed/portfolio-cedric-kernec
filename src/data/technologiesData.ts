@@ -35,7 +35,16 @@ import {
 
 import type { Technology } from "../types/technology";
 
-// Vérifie le type des technologies tout en conservant les clés précises de l'objet
+/**
+ * Référentiel des technologies utilisées dans le portfolio.
+ *
+ * Centralise leurs informations pour les partager entre les sections
+ * Compétences et Projets, sans dupliquer leurs configurations.
+ *
+ * satisfies vérifie que chaque entrée respecte le type Technology,
+ * tout en conservant les clés précises de l'objet pour permettre
+ * leur accès direct et détecter les références inexistantes.
+ */
 export const technologies = {
   bootstrap: {
     name: "Bootstrap",
@@ -57,12 +66,14 @@ export const technologies = {
   composer: {
     name: "Composer",
     icon: siComposer,
+    displayColor: "9C7353",
     link: "https://getcomposer.org/",
   },
 
   css: {
     name: "CSS",
     icon: siCss,
+    displayColor: "8F6AB5",
     link: "https://developer.mozilla.org/fr/docs/Web/CSS",
   },
 
@@ -75,12 +86,14 @@ export const technologies = {
   esLint: {
     name: "ESLint",
     icon: siEslint,
+    displayColor: "7D6BD4",
     link: "https://eslint.org/",
   },
 
   express: {
     name: "Express",
     icon: siExpress,
+    displayColor: "F1F1F4",
     link: "https://expressjs.com/",
   },
 
@@ -99,12 +112,14 @@ export const technologies = {
   github: {
     name: "GitHub",
     icon: siGithub,
+    displayColor: "F1F1F4",
     link: "https://github.com/",
   },
 
   githubApi: {
     name: "GitHub API",
     icon: siGithub,
+    displayColor: "F1F1F4",
     link: "https://docs.github.com/en/rest",
   },
 
@@ -137,12 +152,14 @@ export const technologies = {
   jwt: {
     name: "JWT",
     icon: siJsonwebtokens,
+    displayColor: "F1F1F4",
     link: "https://www.jwt.io/",
   },
 
   markdown: {
     name: "Markdown",
     icon: siMarkdown,
+    displayColor: "F1F1F4",
     link: "https://markdown.org/",
   },
 
@@ -155,6 +172,7 @@ export const technologies = {
   mongoose: {
     name: "Mongoose",
     icon: siMongoose,
+    displayColor: "B66363",
     link: "https://mongoosejs.com/",
   },
 
@@ -235,6 +253,7 @@ export const technologies = {
   railway: {
     name: "Railway",
     icon: siRailway,
+    displayColor: "F1F1F4",
     link: "https://railway.com/",
   },
 
@@ -253,6 +272,7 @@ export const technologies = {
   render: {
     name: "Render",
     icon: siRender,
+    displayColor: "F1F1F4",
     link: "https://render.com/",
   },
 

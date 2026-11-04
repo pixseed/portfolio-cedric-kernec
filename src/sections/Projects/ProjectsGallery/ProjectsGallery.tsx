@@ -7,12 +7,30 @@ import Dropdown from "../../../components/Dropdown/Dropdown";
 import styles from "./projectsGallery.module.scss";
 import { SquaresFourIcon } from "@phosphor-icons/react";
 
+/**
+ * Prépare les catégories pour leur utilisation dans la galerie.
+ *
+ * projectCategories est un objet typé avec Record afin de garantir
+ * que chaque catégorie possède une configuration.
+ *
+ * Les filtres et les compteurs nécessitent cependant de parcourir
+ * ces catégories avec map(). Object.entries() transforme donc
+ * l'objet en tableau de paires [identifiant, configuration].
+ *
+ * L'assertion de type permet de conserver les identifiants
+ * ProjectCategory, car Object.entries() retourne des clés
+ * typées comme de simples chaînes (string).
+ */
+const categoryEntries = Object.entries(projectCategories) as Array<
+  [ProjectCategory, (typeof projectCategories)[ProjectCategory]]
+>;
+
 type ProjectsGalleryProps = {
   projects: Project[];
   onOpenProject: (project: Project) => void;
   selectedCategory: ProjectCategory | null;
   onCategoryChange: (category: ProjectCategory | null) => void;
-  focusProjectId: string | null;
+  focusProjectId: Project["id"] | null;
 };
 
 export default function ProjectsGallery({
@@ -49,22 +67,19 @@ export default function ProjectsGallery({
       counts[project.category]++;
       return counts;
     },
-    {
-      conception: 0,
-      frontend: 0,
-      backend: 0,
-      fullstack: 0,
-    } satisfies Record<ProjectCategory, number>,
+    Object.fromEntries(
+      categoryEntries.map(([category]) => [category, 0]),
+    ) as Record<ProjectCategory, number>,
   );
 
   /**
    * Transforme les catégories en options pour le dropdown.
    * Ajoute le nombre de projets correspondant à chaque catégorie.
    */
-  const dropdownOptions = projectCategories.map((category) => {
+  const dropdownOptions = categoryEntries.map(([id, category]) => {
     return {
-      value: category.id,
-      label: `${category.label} (${categoryCounts[category.id]})`,
+      value: id,
+      label: `${category.label} (${categoryCounts[id]})`,
       icon: category.icon,
       color: category.color,
     };
@@ -151,15 +166,15 @@ export default function ProjectsGallery({
           >
             Tous ({projects.length})
           </button>
-          {projectCategories.map((category) => (
+          {categoryEntries.map(([id, category]) => (
             <button
-              key={category.id}
+              key={id}
               type="button"
-              onClick={() => onCategoryChange(category.id)}
-              aria-pressed={selectedCategory === category.id}
+              onClick={() => onCategoryChange(id)}
+              aria-pressed={selectedCategory === id}
               className={styles.filterButton}
             >
-              {category.label} ({categoryCounts[category.id]})
+              {category.label} ({categoryCounts[id]})
             </button>
           ))}
         </div>

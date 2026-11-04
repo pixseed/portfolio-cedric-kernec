@@ -22,9 +22,11 @@ export function useEmblaSelectedIndex(
     onSelect();
 
     emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
 
     return () => {
       emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi]);
 

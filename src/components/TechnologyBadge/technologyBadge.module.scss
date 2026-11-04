@@ -12,17 +12,20 @@
 
     width: fit-content;
 
-    border: vars.$border-width-default solid var(--technology-visible-color, vars.$border-default);
+    border: vars.$border-width-default solid var(--technology-border-color, vars.$border-default);
     border-radius: vars.$radius-md;
 
     overflow: hidden;
 
-    transition: color vars.$transition-duration-fast
+    transition: border-color vars.$transition-duration-fast
+        vars.$transition-easing-default,
+        scale vars.$transition-duration-fast
         vars.$transition-easing-default;
-
-    &:hover,
-    &:focus-visible {
-        color: var(--technology-visible-color);
+        
+    &:hover {
+        scale: 1.03;
+        color: vars.$text-primary;
+        border-color: vars.$border-light;
     }
 }
 
@@ -57,7 +60,7 @@
     border-color: vars.$neutral-600;
 
     .icon {
-        color: var(--technology-visible-color);
+        color: var(--technology-compact-color, vars.$text-primary);
         background-color: transparent;
     }
 

@@ -121,7 +121,7 @@
 }
 
 @media (min-width: vars.$breakpoint-tablet) {
-    .imageGallery {
+    .imageGallery.withThumbnails {
         display: grid;
         grid-template-columns: minmax(0, 1fr) 80px;
         align-items: start;
@@ -144,7 +144,7 @@
 }
 
 @media (min-width: vars.$breakpoint-desktop) {
-    .imageGallery {
+    .imageGallery.withThumbnails {
         display: flex;
         flex-direction: column;
     }

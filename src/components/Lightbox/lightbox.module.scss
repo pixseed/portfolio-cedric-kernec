@@ -1,4 +1,5 @@
 @use "../../styles/abstracts/variables" as vars;
+@use "../../styles/abstracts/mixins";
 
 /* ==========================================
  * Styles Lightbox
@@ -31,6 +32,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: vars.$spacing-3;
 
     width: 100%;
     min-height: 0;
@@ -39,8 +41,12 @@
     img {
         display: block;
         width: 100%;
-        height: 100%;
+        height: auto;
+        min-height: 0;
         min-width: 0;
+
+        flex-shrink: 1;
+
         object-fit: contain;
         user-select: none;
     }
@@ -53,6 +59,8 @@
     gap: vars.$spacing-4;
 
     width: 100%;
+
+    flex-shrink: 0;
 }
 
 .closeButton {
@@ -70,6 +78,8 @@
 
     background-color: vars.$neutral-700;
     color: vars.$text-primary;
+
+    z-index: 2;
 }
 
 .navigationButton {
@@ -93,8 +103,26 @@
     user-select: none;
 }
 
+.unavailableMessage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+
+    width: max-content;
+    max-width: calc(100% - 2rem);
+    color: vars.$text-primary;
+
+    isolation: isolate;
+    padding: vars.$spacing-3 vars.$spacing-4;
+    text-align: center;
+
+    @include mixins.glass-surface();
+}
+
 /* ==========================================
- * Styles ProjectDetails - TABLET LARGE
+ * Styles Lightbox - TABLET LARGE
  * ========================================== */
 
 @media (min-width: vars.$breakpoint-tablet-lg) {

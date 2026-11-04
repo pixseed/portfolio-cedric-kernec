@@ -93,6 +93,16 @@ $card-padding-bottom: vars.$spacing-12;
             gap: vars.$spacing-2;
         }
     }
+
+    &.inline {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "content";
+
+        &.withNumber {
+            grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-areas: "content number";
+        }
+    }
 }
 
 .primary {
@@ -137,7 +147,7 @@ $card-padding-bottom: vars.$spacing-12;
             width: 20%;
         }
 
-        &.compact {
+        &.compact:not(.inline) {
             grid-template-columns: 1fr;
             grid-template-areas:
                 "icon"

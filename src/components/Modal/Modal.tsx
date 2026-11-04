@@ -14,6 +14,7 @@ type ModalProps = {
   onClose: () => void;
   children: ReactNode;
   size?: "default" | "large";
+  ariaLabel: string;
   header?: ReactNode;
   scrollKey?: string;
   preserveScrollKey?: string;
@@ -40,6 +41,7 @@ export default function Modal({
   onClose,
   children,
   size = "default",
+  ariaLabel,
   header,
   scrollKey,
   preserveScrollKey,
@@ -195,6 +197,7 @@ export default function Modal({
       className={`${styles.dialog} ${size === "large" ? styles.large : ""}`}
       onClose={onClose}
       onClick={handleDialogClick}
+      aria-label={ariaLabel}
     >
       <div className={styles.dialogHeader}>
         <div ref={headerContentRef} className={styles.headerContent}>

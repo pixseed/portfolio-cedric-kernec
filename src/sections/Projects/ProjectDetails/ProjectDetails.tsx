@@ -29,7 +29,7 @@ export default function ProjectDetails({ project }: ProjectDetailsProps) {
 
           {/* Présentation du projet */}
           <div className={styles.projectInformations}>
-            <span className={styles.projectCategory}>{project.category}</span>
+            <span className={styles.projectCategory}>{project.categoryLabel}</span>
             <h3 className={styles.projectTitle}>{project.title}</h3>
             <p className={styles.projectDescription}>{project.description}</p>
           </div>
@@ -53,7 +53,7 @@ export default function ProjectDetails({ project }: ProjectDetailsProps) {
           <div className={styles.projectTechnologies}>
             <div className={styles.cardHeader}>
               <h4 className={styles.sectionTitle}>
-                <CodeIcon />
+                <CodeIcon aria-hidden="true" />
                 Technologies utilisées
               </h4>
             </div>
@@ -95,7 +95,7 @@ export default function ProjectDetails({ project }: ProjectDetailsProps) {
           <div className={styles.projectTechnicalPoints}>
             <div className={styles.cardHeader}>
               <h4 className={styles.sectionTitle}>
-                <SealCheckIcon />
+                <SealCheckIcon aria-hidden="true" />
                 Points techniques clés
               </h4>
             </div>

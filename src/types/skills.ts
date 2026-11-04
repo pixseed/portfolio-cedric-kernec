@@ -21,9 +21,11 @@ export type SkillDomain = {
   illustration: string;
   icon: Icon;
   title: string;
-  label: string;
-  description: string;
 
+  /** Libellé introductif affiché au-dessus du titre du domaine. */
+  label: string;
+
+  description: string;
   technologies: Array<Technology>;
   cards: Array<SkillCard>;
 };

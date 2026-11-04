@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useRef, type MouseEvent } from "react";
 
 import styles from "./lightbox.module.scss";
+
+import type { ProjectImage } from "../../types/projects";
 import { CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
 import { getCircularIndex } from "../../utils/getCircularIndex";
 
+import imageUnavailable from "../../assets/images/fallbacks/image-unavailable.png";
+
 type LightboxProps = {
-  images: string[];
+  images: ProjectImage[];
   activeIndex: number;
   isOpen: boolean;
   title: string;
@@ -28,6 +32,11 @@ export default function Lightbox({
   const dialogRef = useRef<HTMLDialogElement>(null);
   const previousImageButtonRef = useRef<HTMLButtonElement>(null);
   const nextImageButtonRef = useRef<HTMLButtonElement>(null);
+
+  // ===============================================================
+  // Derived data
+  // ===============================================================
+  const activeImage = images[activeIndex];
 
   // ===============================================================
   // Handlers
@@ -64,7 +73,7 @@ export default function Lightbox({
   }, [isOpen]);
 
   useEffect(() => {
-    if (!isOpen || images.length <= 1) return;
+    if (!isOpen || !activeImage || images.length <= 1) return;
 
     const dialog = dialogRef.current;
     if (!dialog) return;
@@ -101,7 +110,7 @@ export default function Lightbox({
     return () => {
       dialog.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, handleNavigate, images.length]);
+  }, [isOpen, activeImage, handleNavigate, images.length]);
 
   // ===============================================================
   // Return
@@ -132,13 +141,22 @@ export default function Lightbox({
       </button>
 
       <div className={styles.lightboxContent}>
-        <img
-          src={images[activeIndex]}
-          alt={`${title} - Image ${activeIndex + 1} sur ${images.length}`}
-          draggable={false}
-        />
+        {activeImage ? (
+          <img
+            src={activeImage.src}
+            alt={activeImage.alt}
+            draggable={false}
+          />
+        ) : (
+          <>
+            <div className={styles.unavailableMessage} role="status">
+              <p>Image indisponible.</p>
+            </div>
+            <img src={imageUnavailable} alt="" draggable="false" />
+          </>
+        )}
 
-        {images.length > 1 && (
+        {activeImage && images.length > 1 && (
           <div className={styles.lightboxNavigation}>
             <button
               ref={previousImageButtonRef}

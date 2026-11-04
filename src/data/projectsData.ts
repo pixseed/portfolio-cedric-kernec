@@ -17,15 +17,28 @@ import tifosiIllustration from "../assets/images/projects/tifosi/tifosi-main.png
 import porfolioReactIllustration from "../assets/images/projects/portfolio-react/porfolio-react-main.png";
 import touchePasAuKlaxonIllustration from "../assets/images/projects/touche-pas-au-klaxon/touche-pas-au-klaxon-main.png";
 
+/**
+ * Projets présentés dans le portfolio.
+ *
+ * L'ordre des éléments détermine leur ordre initial d'affichage.
+ * Les technologies sont référencées depuis technologiesData
+ * pour conserver une source de données commune.
+ */
 export const projects: Array<Project> = [
   {
     id: "project1",
     category: "conception",
     categoryLabel: "Planification & architecture",
     title: "La Socketterie",
-    illustration: laSocketterieIllustration,
+    illustration: {
+      src: laSocketterieIllustration,
+      alt: "Planification de La Socketterie dans GitHub Projects : diagramme de Gantt, backlog et tableau Kanban par responsable.",
+    },
     images: [
-      laSocketterieGantt,
+      {
+        src: laSocketterieGantt,
+        alt: "Diagramme de Gantt de La Socketterie dans GitHub Projects, avec les tâches d'analyse des besoins et de préparation du développement.",
+      },
     ],
     introduction:
       "Préparation du développement d'une plateforme e-commerce, de l'analyse des besoins à l'organisation des différentes étapes du projet.",
@@ -131,7 +144,10 @@ export const projects: Array<Project> = [
       technologies.sequelize,
       technologies.mySql,
     ],
-    illustration: trouveTonArtisanIllustration,
+    illustration: {
+      src: trouveTonArtisanIllustration,
+      alt: "Trouve ton artisan sur ordinateur, tablette et mobile : liste des artisans, sélection des mieux notés et fiche d'une chocolaterie.",
+    },
     links: [
       {
         label: "Voir le dépôt",
@@ -203,7 +219,10 @@ export const projects: Array<Project> = [
       technologies.postman,
       technologies.render,
     ],
-    illustration: apiRussellIllustration,
+    illustration: {
+      src: apiRussellIllustration,
+      alt: "Interface du port de plaisance Russell : tableau de bord, liste des réservations et documentation de l'API dans Swagger.",
+    },
     links: [
       {
         label: "Voir le dépôt",
@@ -254,7 +273,10 @@ export const projects: Array<Project> = [
     ],
     featuredTechnologies: [technologies.sql, technologies.mySql],
     technologies: [technologies.sql, technologies.mySql],
-    illustration: tifosiIllustration,
+    illustration: {
+      src: tifosiIllustration,
+      alt: "Schéma relationnel de Tifosi reliant produits, menus et clients, accompagné d'une requête SQL recherchant les ingrédients d'une focaccia.",
+    },
     links: [
       {
         label: "Voir le dépôt",
@@ -315,7 +337,10 @@ export const projects: Array<Project> = [
       technologies.github,
       technologies.githubApi,
     ],
-    illustration: porfolioReactIllustration,
+    illustration: {
+      src: porfolioReactIllustration,
+      alt: "Portfolio de John Doe sur ordinateur, tablette et mobile : accueil avec compétences, galerie de réalisations et formulaire de contact.",
+    },
     links: [
       {
         label: "Voir le dépôt",
@@ -378,7 +403,10 @@ export const projects: Array<Project> = [
       technologies.phpDocumentor,
       technologies.npm,
     ],
-    illustration: touchePasAuKlaxonIllustration,
+    illustration: {
+      src: touchePasAuKlaxonIllustration,
+      alt: "Interfaces de Touche pas au klaxon : formulaire de création d'un trajet, connexion et tableau des trajets proposés.",
+    },
     links: [
       {
         label: "Voir le dépôt",

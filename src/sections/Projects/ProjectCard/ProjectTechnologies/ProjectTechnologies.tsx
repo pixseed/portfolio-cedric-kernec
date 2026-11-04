@@ -9,6 +9,7 @@ type ProjectTechnologiesProps = {
   projectId: Project["id"];
   featuredTechnologies: Project["featuredTechnologies"];
   technologies: Project["technologies"];
+  isActive: boolean;
 };
 
 const SAFETY_MARGIN = 2;
@@ -27,6 +28,7 @@ export default function ProjectTechnologies({
   projectId,
   featuredTechnologies,
   technologies,
+  isActive,
 }: ProjectTechnologiesProps) {
   // ===============================================================
   // State
@@ -43,6 +45,26 @@ export default function ProjectTechnologies({
   const technologiesContainerRef = useRef<HTMLDivElement>(null);
   const measurementRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+
+  const popoverRef = useRef<HTMLDivElement>(null);
+
+  // ===============================================================
+  // Derived data
+  // ===============================================================
+
+  // Technologie principales actuellement visibles dans la card.
+  const visibleTechnologies = featuredTechnologies.slice(0, visibleCount);
+
+  // Technologies absentes de la card à afficher dans le popover.
+  const hiddenTechnologies = technologies.filter(
+    (technology) =>
+      !visibleTechnologies.some(
+        (visibleTechnology) => visibleTechnology.name === technology.name,
+      ),
+  );
+
+  // Nombre de technologies accessibles via le popover.
+  const additionalTechnologiesCount = hiddenTechnologies.length;
 
   // ===============================================================
   // Effects
@@ -145,23 +167,17 @@ export default function ProjectTechnologies({
     };
   }, [featuredTechnologies, technologies]);
 
-  // ===============================================================
-  // Derived data
-  // ===============================================================
+  /**
+   * Ferme le popover lorsque sa carte devient inactive,
+   * quel que soit le moyen utilisé pour changer de projet.
+   */
+  useEffect(() => {
+    const popover = popoverRef.current;
 
-  // Technologie principales actuellement visibles dans la card.
-  const visibleTechnologies = featuredTechnologies.slice(0, visibleCount);
-
-  // Technologies absentes de la card à afficher dans le popover.
-  const hiddenTechnologies = technologies.filter(
-    (technology) =>
-      !visibleTechnologies.some(
-        (visibleTechnology) => visibleTechnology.name === technology.name,
-      ),
-  );
-
-  // Nombre de technologies accessibles via le popover.
-  const additionalTechnologiesCount = hiddenTechnologies.length;
+    if (!isActive && popover?.matches(":popover-open")) {
+      popover.hidePopover();
+    }
+  }, [isActive]);
 
   // ===============================================================
   // Return
@@ -218,8 +234,9 @@ export default function ProjectTechnologies({
             +{additionalTechnologiesCount}
           </button>
 
-          {/* Popover natif contenant toutes les technologies du projet. */}
+          {/* Popover natif contenant les technologies non affichées sur la carte. */}
           <div
+            ref={popoverRef}
             id={`technologies-${projectId}`}
             popover="auto"
             className={styles.technologiesPopover}

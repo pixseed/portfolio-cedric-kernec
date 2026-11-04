@@ -30,6 +30,16 @@ import designIllustration from "../assets/images/skills/design-illustration.png"
 import toolsIllustration from "../assets/images/skills/tools-illustration.png";
 import deploymentIllustration from "../assets/images/skills/deployment-illustration.png";
 
+/**
+ * Domaines de compétences présentés dans le portfolio.
+ *
+ * Chaque domaine regroupe ses informations de présentation,
+ * les technologies associées et les cartes décrivant les compétences.
+ *
+ * L'ordre des éléments détermine leur ordre d'affichage dans la navigation.
+ * Les technologies proviennent du référentiel technologiesData afin
+ * de partager leur configuration avec les autres sections.
+ */
 export const skillDomains: Array<SkillDomain> = [
   // Front-end
   {

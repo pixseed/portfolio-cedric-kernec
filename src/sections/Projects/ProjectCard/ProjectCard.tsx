@@ -68,8 +68,8 @@ export default function ProjectCard(props: ProjectCardProps) {
       >
         <div className={styles.projectIllustration}>
           <img
-            src={project.illustration}
-            alt={`Aperçu du projet ${project.title}`}
+            src={project.illustration.src}
+            alt={project.illustration.alt}
           />
         </div>
 
@@ -95,12 +95,14 @@ export default function ProjectCard(props: ProjectCardProps) {
               projectId={project.id}
               technologies={project.technologies}
               featuredTechnologies={project.featuredTechnologies}
+              isActive={isActive}
             />
           )}
 
-          <div className={styles.projectAction}>
+          <div className={styles.projectAction} data-project-action>
             <ActionButton
               label="En savoir plus"
+              ariaLabel={`En savoir plus sur ${project.title}`}
               rightIcon={ArrowsOutSimpleIcon}
               variant={!isCarousel || isActive ? "filled" : "muted"}
               onClick={onOpen}

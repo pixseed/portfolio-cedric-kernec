@@ -40,6 +40,7 @@ export default function About() {
                 title={item.title}
                 description={item.description}
                 accent={item.accent}
+                headingLevel={3}
               />
             ))}
           </div>

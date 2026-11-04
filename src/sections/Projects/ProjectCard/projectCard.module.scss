@@ -4,7 +4,6 @@
 /* ==========================================
  * Styles ProjectCard
  * ========================================== */
-
 .projectCard {
     display: flex;
     min-width: 0;
@@ -188,18 +187,27 @@
     }
 }
 
+/* ==========================================
+ * Styles Projects - TABLETTE
+ * ========================================== */
 @media (min-width: vars.$breakpoint-tablet) {
     .carousel .projectIllustration {
         height: 200px;
     }
 }
 
+/* ==========================================
+ * Styles Projects - TABLETTE LARGE
+ * ========================================== */
 @media (min-width: vars.$breakpoint-tablet-lg) {
     .carousel .projectIllustration {
         height: 220px;
     }
 }
 
+/* ==========================================
+ * Styles Projects - DESKTOP
+ * ========================================== */
 @media (min-width: vars.$breakpoint-desktop) {
     .carousel {
         .projectCardInner.active {

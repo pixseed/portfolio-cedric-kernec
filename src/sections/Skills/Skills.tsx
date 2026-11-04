@@ -115,7 +115,7 @@ export default function Skills() {
                     className={activeDomain === domain.id ? styles.active : ""}
                     aria-pressed={activeDomain === domain.id}
                   >
-                    <DomainIcon className={styles.domainIcon} />
+                    <DomainIcon className={styles.domainIcon} aria-hidden="true" />
                     <span>{domain.title}</span>
                   </button>
                 );

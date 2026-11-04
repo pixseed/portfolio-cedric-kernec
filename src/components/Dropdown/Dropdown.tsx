@@ -64,6 +64,7 @@ export default function Dropdown({
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const listboxRef = useRef<HTMLDivElement>(null);
 
   // ===============================================================
   // Derived data
@@ -90,7 +91,7 @@ export default function Dropdown({
 
   function handleToggle() {
     if (isDisabled) return;
-    
+
     setIsOpen((previous) => !previous);
 
     if (!isOpen) {
@@ -144,7 +145,7 @@ export default function Dropdown({
 
     if (
       !isOpen &&
-      isDisabled &&
+      !isDisabled &&
       (event.key === "ArrowDown" || event.key === "ArrowUp")
     ) {
       event.preventDefault();
@@ -223,6 +224,38 @@ export default function Dropdown({
     };
   }, [isOpen]);
 
+  /**
+   * Maintient l'option active visible à l'ouverture et pendant la navigation clavier.
+   * Ajuste uniquement le défilement interne de la liste si nécessaire,
+   * en préservant son padding supérieur et inférieur défini dans le SCSS.
+   * Le focus reste sur le bouton combobox, celui de la modale n'est pas déplacé.
+   */
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const listbox = listboxRef.current;
+    const option = listbox?.children[safeActiveIndex];
+
+    if (!listbox || !(option instanceof HTMLElement)) return;
+
+    const listRect = listbox.getBoundingClientRect();
+    const optionRect = option.getBoundingClientRect();
+
+    // Préserve l'espace intérieur défini dans le SCSS autour de l'option active.
+    const listStyle = getComputedStyle(listbox);
+    const paddingTop = parseFloat(listStyle.paddingTop) || 0;
+    const paddingBottom = parseFloat(listStyle.paddingBottom) || 0;
+
+    const visibleTop = listRect.top + paddingTop;
+    const visibleBottom = listRect.bottom - paddingBottom;
+
+    if (optionRect.top < visibleTop) {
+      listbox.scrollTop -= visibleTop - optionRect.top;
+    } else if (optionRect.bottom > visibleBottom) {
+      listbox.scrollTop += optionRect.bottom - visibleBottom;
+    }
+  }, [isOpen, safeActiveIndex]);
+
   // ===============================================================
   // Return
   // ===============================================================
@@ -265,38 +298,40 @@ export default function Dropdown({
 
       {/* Liste déroulante */}
       {isOpen && (
-        <div id={listBoxId} role="listbox" className={styles.listbox}>
-          {options.map((option, index) => {
-            const OptionIcon = option.icon;
+        <div className={styles.listboxSurface}>
+          <div ref={listboxRef} id={listBoxId} role="listbox" className={styles.listbox}>
+            {options.map((option, index) => {
+              const OptionIcon = option.icon;
 
-            return (
-              <div
-                key={option.value}
-                id={`${listBoxId}-option-${index}`}
-                role="option"
-                aria-selected={option.value === value}
-                className={index === safeActiveIndex ? styles.active : ""}
-                onMouseDown={(event) => event.preventDefault()}
-                onClick={() => handleSelect(option.value)}
-              >
-                {OptionIcon && (
-                  <OptionIcon
-                    size={20}
-                    color={option.color}
-                    aria-hidden="true"
-                  />
-                )}
-                {option.label}
-                {option.value === value && (
-                  <CheckIcon
-                    size={18}
-                    className={styles.checkIcon}
-                    aria-hidden="true"
-                  />
-                )}
-              </div>
-            );
-          })}
+              return (
+                <div
+                  key={option.value}
+                  id={`${listBoxId}-option-${index}`}
+                  role="option"
+                  aria-selected={option.value === value}
+                  className={index === safeActiveIndex ? styles.active : ""}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => handleSelect(option.value)}
+                >
+                  {OptionIcon && (
+                    <OptionIcon
+                      size={20}
+                      color={option.color}
+                      aria-hidden="true"
+                    />
+                  )}
+                  {option.label}
+                  {option.value === value && (
+                    <CheckIcon
+                      size={18}
+                      className={styles.checkIcon}
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

@@ -53,13 +53,13 @@ export default function ProjectImageGallery({
 
   return (
     <>
-      <div className={styles.imageGallery}>
+      <div className={`${styles.imageGallery} ${images.length > 1 ? styles.withThumbnails : ""}`} >
         <div className={styles.carouselMain}>
           {/* Image principale */}
           <div className={styles.carouselViewport} ref={emblaRef}>
             <div className={styles.carouselContainer}>
               {images.map((image, index) => (
-                <div className={styles.carouselSlide} key={`${image}-${index}`}>
+                <div className={styles.carouselSlide} key={`${image.src}-${index}`}>
                   <button
                     ref={index === activeIndex ? activeImageButtonRef : null}
                     type="button"
@@ -69,8 +69,8 @@ export default function ProjectImageGallery({
                     aria-label={`Agrandir l'image ${index + 1} du projet ${project.title}`}
                   >
                     <img
-                      src={image}
-                      alt={`Aperçu ${index + 1} du projet ${project.title}`}
+                      src={image.src}
+                      alt={image.alt}
                       draggable={false}
                     />
                   </button>
@@ -110,7 +110,7 @@ export default function ProjectImageGallery({
           <div className={styles.thumbnails}>
             {images.map((image, index) => (
               <button
-                key={`${image}-${index}`}
+                key={`${image.src}-${index}`}
                 type="button"
                 className={`${styles.thumbnail} ${
                   index === activeIndex ? styles.active : ""
@@ -119,7 +119,7 @@ export default function ProjectImageGallery({
                 aria-label={`Afficher l'image ${index + 1} sur ${images.length}`}
                 aria-pressed={index === activeIndex}
               >
-                <img src={image} alt="" draggable="false" />
+                <img src={image.src} alt="" draggable="false" />
               </button>
             ))}
           </div>

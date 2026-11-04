@@ -139,11 +139,6 @@ $card-background: vars.$background-primary;
  * Styles ProjectDetails - TABLET
  * ========================================== */
 @media (min-width: vars.$breakpoint-tablet) {
-    .projectPresentation {
-        grid-template-columns: minmax(0, 1fr) minmax(180px, 0.65fr);
-        align-items: start;
-    }
-
     .projectChallenge {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -157,7 +152,6 @@ $card-background: vars.$background-primary;
         grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     }
 
-    .projectPresentation,
     .projectChallenge {
         grid-template-columns: minmax(0, 1fr);
     }
