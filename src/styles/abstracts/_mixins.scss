@@ -71,25 +71,210 @@
 }
 
 /**
- * Crée un fond avec une bordure en dégradé à partir
- * d'une couleur principale.
+ * Crée un fond teinté accompagné d'une bordure en dégradé
+ * à partir d'une couleur principale.
  *
- * La première couche constitue le fond du composant,
- * tandis que la seconde est affichée dans la zone de bordure.
+ * Deux couches de background sont superposées :
+ * - la première, limitée à la padding-box, crée le fond teinté ;
+ * - la seconde, limitée à la border-box, crée la bordure en dégradé.
  *
- * @param $color Couleur utilisée comme point de départ des dégradés.
+ * Une bordure transparente est appliquée afin de réserver
+ * l'espace nécessaire à l'affichage du dégradé.
+ *
+ * @param $color ─ Couleur utilisée comme point de départ des dégradés.
  */
 @mixin gradient-border-background($color) {
     background:
         linear-gradient(
-            to right,
-            color.mix($color, vars.$background-primary, 35%) 0%,
-            vars.$neutral-800 40%
-        ) padding-box,
+                to right,
+                color.mix($color, vars.$background-primary, 35%) 0%,
+                vars.$neutral-800 40%
+            )
+            padding-box,
         linear-gradient(
-            to right,
-            $color 0%,
-            vars.$neutral-800 35%,
-            vars.$neutral-700 100%
-        ) border-box;
+                to right,
+                $color 0%,
+                vars.$neutral-800 35%,
+                vars.$neutral-700 100%
+            )
+            border-box;
+
+    border: vars.$border-width-default solid transparent;
+}
+
+/**
+ * Crée une surface unie entourée d'une bordure en dégradé.
+ *
+ * Deux couches de background sont superposées :
+ * - la première, limitée à la padding-box, conserve un fond uniforme ;
+ * - la seconde, limitée à la border-box, affiche le dégradé
+ *   uniquement dans la zone de bordure.
+ *
+ * La bordure transparente définit l'espace dans lequel
+ * le dégradé devient visible.
+ *
+ * @param $color1 ─ Couleur de fond du composant.
+ * @param $color2 ─ Dégradé utilisé pour la bordure.
+ */
+@mixin gradient-border(
+    $color1: vars.$background-secondary,
+    $color2: vars.$gradient-primary
+) {
+    background:
+        linear-gradient($color1, $color1) padding-box,
+        $color2 border-box;
+
+    border: vars.$border-width-default solid transparent;
+}
+
+/**
+ * Applique l'apparence commune des catégories de projet.
+ *
+ * La catégorie est affichée sous forme de badge compact avec
+ * un fond sombre, une bordure discrète et des dimensions adaptées
+ * à son contenu.
+ *
+ * Utilisé notamment dans les cartes et les détails des projets.
+ */
+@mixin project-category {
+    width: fit-content;
+    padding: vars.$spacing-1 vars.$spacing-2;
+
+    border: vars.$border-width-default solid vars.$neutral-600;
+    border-radius: vars.$radius-md;
+
+    background-color: vars.$neutral-700;
+}
+
+@mixin surface-card(
+    $background: transparent,
+    $padding: vars.$spacing-3,
+    $border-color: vars.$border-default
+) {
+    padding: $padding;
+    background-color: $background;
+    border: vars.$border-width-default solid $border-color;
+    border-radius: vars.$radius-lg;
+}
+
+/**
+ * Personnalise l'apparence des barres de défilement.
+ *
+ * - Largeur réduite pour une apparence discrète.
+ * - Fond transparent.
+ * - Couleur neutre au repos et accentuée au survol.
+ *
+ * À appliquer sur les éléments possédant un débordement scrollable.
+ */
+@mixin custom-scrollbar {
+    // Firefox et navigateurs prenant en charge les propriétés standard.
+    scrollbar-width: thin;
+    scrollbar-color: vars.$border-light transparent;
+
+    // Personnalisation WebKit (Chrome, Edge, Safari).
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: vars.$border-light;
+        border-radius: vars.$radius-full;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: vars.$action-primary;
+    }
+}
+
+/**
+ * Ajoute des dégradés aux extrémités d'une zone défilable.
+ *
+ * Les pseudo-éléments sont invisibles par défaut.
+ * Leur visibilité est contrôlée par le composant utilisant le mixin.
+ *
+ * @param $direction - Direction du défilement (horizontal ou vertical).
+ * @param $color - Couleur de fond utilisée pour le fondu.
+ * @param $size - Épaisseur des dégradés.
+ */
+@mixin scroll-fade(
+    $direction: horizontal,
+    $color: vars.$background-primary,
+    $size: 24px
+) {
+    position: relative;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+
+        pointer-events: none;
+        opacity: 0;
+        z-index: 1;
+
+        transition: opacity vars.$transition-duration-default
+            vars.$transition-easing-smooth;
+    }
+
+    @if $direction == horizontal {
+        &::before,
+        &::after {
+            top: 0;
+            bottom: 0;
+            width: $size;
+        }
+
+        &::before {
+            left: 0;
+            background: linear-gradient(to left, transparent, $color);
+        }
+
+        &::after {
+            right: 0;
+            background: linear-gradient(to right, transparent, $color);
+        }
+    } @else if $direction == vertical {
+        &::before,
+        &::after {
+            left: 0;
+            right: 0;
+            height: $size;
+        }
+
+        &::before {
+            top: 0;
+            background: linear-gradient(to top, transparent, $color);
+        }
+
+        &::after {
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, $color);
+        }
+    } @else {
+        @error "Direction invalide : utiliser horizontal ou vertical.";
+    }
+}
+
+@mixin decoration-line(
+    $width: 20%,
+    $height: vars.$decoration-line-thickness,
+    $gradient: vars.$gradient-primary
+) {
+    &::after {
+        content: "";
+        display: block;
+        width: $width;
+        height: $height;
+        background: $gradient;
+        border-radius: vars.$radius-full;
+    }
 }

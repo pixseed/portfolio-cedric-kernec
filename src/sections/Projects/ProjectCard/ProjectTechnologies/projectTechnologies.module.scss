@@ -1,0 +1,148 @@
+@use "../../../../styles/abstracts/variables" as vars;
+@use "../../../../styles/abstracts/mixins";
+
+/* ==========================================
+ * Styles ProjectTechnologies
+ * ========================================== */
+
+.projectTechnologies {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: vars.$spacing-2;
+
+    .technologiesMeasurement {
+        position: absolute;
+        visibility: hidden;
+        pointer-events: none;
+
+        display: flex;
+        flex-wrap: nowrap;
+        width: max-content;
+        gap: vars.$spacing-2;
+    }
+
+    .technologiesTriggerWrapper {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+
+        .technologiesTrigger {
+            &:hover::before {
+                opacity: 1;
+            }
+        }
+
+        &:has(.technologiesPopover:popover-open) .technologiesTrigger::before {
+            opacity: 1;
+        }
+
+        .technologiesPopover {
+            display: none;
+
+            &:popover-open {
+                display: flex;
+                flex-wrap: wrap;
+                gap: vars.$spacing-2;
+            }
+
+            position: fixed;
+            position-anchor: var(--card-anchor);
+
+            inset: auto;
+            margin: 0;
+
+            left: anchor(center);
+            translate: -50% - #{vars.$spacing-2};
+
+            bottom: anchor(var(--technologies-anchor) top);
+
+            width: max-content;
+            max-width: calc(100vw - 2rem);
+            height: fit-content;
+            max-height: calc(100dvh - 2rem);
+            overflow-y: auto;
+
+            padding: vars.$spacing-3;
+
+            background-color: vars.$background-primary;
+            @include mixins.gradient-border();
+            border-radius: vars.$radius-lg;
+
+            box-shadow: 0 6px 6px vars.$neutral-800;
+        }
+    }
+
+    // N'est pas intégrer dans .technologiesTriggerWrapper afin
+    // que le bouton de mesure non visible bénéficie des mêmes régles.
+    .technologiesTrigger {
+        position: relative;
+        isolation: isolate;
+
+        flex-shrink: 0;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: vars.$spacing-1 vars.$spacing-2;
+
+        color: vars.$text-primary;
+        background-color: transparent;
+
+        border: vars.$border-width-default solid vars.$border-light;
+        border-radius: vars.$radius-md;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: -#{vars.$border-width-default};
+            z-index: -1;
+
+            @include mixins.gradient-border();
+            border-radius: inherit;
+            opacity: 0;
+
+            transition: opacity vars.$transition-duration-fast vars.$transition-easing-default;
+        }
+    }
+}
+
+/* ==========================================
+ * Styles Projects - TABLETTE
+ * ========================================== */
+@media (min-width: vars.$breakpoint-tablet) {
+    .projectTechnologies {
+        .technologiesTriggerWrapper {
+            .technologiesPopover {
+                max-width: 480px;
+            }
+        }
+    }
+}
+
+/* ==========================================
+ * Styles Projects - TABLETTE LARGE
+ * ========================================== */
+@media (min-width: vars.$breakpoint-tablet-lg) {
+    .projectTechnologies {
+        .technologiesTriggerWrapper {
+            .technologiesPopover {
+                max-width: 580px;
+            }
+        }
+    }
+}
+
+/* ==========================================
+ * Styles Projects - DESKTOP
+ * ========================================== */
+@media (min-width: vars.$breakpoint-desktop) {
+    .projectTechnologies {
+        .technologiesTriggerWrapper {
+            .technologiesPopover {
+                max-width: 510px;
+            }
+        }
+    }
+}

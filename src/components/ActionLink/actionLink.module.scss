@@ -14,9 +14,16 @@
 
     transition:
         transform vars.$transition-duration-fast vars.$transition-easing-default,
-        border-color vars.$transition-duration-fast vars.$transition-easing-default,
+        border-color vars.$transition-duration-fast
+            vars.$transition-easing-default,
         color vars.$transition-duration-fast vars.$transition-easing-default,
-        background vars.$transition-duration-fast vars.$transition-easing-default;
+        background vars.$transition-duration-fast
+            vars.$transition-easing-default;
+
+    .externalIcon {
+        flex-shrink: 0;
+        margin-left: auto;
+    }
 
     &:hover {
         transform: scale(1.02);
@@ -60,6 +67,22 @@
         color: vars.$action-accent;
         border-color: vars.$action-accent;
         background-color: rgba(vars.$action-accent, $alpha: 0.15);
+    }
+
+    &:active {
+        color: vars.$text-primary;
+        border-color: vars.$border-light;
+    }
+}
+
+.neutral {
+    color: vars.$neutral-200;
+    border-color: vars.$neutral-200;
+
+    &:hover {
+        color: vars.$action-secondary;
+        border-color: vars.$action-secondary;
+        background-color: rgba(vars.$action-secondary, $alpha: 0.15);
     }
 
     &:active {

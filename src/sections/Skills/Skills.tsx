@@ -1,11 +1,12 @@
-import { useState, useRef } from "react";
-import type { MouseEvent, UIEvent } from "react";
+import { useState } from "react";
+import type { MouseEvent } from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 
 import Card from "../../components/Cards/Cards";
-import TechnologyBadge from "./TechnologyBadge/TechnologyBadge";
-import { skillDomains } from "./skillsData";
+import TechnologyBadge from "../../components/TechnologyBadge/TechnologyBadge";
+import { skillDomains } from "../../data/skillsData";
 import type { SkillDomainId } from "../../types/skills";
+import useScrollEdges from "../../hooks/useScrollEdges";
 
 import styles from "./skills.module.scss";
 
@@ -15,14 +16,11 @@ export default function Skills() {
   // ===============================================================
 
   const [activeDomain, setActiveDomain] = useState<SkillDomainId>("frontend");
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  // ===============================================================
-  // Refs
-  // ===============================================================
-
-  const domainNavRef = useRef<HTMLElement>(null);
+  const {
+    scrollRef: domainNavRef,
+    canScrollStart: canScrollLeft,
+    canScrollEnd: canScrollRight,
+  } = useScrollEdges<HTMLElement>("horizontal");
 
   // ===============================================================
   // Derived data
@@ -34,7 +32,7 @@ export default function Skills() {
   );
 
   // ===============================================================
-  // Navigation helpers
+  // Helpers
   // ===============================================================
 
   /**
@@ -59,22 +57,6 @@ export default function Skills() {
   // ===============================================================
 
   /**
-   * Met à jour l'état des contrôles de navigation selon
-   * la position actuelle du défilement horizontal.
-   */
-  const handleNavigationScroll = (event: UIEvent<HTMLElement>) => {
-    const nav = event.currentTarget;
-
-    // Tolérance d'un pixel pour éviter les imprécisions liées au calcul du scroll.
-    const scrollThreshold = 1;
-
-    setCanScrollLeft(nav.scrollLeft > scrollThreshold);
-    setCanScrollRight(
-      nav.scrollLeft < nav.scrollWidth - nav.clientWidth - scrollThreshold,
-    );
-  };
-
-  /**
    * Active le domaine sélectionné et recentre son bouton
    * dans la navigation horizontale.
    */
@@ -91,6 +73,9 @@ export default function Skills() {
     });
   };
 
+  // ===============================================================
+  // Return
+  // ===============================================================
   return (
     <section id="skills" className="page-section">
       <div className="container section-content">
@@ -118,7 +103,6 @@ export default function Skills() {
               ref={domainNavRef}
               aria-label="Domaines de compétences"
               className={styles.domainNavigation}
-              onScroll={handleNavigationScroll}
             >
               {skillDomains.map((domain) => {
                 const DomainIcon = domain.icon;
@@ -131,7 +115,7 @@ export default function Skills() {
                     className={activeDomain === domain.id ? styles.active : ""}
                     aria-pressed={activeDomain === domain.id}
                   >
-                    <DomainIcon className={styles.domainIcon} />
+                    <DomainIcon className={styles.domainIcon} aria-hidden="true" />
                     <span>{domain.title}</span>
                   </button>
                 );
@@ -184,6 +168,7 @@ export default function Skills() {
                     title={item.title}
                     description={item.description}
                     variant="compact"
+                    accent={item.accent}
                   />
                 ))}
               </div>

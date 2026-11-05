@@ -28,9 +28,11 @@ $border-light: $neutral-300;
 $action-primary: $primary;
 $action-secondary: $secondary;
 $action-accent: $accent;
+$muted: $neutral-500;
 
 // Gradients
 $gradient-primary: linear-gradient(to right, $primary, $accent);
+$gradient-action: linear-gradient(to right, $primary 35%, $accent 100%);
 
 // Spacing
 $spacing-1: 0.25rem;
@@ -42,6 +44,8 @@ $spacing-8: 2rem;
 $spacing-12: 3rem;
 $spacing-16: 4rem;
 
+$carousel-gap: $spacing-4;
+
 // Radius
 $radius-sm: 4px;
 $radius-md: 8px;
@@ -50,6 +54,7 @@ $radius-full: 999px;
 
 // Borders
 $border-width-default: 1.5px;
+$border-width-md: 2.25px;
 $border-width-lg: 3px;
 
 // Layout
@@ -86,8 +91,12 @@ $transition-easing-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 $decoration-line-thickness: 5px;
 
 // Icon sizes
-$icon-size-sm: 1rem;
+$icon-size-xs: 1rem;
+$icon-size-sm: 1.25rem;
 $icon-size-md: 1.5rem;
 $icon-size-lg: 2rem;
 $icon-size-xl: 2.5rem;
 $icon-size-xxl: 3rem;
+
+// Button sizes
+$carousel-button-size: 2rem;

@@ -1,0 +1,150 @@
+@use "../../styles/abstracts/variables" as vars;
+@use "../../styles/abstracts/mixins";
+
+/* ==========================================
+ * Styles Lightbox
+ * ========================================== */
+
+.lightbox {
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+
+    padding: vars.$spacing-4;
+    border: none;
+
+    background-color: rgba(vars.$background-primary, 0.90);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$spacing-4;
+
+    &:not([open]) {
+        display: none;
+    }
+}
+
+.lightboxContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$spacing-3;
+
+    width: 100%;
+    min-height: 0;
+    flex: 1;
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        min-width: 0;
+
+        flex-shrink: 1;
+
+        object-fit: contain;
+        user-select: none;
+    }
+}
+
+.lightboxNavigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$spacing-4;
+
+    width: 100%;
+
+    flex-shrink: 0;
+}
+
+.closeButton {
+    position: absolute;
+    top: vars.$spacing-4;
+    right: vars.$spacing-4;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: vars.$spacing-3;
+    border: none;
+    border-radius: vars.$radius-md;
+
+    background-color: vars.$neutral-700;
+    color: vars.$text-primary;
+
+    z-index: 2;
+}
+
+.navigationButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    padding: vars.$spacing-3;
+    border: none;
+    border-radius: vars.$radius-md;
+
+    background-color: vars.$neutral-700;
+    color: vars.$text-primary;
+
+    user-select: none;
+}
+
+.imageCounter {
+    color: vars.$text-secondary;
+    user-select: none;
+}
+
+.unavailableMessage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+
+    width: max-content;
+    max-width: calc(100% - 2rem);
+    color: vars.$text-primary;
+
+    isolation: isolate;
+    padding: vars.$spacing-3 vars.$spacing-4;
+    text-align: center;
+
+    @include mixins.glass-surface();
+}
+
+/* ==========================================
+ * Styles Lightbox - TABLET LARGE
+ * ========================================== */
+
+@media (min-width: vars.$breakpoint-tablet-lg) {
+    .lightboxContent {
+        padding-inline: 64px;
+    }
+
+    .lightboxNavigation {
+        position: static;
+    }
+
+    .navigationButton {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .previousButton {
+        left: vars.$spacing-4;
+    }
+
+    .nextButton {
+        right: vars.$spacing-4;
+    }
+}

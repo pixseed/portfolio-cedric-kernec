@@ -1,0 +1,86 @@
+@use "../../../styles/abstracts/variables" as vars;
+@use "../../../styles/abstracts/mixins";
+
+/* ==========================================
+ * Styles ProjectsGallery
+ * ========================================== */
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-4;
+}
+
+.galleryHeader {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-2;
+    
+    @include mixins.decoration-line();
+}
+
+.galleryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+    gap: vars.$spacing-4;
+}
+
+.galleryFilter {
+    .mobileFilter {
+        display: flex;
+        flex-direction: column;
+        gap: vars.$spacing-2;
+    }
+
+    .desktopFilter {
+        display: none;
+    }
+}
+
+.filterButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$spacing-2;
+
+    padding: vars.$spacing-2 vars.$spacing-4;
+
+    color: vars.$text-secondary;
+    background-color: vars.$background-secondary;
+
+    border: vars.$border-width-default solid vars.$border-default;
+    border-radius: vars.$radius-full;
+
+    transition:
+        color vars.$transition-duration-fast vars.$transition-easing-default,
+        border-color vars.$transition-duration-fast
+            vars.$transition-easing-default;
+
+    &[aria-pressed="true"] {
+        @include mixins.gradient-border($color1: vars.$background-secondary);
+
+        color: vars.$text-primary;
+    }
+
+    &:not([aria-pressed="true"]):hover {
+        color: vars.$text-primary;
+        border-color: vars.$border-light;
+    }
+}
+
+/* ==========================================
+ * Styles Projects - TABLETTE
+ * ========================================== */
+@media (min-width: vars.$breakpoint-tablet) {
+    .galleryFilter {
+        .mobileFilter {
+            display: none;
+        }
+
+        .desktopFilter {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: vars.$spacing-2;
+        }
+    }
+}

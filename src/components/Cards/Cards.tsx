@@ -7,6 +7,9 @@ type CardProps = {
   title: string;
   description: string;
   variant?: "default" | "compact";
+  iconPosition?: "top" | "inline";
+  accent?: "primary" | "secondary" | "accent";
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
 };
 
 export default function Card({
@@ -15,19 +18,33 @@ export default function Card({
   title,
   description,
   variant = "default",
+  iconPosition = "top",
+  accent = "primary",
+  headingLevel = 4,
 }: CardProps) {
   const Icon = icon;
+  const Heading = `h${headingLevel}` as "h2" | "h3" | "h4" | "h5" | "h6";
 
   return (
     <article
-      className={`${styles.card} ${variant === "compact" ? styles.compact : ""}`}
+      className={`${styles.card} ${styles[variant]} ${styles[accent]} ${iconPosition === "inline" ? styles.inline : ""} ${number ? styles.withNumber : ""}`}
     >
-      <Icon aria-hidden="true"/>
+      {number && <span className={styles.cardNumber}>{number}</span>}
+
+      {iconPosition === "top" && <Icon aria-hidden="true" />}
+
       <div className={styles.cardContent}>
-        <h4 className={styles.cardTitle}>{title}</h4>
+        {iconPosition === "inline" ? (
+          <div className={styles.cardHeading}>
+            <Icon aria-hidden="true" />
+            <Heading className={styles.cardTitle}>{title}</Heading>
+          </div>
+        ) : (
+          <Heading className={styles.cardTitle}>{title}</Heading>
+        )}
+
         <p className={styles.cardDescription}>{description}</p>
       </div>
-      {number && <div className={styles.cardNumber}>{number}</div>}
     </article>
   );
 }

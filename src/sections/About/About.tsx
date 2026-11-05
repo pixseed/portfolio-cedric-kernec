@@ -1,7 +1,7 @@
 import Card from "../../components/Cards/Cards";
 import styles from "./about.module.scss";
 
-import { axisItems } from "./aboutData";
+import { axisItems } from "../../data/aboutData";
 
 export default function About() {
   return (
@@ -39,6 +39,8 @@ export default function About() {
                 number={item.number}
                 title={item.title}
                 description={item.description}
+                accent={item.accent}
+                headingLevel={3}
               />
             ))}
           </div>

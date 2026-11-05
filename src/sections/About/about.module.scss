@@ -51,6 +51,11 @@
 
     .axes {
         flex-direction: row;
+
+        > * {
+            flex: 1;
+            min-width: 0;
+        }
     }
 }
 
@@ -69,5 +74,9 @@
     .axes {
         flex: 1;
         flex-direction: column;
+
+        > * {
+            flex: initial;
+        }
     }
 }

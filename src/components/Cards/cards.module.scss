@@ -1,4 +1,5 @@
 @use "../../styles/abstracts/variables" as vars;
+@use "../../styles/abstracts/mixins";
 
 $card-padding-bottom: vars.$spacing-12;
 
@@ -9,6 +10,11 @@ $card-padding-bottom: vars.$spacing-12;
 .card {
     position: relative;
 
+    @include mixins.surface-card(
+        $padding: vars.$spacing-6,
+        $border-color: var(--card-color)
+    );
+
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas:
@@ -16,12 +22,8 @@ $card-padding-bottom: vars.$spacing-12;
         "content content";
     align-content: start;
 
-    padding-inline: vars.$spacing-6;
-    padding-block: vars.$spacing-6 $card-padding-bottom;
+    padding-bottom: $card-padding-bottom;
     gap: vars.$spacing-4;
-
-    border: vars.$border-width-default solid var(--card-color);
-    border-radius: vars.$radius-lg;
 
     &::after {
         content: "";
@@ -33,18 +35,6 @@ $card-padding-bottom: vars.$spacing-12;
         border-radius: 0 vars.$radius-full vars.$radius-full 0;
 
         background-color: var(--card-color);
-    }
-
-    &:nth-child(1) {
-        --card-color: #{vars.$primary};
-    }
-
-    &:nth-child(2) {
-        --card-color: #{vars.$accent};
-    }
-
-    &:nth-child(3) {
-        --card-color: #{vars.$secondary};
     }
 
     .cardNumber {
@@ -79,6 +69,12 @@ $card-padding-bottom: vars.$spacing-12;
         gap: vars.$flow-element;
     }
 
+    .cardHeading {
+        display: flex;
+        align-items: center;
+        gap: vars.$spacing-4;
+    }
+
     &.compact {
         padding: vars.$spacing-4;
         gap: vars.$spacing-3;
@@ -97,6 +93,28 @@ $card-padding-bottom: vars.$spacing-12;
             gap: vars.$spacing-2;
         }
     }
+
+    &.inline {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: "content";
+
+        &.withNumber {
+            grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-areas: "content number";
+        }
+    }
+}
+
+.primary {
+    --card-color: #{vars.$primary};
+}
+
+.secondary {
+    --card-color: #{vars.$secondary};
+}
+
+.accent {
+    --card-color: #{vars.$accent};
 }
 
 /* ==========================================
@@ -104,9 +122,6 @@ $card-padding-bottom: vars.$spacing-12;
  * ========================================== */
 @media (min-width: vars.$breakpoint-tablet-lg) {
     .card {
-        // Répartit équitablement les cartes lorsqu'elles sont utilisées dans un conteneur flex.
-        flex: 1;
-        
         &::after {
             width: 35%;
         }
@@ -132,7 +147,7 @@ $card-padding-bottom: vars.$spacing-12;
             width: 20%;
         }
 
-        &.compact {
+        &.compact:not(.inline) {
             grid-template-columns: 1fr;
             grid-template-areas:
                 "icon"
