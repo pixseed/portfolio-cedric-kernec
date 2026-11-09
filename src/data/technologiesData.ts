@@ -8,6 +8,7 @@ import {
   siFigma,
   siGit,
   siGithub,
+  siGooglesheets,
   siHtml5,
   siJavascript,
   siJsonwebtokens,
@@ -18,6 +19,7 @@ import {
   siNetlify,
   siNodedotjs,
   siNpm,
+  siNotion,
   siOpenapiinitiative,
   siPhp,
   siPostman,
@@ -26,6 +28,7 @@ import {
   siReact,
   siReactrouter,
   siRender,
+  siSage,
   siSass,
   siSequelize,
   siSwagger,
@@ -39,13 +42,20 @@ import type { Technology } from "../types/technology";
  * Référentiel des technologies utilisées dans le portfolio.
  *
  * Centralise leurs informations pour les partager entre les sections
- * Compétences et Projets, sans dupliquer leurs configurations.
+ * Compétences, Projets et Parcours, sans dupliquer leurs configurations.
  *
  * satisfies vérifie que chaque entrée respecte le type Technology,
  * tout en conservant les clés précises de l'objet pour permettre
  * leur accès direct et détecter les références inexistantes.
  */
 export const technologies = {
+  access: {
+    name: "Microsoft Access",
+    iconLabel: "A",
+    color: "A4373A",
+    link: "https://www.microsoft.com/fr-fr/microsoft-365/access",
+  },
+
   bootstrap: {
     name: "Bootstrap",
     icon: siBootstrap,
@@ -123,6 +133,12 @@ export const technologies = {
     link: "https://docs.github.com/en/rest",
   },
 
+  googleSheets: {
+    name: "Google Sheets",
+    icon: siGooglesheets,
+    link: "https://sheets.google.com/",
+  },
+
   html: {
     name: "HTML",
     icon: siHtml5,
@@ -195,6 +211,13 @@ export const technologies = {
     link: "https://nodejs.org/",
   },
 
+  notion: {
+    name: "Notion",
+    icon: siNotion,
+    displayColor: "F1F1F4",
+    link: "https://www.notion.so/",
+  },
+
   npm: {
     name: "npm",
     icon: siNpm,
@@ -244,6 +267,13 @@ export const technologies = {
     link: "https://www.postman.com/",
   },
 
+  premierePro: {
+    name: "Adobe Premiere Pro",
+    iconLabel: "Pr",
+    color: "9999FF",
+    link: "https://www.adobe.com/fr/products/premiere.html",
+  },
+
   prettier: {
     name: "Prettier",
     icon: siPrettier,
@@ -274,6 +304,12 @@ export const technologies = {
     icon: siRender,
     displayColor: "F1F1F4",
     link: "https://render.com/",
+  },
+
+  sage: {
+    name: "Sage",
+    icon: siSage,
+    link: "https://www.sage.com/fr-fr/",
   },
 
   sass: {

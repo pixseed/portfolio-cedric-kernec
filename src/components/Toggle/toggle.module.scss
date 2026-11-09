@@ -1,0 +1,87 @@
+@use "../../styles/abstracts/variables" as vars;
+@use "../../styles/abstracts/mixins";
+
+/* ==========================================
+ * Styles Toggle
+ * ========================================== */
+
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: vars.$spacing-3;
+
+    width: 100%;
+    min-height: 44px;
+    justify-content: space-between;
+
+    padding: vars.$spacing-2;
+
+    border: none;
+    border-radius: vars.$radius-md;
+
+    background: transparent;
+    text-align: left;
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: vars.$spacing-2;
+        min-width: 0;
+    }
+
+    .label {
+        font-weight: 600;
+    }
+
+    .description {
+        color: vars.$text-secondary;
+        font-size: 0.785rem;
+    }
+
+    .track {
+        position: relative;
+        flex-shrink: 0;
+        width: 52px;
+        height: 28px;
+        border-radius: vars.$radius-full;
+        background: vars.$neutral-600;
+    }
+
+    .thumb {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+
+        width: 20px;
+        height: 20px;
+        border-radius: vars.$radius-full;
+        background-color: vars.$neutral-100;
+
+        transition: transform vars.$transition-duration-fast
+            vars.$transition-easing-default;
+    }
+
+    &.outlined {
+        padding: vars.$spacing-4;
+        border-radius: vars.$radius-lg;
+
+        @include mixins.gradient-border($color1: vars.$background-primary);
+    }
+
+    &[aria-checked="true"] {
+        .track {
+            background: vars.$gradient-primary;
+        }
+
+        .thumb {
+            transform: translate(24px);
+            box-shadow: -2px 0 4px rgba(vars.$neutral-950, 0.4);
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .toggle .thumb {
+        transition: none;
+    }
+}

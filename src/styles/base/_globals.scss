@@ -1,8 +1,9 @@
+@use "../abstracts/variables" as vars;
+@use "../abstracts/mixins";
+
 /* ==========================================
  * Styles globaux
  * ========================================== */
-
-@use "../abstracts/variables" as vars;
 
 body {
     background-color: vars.$background-primary;
@@ -50,4 +51,8 @@ a {
         background-color: vars.$primary;
         transform: skew(-12deg);
     }
+}
+
+.gradient-text {
+    @include mixins.gradient-text(vars.$gradient-primary);
 }

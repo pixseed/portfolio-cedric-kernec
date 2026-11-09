@@ -10,6 +10,7 @@ type ActionLinkProps = {
   download?: string;
   external?: boolean;
   showExternalIcon?: boolean;
+  appearance?: "button" | "text";
 };
 
 export default function ActionLink({
@@ -21,13 +22,13 @@ export default function ActionLink({
   download,
   external = false,
   showExternalIcon = false,
+  appearance = "button",
 }: ActionLinkProps) {
-
   return (
     <a
       href={href}
       download={download}
-      className={`${styles.actionLink} ${styles[variant]}`}
+      className={`${styles.actionLink} ${styles[variant]} ${appearance === "text" ? styles.text : ""}`}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
     >
@@ -41,9 +42,7 @@ export default function ActionLink({
         />
       )}
       {external && (
-        <span className="visually-hidden">
-        (ouvre dans un nouvel onglet)
-        </span>
+        <span className="visually-hidden">(ouvre dans un nouvel onglet)</span>
       )}
     </a>
   );

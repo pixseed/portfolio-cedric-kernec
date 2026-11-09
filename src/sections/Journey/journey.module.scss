@@ -1,0 +1,187 @@
+@use "../../styles/abstracts/variables" as vars;
+
+$timeline-axis-width: 2px;
+$timeline-dot-size: 16px;
+$timeline-column-gap: vars.$spacing-16;
+$timeline-mobile-indent: vars.$spacing-8;
+
+/* ==========================================
+ * Styles Journey
+ * ========================================== */
+
+.header,
+.introduction {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    gap: vars.$spacing-4;
+}
+
+.introduction {
+    gap: vars.$flow-element;
+    min-width: 0;
+}
+
+.viewControl {
+    min-width: 0;
+}
+
+.year {
+    position: relative;
+    display: block;
+    width: fit-content;
+    margin: 0 0 vars.$spacing-6;
+    padding: vars.$spacing-1 vars.$spacing-2;
+
+    border: vars.$border-width-default solid vars.$neutral-600;
+    border-radius: vars.$radius-md;
+    background-color: vars.$background-secondary;
+
+    font-family: vars.$font-code;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+// Chaque année et sa liste suivent le flux normal : aucun calcul de ligne.
+.yearEntries {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-6;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.timeline {
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-6;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: calc(($timeline-dot-size - $timeline-axis-width) / 2);
+        width: $timeline-axis-width;
+
+        background-color: vars.$neutral-600;
+        z-index: -1;
+    }
+}
+
+.timelineItem {
+    --journey-dot-top: #{vars.$spacing-8};
+
+    position: relative;
+    min-width: 0;
+    padding-left: $timeline-mobile-indent;
+
+    > article {
+        border-left: 6px solid var(--journey-color);
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: var(--journey-dot-top);
+        left: 0;
+
+        width: $timeline-dot-size;
+        height: $timeline-dot-size;
+        border-radius: vars.$radius-full;
+        background-color: var(--journey-color);
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: calc(
+            var(--journey-dot-top) +
+                ($timeline-dot-size - $timeline-axis-width) / 2
+        );
+        left: $timeline-dot-size;
+
+        width: calc($timeline-mobile-indent - $timeline-dot-size);
+        height: $timeline-axis-width;
+        background-color: var(--journey-color);
+    }
+}
+
+.experience {
+    --journey-color: #{vars.$primary};
+}
+
+.education {
+    --journey-color: #{vars.$secondary};
+}
+
+/* ==========================================
+ * Styles Journey - DESKTOP
+ * ========================================== */
+
+@media (min-width: vars.$breakpoint-desktop) {
+    .header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+        align-items: start;
+        gap: vars.$spacing-8;
+    }
+    .year {
+        margin-inline: auto;
+    }
+
+    .timeline {
+        &::before {
+            left: calc(50% - $timeline-axis-width / 2);
+        }
+    }
+
+    .timelineItem {
+        // La moitié de la largeur, moins la moitié du couloir central.
+        width: calc((100% - $timeline-column-gap) / 2);
+        padding-left: 0;
+
+        &::before {
+            left: auto;
+        }
+
+        &::after {
+            width: calc(($timeline-column-gap - $timeline-dot-size) / 2);
+        }
+    }
+
+    .experience {
+        align-self: flex-start;
+
+        &::before {
+            right: calc(-1 * ($timeline-column-gap + $timeline-dot-size) / 2);
+        }
+
+        &::after {
+            left: 100%;
+        }
+    }
+
+    .education {
+        align-self: flex-end;
+
+        &::before {
+            left: calc(-1 * ($timeline-column-gap + $timeline-dot-size) / 2);
+        }
+
+        &::after {
+            left: auto;
+            right: 100%;
+        }
+    }
+}

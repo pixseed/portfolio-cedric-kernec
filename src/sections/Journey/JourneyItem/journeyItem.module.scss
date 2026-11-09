@@ -1,0 +1,73 @@
+@use "../../../styles/abstracts/variables" as vars;
+
+/* ==========================================
+ * Styles JourneyItem
+ * ========================================== */
+
+.category {
+    position: relative;
+    color: var(--journey-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    padding-right: vars.$spacing-4;
+
+    &::before {
+        position: absolute;
+        content: "";
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 100%;
+        width: 6px;
+        background-color: var(--journey-color);
+    }
+}
+
+.organizationGroup {
+  display: flex;
+  flex-direction: column;
+  gap: vars.$spacing-1;
+
+  margin-top: vars.$spacing-4;
+}
+
+.organizationName {
+  font-weight: 600;
+}
+
+.employmentDetails,
+.period {
+    color: vars.$text-secondary;
+    font-size: 0.875rem;
+}
+
+.period {
+    font-family: vars.$font-code;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: vars.$spacing-3 vars.$spacing-4;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+        min-width: 0;
+        max-width: 100%;
+    }
+}
+
+.technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: vars.$spacing-2;
+
+    margin: 0;
+    margin-top: vars.$spacing-4;
+    padding: 0;
+    list-style: none;
+}
