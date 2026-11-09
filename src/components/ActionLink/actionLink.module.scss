@@ -90,3 +90,26 @@
         border-color: vars.$border-light;
     }
 }
+
+.actionLink.text {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0;
+    border: none;
+    border-radius: vars.$radius-sm;
+    background: transparent;
+
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    .externalIcon {
+        margin-left: 0;
+    }
+
+    &:hover,
+    &:active {
+        transform: none;
+        background: transparent;
+    }
+}

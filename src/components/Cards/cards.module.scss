@@ -42,7 +42,7 @@ $card-padding-bottom: vars.$spacing-12;
         color: var(--card-color);
     }
 
-    svg {
+    .cardIcon {
         grid-area: icon;
 
         width: vars.$icon-size-xxl;
@@ -75,6 +75,21 @@ $card-padding-bottom: vars.$spacing-12;
         gap: vars.$spacing-4;
     }
 
+    .cardHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: vars.$spacing-4;
+
+        .cardIcon {
+            flex-shrink: 0;
+        }
+    }
+
+    .cardEyebrow {
+        min-width: 0;
+    }
+
     &.compact {
         padding: vars.$spacing-4;
         gap: vars.$spacing-3;
@@ -83,7 +98,7 @@ $card-padding-bottom: vars.$spacing-12;
             display: none;
         }
 
-        svg {
+        .cardIcon {
             width: vars.$icon-size-xl;
             height: vars.$icon-size-xl;
             padding: vars.$spacing-2;
@@ -94,13 +109,24 @@ $card-padding-bottom: vars.$spacing-12;
         }
     }
 
-    &.inline {
+    &.inline,
+    &.header {
         grid-template-columns: minmax(0, 1fr);
         grid-template-areas: "content";
 
         &.withNumber {
             grid-template-columns: minmax(0, 1fr) auto;
             grid-template-areas: "content number";
+        }
+    }
+
+    &.header {
+        .cardHeader {
+            margin-bottom: vars.$spacing-2;
+        }
+
+        .cardTitle {
+            font-size: 1.25rem;
         }
     }
 }
@@ -139,7 +165,8 @@ $card-padding-bottom: vars.$spacing-12;
 
         container-type: inline-size;
 
-        .cardTitle {
+        .cardTitle,
+        &.header .cardTitle {
             font-size: clamp(1rem, 8cqw, 2rem);
         }
 
@@ -147,7 +174,7 @@ $card-padding-bottom: vars.$spacing-12;
             width: 20%;
         }
 
-        &.compact:not(.inline) {
+        &.compact:not(.inline):not(.header) {
             grid-template-columns: 1fr;
             grid-template-areas:
                 "icon"
