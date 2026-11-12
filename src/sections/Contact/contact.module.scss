@@ -1,0 +1,43 @@
+@use "../../styles/abstracts/variables" as vars;
+
+/* ==========================================
+ * Styles Contact
+ * ========================================== */
+
+.section {
+    background-color: vars.$background-secondary;
+}
+
+.content {
+    display: grid;
+    gap: vars.$spacing-8;
+}
+
+.introduction {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$flow-content;
+    min-width: 0;
+}
+
+.contactLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: vars.$spacing-4;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* ==========================================
+ * Styles Contact - DESKTOP
+ * ========================================== */
+
+@media (min-width: vars.$breakpoint-desktop) {
+    .content {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        align-items: start;
+    }
+}
