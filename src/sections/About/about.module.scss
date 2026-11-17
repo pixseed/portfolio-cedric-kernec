@@ -5,9 +5,53 @@
  * ========================================== */
 
 .section {
+    --separator-height: clamp(24px, 4vw, 56px);
+    --separator-line-width: 4px;
+
+    position: relative;
+
     display: flex;
     align-items: stretch;
     background-color: vars.$background-secondary;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset-inline: 0;
+        bottom: 100%;
+
+        height: var(--separator-height);
+
+        background-color: inherit;
+        clip-path: polygon(0 100%, 100% 0, 100% 100%);
+
+        pointer-events: none;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset-inline: 0;
+        bottom: 100%;
+
+        height: var(--separator-height);
+
+        background: linear-gradient(
+            to right,
+            vars.$primary,
+            vars.$secondary,
+            vars.$accent
+        );
+
+        clip-path: polygon(
+            0 calc(100% - var(--separator-line-width)),
+            100% 0,
+            100% var(--separator-line-width),
+            0 100%
+        );
+
+        pointer-events: none;
+    }
 }
 
 .content {

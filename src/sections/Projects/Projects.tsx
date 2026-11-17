@@ -41,6 +41,12 @@ export default function Projects() {
     loop: true,
     align: "center",
     containScroll: false,
+    breakpoints: {
+      // Supprime l'animation de navigation lorsque les mouvements sont réduits.
+      "(prefers-reduced-motion: reduce)": {
+        duration: 0,
+      }
+    }
   });
 
   const activeIndex = useEmblaSelectedIndex(emblaApi);
@@ -231,9 +237,9 @@ export default function Projects() {
   // ===============================================================
 
   return (
-    <section id="projects" className={`${styles.section} page-section`}>
+    <section id="projects" className={styles.section}>
       <div className="container section-content">
-        <h2 className="section-title">Projets</h2>
+        <h2 className="visually-hidden">Projets</h2>
 
         {/* En-tête */}
         <header className={styles.projectsHeader}>

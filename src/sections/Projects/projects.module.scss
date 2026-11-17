@@ -150,6 +150,18 @@ $carousel-side-spacing: vars.$spacing-12;
     display: none;
 }
 
+@keyframes projects-content-enter {
+    from {
+        opacity: 0;
+        translate: 0 1.5rem;
+    }
+
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
 /* ==========================================
  * Styles Projects - TABLETTE
  * ========================================== */
@@ -280,6 +292,35 @@ $carousel-side-spacing: vars.$spacing-12;
                 vars.$background-secondary,
                 transparent
             );
+        }
+    }
+}
+
+/* ==========================================
+ * Styles Projects - ANIMATIONS
+ * ========================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+        .projectsHeader {
+            @include mixins.scroll-animation(
+                $name: projects-content-enter,
+                $range: entry 0% cover 30%
+            );
+        }
+
+        .carousel {
+            @include mixins.scroll-animation(
+                $name: projects-content-enter,
+                $range: entry 0% entry 100%
+            );
+        }
+
+        .projectsHeader,
+        .carousel {
+            &:focus-within {
+                animation: none;
+            }
         }
     }
 }

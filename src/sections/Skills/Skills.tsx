@@ -10,6 +10,18 @@ import useScrollEdges from "../../hooks/useScrollEdges";
 
 import styles from "./skills.module.scss";
 
+/**
+ * Choisit le défilement selon la préférence de mouvements.
+ * La préférence est relue à chaque appel.
+ */
+function getScrollBehavior(): ScrollBehavior {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  return prefersReducedMotion ? "instant" : "smooth";
+}
+
 export default function Skills() {
   // ===============================================================
   // State
@@ -48,7 +60,7 @@ export default function Skills() {
 
     nav.scrollBy({
       left: direction === "left" ? -scrollDistance : scrollDistance,
-      behavior: "smooth",
+      behavior: getScrollBehavior(),
     });
   };
 
@@ -67,7 +79,7 @@ export default function Skills() {
     setActiveDomain(domainId);
 
     event.currentTarget.scrollIntoView({
-      behavior: "smooth",
+      behavior: getScrollBehavior(),
       inline: "center",
       block: "nearest",
     });
@@ -77,9 +89,9 @@ export default function Skills() {
   // Return
   // ===============================================================
   return (
-    <section id="skills" className="page-section">
+    <section id="skills">
       <div className="container section-content">
-        <h2 className="section-title">Compétences</h2>
+        <h2 className="visually-hidden">Compétences</h2>
         <div className={styles.skillsInterface}>
           {/* Navigation des domaines */}
           <div
@@ -115,7 +127,10 @@ export default function Skills() {
                     className={activeDomain === domain.id ? styles.active : ""}
                     aria-pressed={activeDomain === domain.id}
                   >
-                    <DomainIcon className={styles.domainIcon} aria-hidden="true" />
+                    <DomainIcon
+                      className={styles.domainIcon}
+                      aria-hidden="true"
+                    />
                     <span>{domain.title}</span>
                   </button>
                 );

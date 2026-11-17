@@ -38,9 +38,9 @@ export default function Journey() {
   // ===============================================================
 
   return (
-    <section id="journey" className="page-section">
+    <section id="journey">
       <div className="container section-content">
-        <h2 className="section-title">Parcours</h2>
+        <h2 className="visually-hidden">Parcours</h2>
         <div className={styles.header}>
           <div className={styles.introduction}>
             <h3>

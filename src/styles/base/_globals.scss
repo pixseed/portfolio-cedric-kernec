@@ -19,10 +19,6 @@ a {
     }
 }
 
-.page-section {
-    min-height: 100svh;
-}
-
 .container {
     width: 100%;
     max-width: vars.$container-max-width;
@@ -35,22 +31,6 @@ a {
     flex-direction: column;
     gap: vars.$flow-content;
     padding-block: vars.$flow-section;
-}
-
-.section-title {
-    display: flex;
-    align-items: stretch;
-    gap: vars.$spacing-2;
-
-    font-size: 1rem;
-    font-weight: 400;
-
-    &::before {
-        content: "";
-        width: 6px;
-        background-color: vars.$primary;
-        transform: skew(-12deg);
-    }
 }
 
 .gradient-text {

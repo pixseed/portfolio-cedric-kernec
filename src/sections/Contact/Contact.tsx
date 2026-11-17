@@ -7,9 +7,9 @@ import styles from "./contact.module.scss";
 
 export default function Contact() {
   return (
-    <section id="contact" className={`${styles.section} page-section`}>
+    <section id="contact" className={styles.section}>
       <div className="container section-content">
-        <h2 className="section-title">Contact</h2>
+        <h2 className="visually-hidden">Contact</h2>
         <div className={styles.content}>
           <div className={styles.introduction}>
             <h3>

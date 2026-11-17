@@ -1,7 +1,6 @@
 import Header from "./layouts/Header/Header";
 
-import Hero from "./sections/Hero/Hero";
-import About from "./sections/About/About";
+import IntroTransition from "./sections/IntroTransition/IntroTransition";
 import Journey from "./sections/Journey/Journey";
 import Projects from "./sections/Projects/Projects";
 import Skills from "./sections/Skills/Skills";
@@ -15,8 +14,7 @@ function App() {
       <Header />
 
       <main>
-        <Hero />
-        <About />
+        <IntroTransition />
         <Journey />
         <Projects />
         <Skills />
