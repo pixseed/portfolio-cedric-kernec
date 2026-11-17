@@ -28,6 +28,12 @@ export default function ProjectImageGallery({
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "center",
+    breakpoints: {
+      // Supprime l'animation de navigation lorsque les mouvements sont réduits.
+      "(prefers-reduced-motion: reduce)": {
+        duration: 0,
+      },
+    },
   });
 
   const activeIndex = useEmblaSelectedIndex(emblaApi);

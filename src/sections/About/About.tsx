@@ -5,12 +5,12 @@ import { axisItems } from "../../data/aboutData";
 
 export default function About() {
   return (
-    <section id="about" className={`${styles.section} page-section`}>
+    <section id="about" className={styles.section}>
       <div className="container section-content">
-        <h2 className="section-title">À propos</h2>
+        <h2 className="visually-hidden">À propos</h2>
         <div className={styles.content}>
           {/* Introduction */}
-          <div className={styles.introduction}>
+          <div className={styles.introduction} data-intro-layer="about-content">
             <div className={styles.introContent}>
               <h3 className={styles.subtitle}>
                 Mon approche en <span className="gradient-text">3 axes</span>
@@ -31,7 +31,7 @@ export default function About() {
           </div>
 
           {/* Axes */}
-          <div className={styles.axes}>
+          <div className={styles.axes} data-intro-layer="about-axes">
             {axisItems.map((item) => (
               <Card
                 key={item.id}

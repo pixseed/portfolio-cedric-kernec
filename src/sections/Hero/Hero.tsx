@@ -14,9 +14,9 @@ import {
 
 export default function Hero() {
   return (
-    <section id="home" className={`${styles.section} page-section`}>
+    <section className={styles.section}>
       <div className={`${styles.hero} container`}>
-        <div className={styles.content}>
+        <div className={styles.content} data-intro-layer="hero-content">
           <div className={styles.presentation}>
             <h1 className={styles.identity}>
               <span className={styles.firstname}>Cédric</span>
@@ -58,7 +58,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className={styles.avatar}>
+        <div className={styles.avatar} data-intro-layer="hero-avatar">
           <img src={avatar} alt="" />
         </div>
       </div>

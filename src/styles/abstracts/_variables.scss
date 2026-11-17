@@ -65,9 +65,19 @@ $container-padding-inline: $spacing-6;
 $flow-element: $spacing-3; // Entre éléments directement liés
 $flow-content: $spacing-6; // Entre un repère/titre et son contenu
 $flow-group: $spacing-6; // Entre groupes de contenu distincts
-$flow-section: $spacing-6; // Entre les limites d'une section et son contenu
+$flow-section: $spacing-12; // Entre les limites d'une section et son contenu
 
 $flow-action: $spacing-4; // Entre plusieurs actions associées
+
+// Header and navigation
+$header-padding-block: $spacing-6;
+$navigation-link-height: 40px;
+$navigation-spacing: $spacing-3;
+
+// Distance entre le haut de la page et le bas du menu sur desktop.
+$header-navigation-bottom: calc(
+    $header-padding-block + $navigation-link-height + 2 * $navigation-spacing
+);
 
 // Typography
 $font-primary: "Sora", sans-serif;

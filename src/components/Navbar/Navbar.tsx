@@ -2,11 +2,7 @@ import { useEffect, useState, useRef } from "react";
 
 import pixelsLogo from "../../assets/images/logos/pixseed-logo-pixels.png";
 
-import {
-  PlusIcon,
-  ListIcon,
-  XIcon,
-} from "@phosphor-icons/react";
+import { PlusIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import type { NavigationItem } from "./navigationData";
 import { navigationItems } from "./navigationData";
 
@@ -118,14 +114,12 @@ export default function Navbar() {
   const primaryMenuRef = useRef<HTMLUListElement>(null);
   const tabletDropdownRef = useRef<HTMLUListElement>(null);
 
-  /*
-   * Mémorise temporairement la section ciblée après un clic.
+  /**
+   * Mémorise la destination d'une navigation par clic.
    *
-   * Pendant le scroll automatique vers cette section, l'IntersectionObserver
-   * ignore les sections intermédiaires afin d'éviter que l'indicateur actif
-   * se déplace brièvement vers un autre lien.
-   *
-   * `null` signifie qu'aucune navigation par clic n'est en cours.
+   * Pendant le défilement automatique, le suivi conserve cette destination
+   * pour éviter d'activer successivement les sections intermédiaires.
+   * `null` indique qu'aucune destination n'est en attente.
    */
   const navigationTargetRef = useRef<string | null>(null);
 
@@ -221,52 +215,114 @@ export default function Navbar() {
     };
   }, [isMobileMenuOpen, isTabletDropdownOpen]);
 
-  /*
-   * Observe les sections visibles pour synchroniser la navigation
-   * avec la position actuelle dans la page.
+  /**
+   * Synchronise la navbar avec les ancres, indépendamment des animations visuelles.
    *
-   * En temps normal, une section devient active lorsqu'au moins 50 %
-   * de celle-ci est visible.
+   * La section active est la dernière dont le début a franchi le repère situé
+   * à 40 % de la hauteur de la fenêtre. Les ancres doivent être ordonnées
+   * dans navigationItems comme elles apparaissent dans la page.
    *
-   * Lors d'une navigation par clic, les sections traversées pendant
-   * le scroll automatique sont ignorées. L'observation normale reprend
-   * lorsque la section ciblée atteint à son tour le seuil de 50 %.
+   * Pendant une navigation par clic, l'indicateur reste sur la destination
+   * jusqu'à ce qu'elle soit atteinte.
+   *
+   * Les calculs sont regroupés avec requestAnimationFrame lors du scroll
+   * et du redimensionnement. Les écouteurs et le calcul en attente sont nettoyés
+   * au démontage.
    */
   useEffect(() => {
-    const sections = document.querySelectorAll("section");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const navigationTarget = navigationTargetRef.current;
+    const sections = navigationItems
+      .map((item) => document.getElementById(item.id))
+      // Retire les ancres absentes et précise à TypeScript que les éléments restants sont des HTMLElement.
+      .filter((section): section is HTMLElement => section !== null);
 
-          if (navigationTarget) {
-            if (
-              entry.target.id === navigationTarget &&
-              entry.intersectionRatio >= 0.5
-            ) {
-              // La destination est atteinte : l'observer peut reprendre la main.
-              navigationTargetRef.current = null;
-            }
+    // Mémorise le calcul planifié pour éviter d'en programmer plusieurs à la fois.
+    let frameId: number | null = null;
 
-            return;
-          }
+    function updateActiveSection() {
+      frameId = null;
 
-          if (entry.intersectionRatio >= 0.5) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        threshold: 0.5,
-      },
-    );
+      const activationLine = window.innerHeight * 0.4;
+      let currentSection = sections[0];
 
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
+      // Retient la dernière section dont le début a franchi le repère.
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= activationLine) {
+          currentSection = section;
+        }
+      }
+
+      if (!currentSection) return;
+
+      const navigationTarget = navigationTargetRef.current;
+
+      // Pendant une navigation par clic, attend d'atteindre la destination.
+      if (navigationTarget) {
+        if (currentSection.id !== navigationTarget) return;
+
+        navigationTargetRef.current = null;
+      }
+
+      setActiveSection(currentSection.id);
+    }
+
+    function scheduleUpdate() {
+      // Regroupe les événements rapprochés dans une seule mise à jour.
+      if (frameId !== null) return;
+
+      frameId = window.requestAnimationFrame(updateActiveSection);
+    }
+
+    // Initialise l'indicateur, notamment si la page est déjà défilée à l'ouverture.
+    updateActiveSection();
+
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
 
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
+    };
+  }, []);
+
+  /**
+   * Libère la destination mémorisée lorsque l'utilisateur reprend
+   * manuellement le défilement.
+   */
+  useEffect(() => {
+    function cancelNavigationTarget() {
+      navigationTargetRef.current = null;
+    }
+
+    function handleScrollKey(event: KeyboardEvent) {
+      const scrollKeys = [
+        "ArrowUp",
+        "ArrowDown",
+        "PageUp",
+        "PageDown",
+        "Home",
+        "End",
+        " ",
+      ];
+
+      if (scrollKeys.includes(event.key)) {
+        cancelNavigationTarget();
+      }
+    }
+
+    window.addEventListener("wheel", cancelNavigationTarget, { passive: true });
+    window.addEventListener("touchstart", cancelNavigationTarget, {
+      passive: true,
+    });
+    window.addEventListener("keydown", handleScrollKey);
+
+    return () => {
+      window.removeEventListener("wheel", cancelNavigationTarget);
+      window.removeEventListener("touchstart", cancelNavigationTarget);
+      window.removeEventListener("keydown", handleScrollKey);
     };
   }, []);
 
@@ -378,13 +434,9 @@ export default function Navbar() {
     };
   }, []);
 
-  /*
-   * Écoute les demandes de navigation déclenchées depuis l'extérieur
-   * de la Navbar, notamment depuis le logo du Header.
-   *
-   * La destination est activée immédiatement et mémorisée afin que
-   * l'IntersectionObserver ignore les sections intermédiaires pendant
-   * le défilement automatique.
+  /**
+   * Active et mémorise la destination demandée depuis l'extérieur
+   * de la Navbar, notamment lors d'un clic sur le logo du Header.
    */
   useEffect(() => {
     function handleNavigationRequest(event: Event) {

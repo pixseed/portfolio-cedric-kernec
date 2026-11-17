@@ -9,6 +9,7 @@
 
     display: flex;
     align-items: stretch;
+    min-height: 100svh;
 
     &::before {
         content: "";
@@ -214,7 +215,8 @@
         flex: 1;
         min-width: 0;
         max-width: none;
-        padding-bottom: 0;
+        padding-top: vars.$header-navigation-bottom;
+        padding-bottom: vars.$flow-section;
     }
 
     .identity {
@@ -239,9 +241,10 @@
         align-self: flex-end;
 
         img {
-            width: clamp(510px, 48vw, 600px);
-            max-width: none;
+            width: auto;
             height: auto;
+            max-width: clamp(510px, 48vw, 600px);
+            max-height: 100svh;
         }
     }
 }
