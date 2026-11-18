@@ -80,9 +80,67 @@
 }
 
 .axes {
+    min-width: 0;
+}
+
+.carouselViewport {
+    overflow: hidden;
+    padding-block: vars.$spacing-4;
+    // Préserve le défilement vertical et le zoom tactile du navigateur.
+    touch-action: pan-y pinch-zoom;
+}
+
+.carouselTrack {
+    display: grid;
+    isolation: isolate;
+    perspective: 1100px;
+}
+
+.carouselSlide {
+    grid-area: 1 / 1;
+    position: relative;
+    width: 66%;
+    min-width: 0;
+    margin-inline: auto;
+
+    opacity: 0.38;
+
+    transition:
+        transform vars.$transition-duration-slow vars.$transition-easing-smooth,
+        opacity vars.$transition-duration-slow vars.$transition-easing-default;
+
+    > article {
+        height: 100%;
+        background-color: vars.$background-secondary;
+    }
+
+    &[data-position="active"] {
+        z-index: 2;
+        opacity: 1;
+        transform: translateX(0) translateZ(0) scale(1) rotateY(0deg);
+    }
+
+    &[data-position="previous"] {
+        z-index: 1;
+        transform: translateX(-36%) translateZ(-85px) scale(0.78) rotateY(7deg);
+    }
+
+    &[data-position="next"] {
+        z-index: 1;
+        transform: translateX(36%) translateZ(-85px) scale(0.78) rotateY(-7deg);
+    }
+}
+
+.carouselControls {
     display: flex;
-    flex-direction: column;
-    gap: vars.$flow-group;
+    align-items: center;
+    justify-content: center;
+    gap: vars.$flow-action;
+    margin-top: vars.$flow-content;
+
+    p {
+        font-family: vars.$font-code;
+    }
 }
 
 /* ==========================================
@@ -91,15 +149,6 @@
 @media (min-width: vars.$breakpoint-tablet-lg) {
     .content {
         gap: vars.$spacing-6;
-    }
-
-    .axes {
-        flex-direction: row;
-
-        > * {
-            flex: 1;
-            min-width: 0;
-        }
     }
 }
 
@@ -117,10 +166,6 @@
 
     .axes {
         flex: 1;
-        flex-direction: column;
-
-        > * {
-            flex: initial;
-        }
+        min-width: 0;
     }
 }
