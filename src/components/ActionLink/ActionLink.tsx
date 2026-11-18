@@ -11,6 +11,7 @@ type ActionLinkProps = {
   external?: boolean;
   showExternalIcon?: boolean;
   appearance?: "button" | "text";
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 };
 
 export default function ActionLink({
@@ -23,6 +24,7 @@ export default function ActionLink({
   external = false,
   showExternalIcon = false,
   appearance = "button",
+  onClick,
 }: ActionLinkProps) {
   return (
     <a
@@ -31,6 +33,7 @@ export default function ActionLink({
       className={`${styles.actionLink} ${styles[variant]} ${appearance === "text" ? styles.text : ""}`}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
+      onClick={onClick}
     >
       {iconPosition === "left" && Icon && <Icon aria-hidden="true" />}
       {label}
