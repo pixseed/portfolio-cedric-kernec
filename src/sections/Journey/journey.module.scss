@@ -148,6 +148,14 @@ $timeline-mobile-indent: vars.$spacing-8;
     --journey-color: #{vars.$secondary};
 }
 
+.secondaryEntry {
+    --journey-color: #{vars.$neutral-400};
+
+    > article {
+        --card-color: var(--journey-color);
+    }
+}
+
 @keyframes journey-card-enter {
     from {
         opacity: 0;
@@ -270,6 +278,10 @@ $timeline-mobile-indent: vars.$spacing-8;
         &[data-type="education"] .overviewCard {
             grid-column: 3;
             background-color: vars.$secondary;
+        }
+
+        &[data-featured="false"] .overviewCard {
+            background-color: vars.$neutral-400;
         }
 
         &:hover {

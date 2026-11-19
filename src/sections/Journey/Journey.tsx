@@ -219,7 +219,7 @@ export default function Journey() {
                     <li
                       key={entry.id}
                       id={`journey-${entry.id}`}
-                      className={`${styles.timelineItem} ${entry.type === "education" ? styles.education : styles.experience}`}
+                      className={`${styles.timelineItem} ${entry.type === "education" ? styles.education : styles.experience} ${!entry.featured ? styles.secondaryEntry : ""}`}
                     >
                       <JourneyItem entry={entry} headingLevel={5} />
                     </li>
@@ -250,6 +250,7 @@ export default function Journey() {
                         className={styles.overviewLink}
                         href={`#journey-${entry.id}`}
                         data-type={entry.type}
+                        data-featured={entry.featured}
                         aria-current={
                           activeEntryId === entry.id ? "step" : undefined
                         }
