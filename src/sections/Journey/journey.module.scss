@@ -25,6 +25,14 @@ $timeline-mobile-indent: vars.$spacing-8;
     min-width: 0;
 }
 
+.layout {
+    min-width: 0;
+}
+
+.overview {
+    display: none;
+}
+
 .viewControl {
     display: flex;
     flex-direction: column;
@@ -124,6 +132,12 @@ $timeline-mobile-indent: vars.$spacing-8;
         height: $timeline-axis-width;
         background-color: var(--journey-color);
     }
+
+    &:target {
+        scroll-margin-block-start: calc(
+            vars.$header-navigation-bottom + vars.$spacing-6
+        );
+    }
 }
 
 .experience {
@@ -143,6 +157,172 @@ $timeline-mobile-indent: vars.$spacing-8;
     to {
         opacity: 1;
         translate: 0 0;
+    }
+}
+
+/* ==========================================
+ * Journey overview - LARGE SCREENS
+ * ========================================== */
+
+@media (min-width: vars.$breakpoint-desktop) and (min-height: 375px) {
+    .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 130px;
+        gap: 28px;
+        align-items: start;
+    }
+
+    .overview {
+        --overview-year-width: 35px;
+
+        position: sticky;
+        top: calc(vars.$header-navigation-bottom + vars.$spacing-6);
+        max-height: calc(
+            100dvh - vars.$header-navigation-bottom - 2 * vars.$spacing-6
+        );
+
+        padding: 15px 10px 12px;
+
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        font-size: 0.75rem;
+
+        background-color: vars.$background-secondary;
+        border: 1px solid vars.$neutral-700;
+        border-radius: 12px;
+
+        ol {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .overviewViewport > ol {
+            position: relative;
+            isolation: isolate;
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: vars.$spacing-2;
+                bottom: vars.$spacing-2;
+                left: calc(50% + var(--overview-year-width) / 2);
+                transform: translateX(-50%);
+                width: 1px;
+
+                background-color: vars.$neutral-600;
+                pointer-events: none;
+                z-index: -1;
+            }
+        }
+
+        li {
+            margin: 0;
+        }
+    }
+
+    .overviewViewport {
+        min-height: 0;
+        overflow-y: auto;
+        padding: vars.$spacing-1;
+
+        @include mixins.custom-scrollbar;
+    }
+
+    .overviewTitle,
+    .overviewCount {
+        flex-shrink: 0;
+    }
+
+    .overviewTitle {
+        margin: 0 0 14px 5px;
+        color: vars.$text-secondary;
+        font-size: 0.6875rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .overviewYear {
+        color: vars.$text-secondary;
+        font-family: vars.$font-code;
+        font-size: 0.6875rem;
+    }
+
+    .overviewLink {
+        position: relative;
+        display: grid;
+        grid-template-columns: var(--overview-year-width) 1fr 1fr;
+        align-items: center;
+        min-height: 36px;
+        padding: 4px 5px;
+        border-radius: 5px;
+
+        &[data-type="experience"] .overviewCard {
+            grid-column: 2;
+        }
+
+        &[data-type="education"] .overviewCard {
+            grid-column: 3;
+            background-color: vars.$secondary;
+        }
+
+        &:hover {
+            background-color: vars.$neutral-800;
+        }
+
+        &[aria-current="step"] {
+            background-color: vars.$neutral-700;
+
+            .overviewCard {
+                opacity: 1;
+            }
+
+            .overviewYear {
+                color: vars.$text-primary;
+            }
+        }
+
+        &:focus-visible {
+            outline: 2px solid vars.$accent;
+            outline-offset: -2px;
+        }
+    }
+
+    .overviewCard {
+        justify-self: center;
+        width: 22px;
+        height: 8px;
+        border-radius: 2px;
+        background-color: vars.$primary;
+        opacity: 0.4;
+    }
+
+    // Conserve une cible d'au moins 24 px dans le mode complet.
+    .overview[data-full="true"] .overviewLink {
+        min-height: 24px;
+        padding-block: 2px;
+    }
+
+    .overviewCount {
+        margin-top: vars.$spacing-3;
+        padding: vars.$spacing-3 5px 0;
+        border-top: 1px solid vars.$neutral-700;
+
+        color: vars.$text-secondary;
+        font-family: vars.$font-code;
+        font-size: 0.6875rem;
+
+        strong {
+            color: vars.$text-primary;
+            font-size: 1rem;
+            font-weight: 500;
+        }
     }
 }
 
