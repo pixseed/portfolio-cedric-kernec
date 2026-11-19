@@ -5,7 +5,7 @@ import type { Project } from "../../../types/projects";
 import useScrollEdges from "../../../hooks/useScrollEdges";
 
 import styles from "./projectCard.module.scss";
-import ProjectTechnologies from "./ProjectTechnologies/ProjectTechnologies";
+import TechnologyList from "../../../components/TechnologyList/TechnologyList";
 
 type BaseProjectCardProps = {
   project: Project;
@@ -67,10 +67,7 @@ export default function ProjectCard(props: ProjectCardProps) {
         style={isCarousel ? { anchorName: `--card-${project.id}` } : undefined}
       >
         <div className={styles.projectIllustration}>
-          <img
-            src={project.illustration.src}
-            alt={project.illustration.alt}
-          />
+          <img src={project.illustration.src} alt={project.illustration.alt} />
         </div>
 
         <div className={styles.projectContent}>
@@ -91,11 +88,12 @@ export default function ProjectCard(props: ProjectCardProps) {
           </div>
 
           {isCarousel && (
-            <ProjectTechnologies
-              projectId={project.id}
+            <TechnologyList
+              instanceId={project.id}
               technologies={project.technologies}
               featuredTechnologies={project.featuredTechnologies}
               isActive={isActive}
+              popoverAnchor={`--card-${project.id}`}
             />
           )}
 

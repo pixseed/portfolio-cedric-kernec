@@ -26,7 +26,15 @@ $timeline-mobile-indent: vars.$spacing-8;
 }
 
 .viewControl {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$spacing-2;
     min-width: 0;
+}
+
+.entryCount {
+    color: vars.$text-secondary;
+    font-size: 0.875rem;
 }
 
 .year {

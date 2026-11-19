@@ -61,6 +61,11 @@ export default function Journey() {
               onChange={setShowFullJourney}
               variant="outlined"
             />
+
+            <p className={styles.entryCount} role="status">
+              {visibleEntries.length} étapes affichées sur{" "}
+              {journeyEntries.length}
+            </p>
           </div>
         </div>
 

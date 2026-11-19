@@ -1,21 +1,22 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
-import TechnologyBadge from "../../../../components/TechnologyBadge/TechnologyBadge";
-import type { Project } from "../../../../types/projects";
+import TechnologyBadge from "../TechnologyBadge/TechnologyBadge";
+import type { Technology } from "../../types/technology";
 
-import styles from "./projectTechnologies.module.scss";
+import styles from "./technologyList.module.scss";
 
-type ProjectTechnologiesProps = {
-  projectId: Project["id"];
-  featuredTechnologies: Project["featuredTechnologies"];
-  technologies: Project["technologies"];
+type TechnologyListProps = {
+  instanceId: string;
+  featuredTechnologies: Technology[];
+  technologies: Technology[];
   isActive: boolean;
+  popoverAnchor?: string;
 };
 
 const SAFETY_MARGIN = 2;
 
 /**
- * Affiche les technologies principales d'un projet sur une seule ligne.
+ * Affiche une sélection de technologies sur une seule ligne.
  *
  * Le nombre de badges visibles s'adapte automatiquement à la largeur
  * disponible. Les technologies masquées restent accessibles via un
@@ -24,12 +25,13 @@ const SAFETY_MARGIN = 2;
  * Le composant utilise ResizeObserver pour recalculer l'affichage
  * lorsque la largeur du conteneur change.
  */
-export default function ProjectTechnologies({
-  projectId,
+export default function TechnologyList({
+  instanceId,
   featuredTechnologies,
   technologies,
   isActive,
-}: ProjectTechnologiesProps) {
+  popoverAnchor,
+}: TechnologyListProps) {
   // ===============================================================
   // State
   // ===============================================================
@@ -141,13 +143,32 @@ export default function ProjectTechnologies({
       );
     };
 
-    // Recalcule l'affichage lorsque les dimensions du conteneur changent.
+    // Conserve la dernière largeur mesurée pour distinguer un redimensionnement
+    // de la première notification envoyée par l'observateur.
+    let previousWidth: number | undefined;
+
     const observer = new ResizeObserver((entries) => {
       const entry = entries[0];
 
       if (!entry) return;
 
-      updateVisibleCount(entry.contentRect.width);
+      const availableWidth = entry.contentRect.width;
+
+      // Ferme le popover si sa zone de référence change de largeur.
+      // Une nouvelle ouverture permettra de recalculer son placement.
+      if (
+        previousWidth !== undefined &&
+        Math.abs(availableWidth - previousWidth) > 0.5
+      ) {
+        const popover = popoverRef.current;
+
+        if (popover?.matches(":popover-open")) {
+          popover.hidePopover();
+        }
+      }
+
+      previousWidth = availableWidth;
+      updateVisibleCount(availableWidth);
     });
 
     observer.observe(container);
@@ -168,8 +189,7 @@ export default function ProjectTechnologies({
   }, [featuredTechnologies, technologies]);
 
   /**
-   * Ferme le popover lorsque sa carte devient inactive,
-   * quel que soit le moyen utilisé pour changer de projet.
+   * Ferme le popover lorsque le contexte  qui contient la liste devient inactif.
    */
   useEffect(() => {
     const popover = popoverRef.current;
@@ -186,8 +206,8 @@ export default function ProjectTechnologies({
   return (
     <div
       ref={technologiesContainerRef}
-      className={styles.projectTechnologies}
-      style={{ anchorName: `--technologies-${projectId}` }}
+      className={styles.technologyList}
+      style={{ anchorName: `--technologies-${instanceId}` }}
     >
       {/* Zone invisible permettant de mesurer les badges et le trigger. */}
       <div
@@ -228,7 +248,7 @@ export default function ProjectTechnologies({
           <button
             type="button"
             aria-label={`Afficher les ${additionalTechnologiesCount} technologies supplémentaires`}
-            popoverTarget={`technologies-${projectId}`}
+            popoverTarget={`technologies-${instanceId}`}
             className={styles.technologiesTrigger}
           >
             +{additionalTechnologiesCount}
@@ -237,13 +257,13 @@ export default function ProjectTechnologies({
           {/* Popover natif contenant les technologies non affichées sur la carte. */}
           <div
             ref={popoverRef}
-            id={`technologies-${projectId}`}
+            id={`technologies-${instanceId}`}
             popover="auto"
             className={styles.technologiesPopover}
             style={
               {
-                "--card-anchor": `--card-${projectId}`,
-                "--technologies-anchor": `--technologies-${projectId}`,
+                "--card-anchor": popoverAnchor ?? `--technologies-${instanceId}`,
+                "--technologies-anchor": `--technologies-${instanceId}`,
               } as CSSProperties
             }
           >
