@@ -101,19 +101,6 @@
     @include mixins.decoration-line();
 }
 
-.avatar {
-    position: relative;
-    z-index: 1;
-
-    display: flex;
-    justify-content: center;
-
-    img {
-        width: min(280px, 100%);
-        height: auto;
-    }
-}
-
 .cta {
     display: flex;
     flex-direction: column;
@@ -128,6 +115,35 @@
 .socialMedia {
     display: flex;
     gap: vars.$spacing-4;
+}
+
+.avatar {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    justify-content: center;
+
+    img {
+        width: min(280px, 100%);
+        height: auto;
+    }
+}
+
+.codePanel {
+    display: none;
+}
+
+.codeKeyword {
+    color: vars.$primary;
+}
+
+.codeString {
+    color: vars.$accent;
+}
+
+.codeBoolean {
+    color: vars.$secondary;
 }
 
 /* ==========================================
@@ -246,5 +262,49 @@
             max-width: clamp(510px, 48vw, 600px);
             max-height: 100svh;
         }
+    }
+}
+
+/* ==========================================
+ * Styles Hero (code panel) - DESKTOP
+ * ========================================== */
+@media (min-width: vars.$breakpoint-desktop) and (min-height: 625px) {
+    .codePanel {
+        position: absolute;
+        left: 50%;
+        translate: -50% 0;
+        bottom: vars.$spacing-16;
+
+        display: block;
+        width: min(26rem, 100%);
+
+        @include mixins.surface-card(
+            $background: rgba(vars.$background-secondary, 0.75),
+            $padding: vars.$spacing-4,
+            $border-color: vars.$neutral-500
+        );
+
+        transform: perspective(700px) rotateY(-12deg) rotateX(6deg) rotateZ(-2deg);
+        box-shadow:
+            0 14px 50px rgba(vars.$neutral-950, 0.9),
+            inset 0 1px 0 rgba(vars.$text-primary, 0.75);
+    }
+
+    .codePanelTitle {
+        padding-bottom: vars.$spacing-3;
+        margin-bottom: vars.$spacing-3;
+        border-bottom: 1px solid vars.$neutral-600;
+
+        color: vars.$text-secondary;
+        font-family: vars.$font-code;
+        font-size: 0.75rem;
+    }
+
+    .codePanelContent {
+        margin: 0;
+        font-family: vars.$font-code;
+        font-size: 0.75rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
     }
 }

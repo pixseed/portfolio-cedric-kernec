@@ -60,6 +60,31 @@ export default function Hero() {
 
         <div className={styles.avatar} data-intro-layer="hero-avatar">
           <img src={avatar} alt="" />
+
+          <figure className={styles.codePanel}>
+            <figcaption className={styles.codePanelTitle}>
+              developer.ts
+            </figcaption>
+            <pre className={styles.codePanelContent}>
+              <code>
+                <span className={styles.codeKeyword}>const</span>
+                {" developer = {\n"}
+                {"  name: "}
+                <span className={styles.codeString}>"Cédric Kernec"</span>
+                {",\n  focus: ["}
+                <span className={styles.codeString}>"Front-end"</span>
+                {", "}
+                <span className={styles.codeString}>"Back-end"</span>
+                {"],\n  approach: "}
+                <span className={styles.codeString}>
+                  "Comprendre, concevoir, développer"
+                </span>
+                {",\n  openToWork: "}
+                <span className={styles.codeBoolean}>true</span>
+                {",\n};"}
+              </code>
+            </pre>
+          </figure>
         </div>
       </div>
     </section>
