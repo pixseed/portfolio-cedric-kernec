@@ -1,11 +1,12 @@
 import { ArrowsOutSimpleIcon } from "@phosphor-icons/react";
 
 import ActionButton from "../../../components/ActionButton/ActionButton";
-import type { Project } from "../../../types/projects";
+import TechnologyList from "../../../components/TechnologyList/TechnologyList";
+
 import useScrollEdges from "../../../hooks/useScrollEdges";
+import type { Project } from "../../../types/projects";
 
 import styles from "./projectCard.module.scss";
-import TechnologyList from "../../../components/TechnologyList/TechnologyList";
 
 type BaseProjectCardProps = {
   project: Project;

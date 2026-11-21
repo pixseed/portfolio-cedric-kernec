@@ -2,12 +2,12 @@ import { useState, useRef } from "react";
 import type { PointerEvent } from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 
-import Card from "../../components/Cards/Cards";
 import ActionButton from "../../components/ActionButton/ActionButton";
-
-import styles from "./about.module.scss";
+import Card from "../../components/Cards/Cards";
 
 import { axisItems } from "../../data/aboutData";
+
+import styles from "./about.module.scss";
 
 export default function About() {
   // ===============================================================

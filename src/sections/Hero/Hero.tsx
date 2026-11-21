@@ -1,16 +1,16 @@
-import styles from "./hero.module.scss";
-
-import avatar from "../../assets/images/hero/hero-avatar.png";
-
-import ActionLink from "../../components/ActionLink/ActionLink";
-import SocialLink from "../../components/SocialLink/SocialLink";
-
 import {
   DownloadSimpleIcon,
   ArrowRightIcon,
   LinkedinLogoIcon,
   GithubLogoIcon,
 } from "@phosphor-icons/react";
+
+import ActionLink from "../../components/ActionLink/ActionLink";
+import SocialLink from "../../components/SocialLink/SocialLink";
+
+import avatar from "../../assets/images/hero/hero-avatar.png";
+
+import styles from "./hero.module.scss";
 
 export default function Hero() {
   return (

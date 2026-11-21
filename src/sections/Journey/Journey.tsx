@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 
 import Toggle from "../../components/Toggle/Toggle";
-import { journeyEntries } from "../../data/journeyData";
 import JourneyItem from "./JourneyItem/JourneyItem";
+
+import { journeyEntries } from "../../data/journeyData";
 
 import styles from "./journey.module.scss";
 

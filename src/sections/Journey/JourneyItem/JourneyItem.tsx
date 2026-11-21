@@ -3,6 +3,7 @@ import { BriefcaseIcon, GraduationCapIcon } from "@phosphor-icons/react";
 import ActionLink from "../../../components/ActionLink/ActionLink";
 import Card from "../../../components/Cards/Cards";
 import TechnologyList from "../../../components/TechnologyList/TechnologyList";
+
 import type { JourneyEntry } from "../../../types/journey";
 import { formatJourneyDate } from "../../../utils/formatJourneyDate";
 
@@ -122,7 +123,7 @@ export default function JourneyItem({
           )}
         </p>
       </div>
-      {/* Outils associés : une ligne de bdges et un accès aux éléments supplémentaires. */}
+      {/* Outils associés : une ligne de badges et un accès aux éléments supplémentaires. */}
       {entry.technologies && entry.technologies.length > 0 && (
         <div className={styles.technologies}>
           <TechnologyList

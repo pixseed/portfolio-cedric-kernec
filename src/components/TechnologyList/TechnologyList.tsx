@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import TechnologyBadge from "../TechnologyBadge/TechnologyBadge";
+
 import type { Technology } from "../../types/technology";
 
 import styles from "./technologyList.module.scss";
@@ -54,7 +55,7 @@ export default function TechnologyList({
   // Derived data
   // ===============================================================
 
-  // Technologie principales actuellement visibles dans la card.
+  // Technologies principales actuellement visibles dans la card.
   const visibleTechnologies = featuredTechnologies.slice(0, visibleCount);
 
   // Technologies absentes de la card à afficher dans le popover.
