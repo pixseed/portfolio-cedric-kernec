@@ -5,9 +5,17 @@
  * Styles globaux
  * ========================================== */
 
+html {
+    // Garde les éléments ciblés au-dessus de la navigation mobile.
+    scroll-padding-bottom: calc(7rem + env(safe-area-inset-bottom, 0px));
+}
+
 body {
     background-color: vars.$background-primary;
     color: vars.$text-primary;
+
+    // Réserve la place de la navigation mobile et de son bouton central.
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
 }
 
 a {
@@ -35,4 +43,14 @@ a {
 
 .gradient-text {
     @include mixins.gradient-text(vars.$gradient-primary);
+}
+
+@media (min-width: vars.$breakpoint-tablet) {
+    html {
+        scroll-padding-bottom: 0;
+    }
+
+    body {
+        padding-bottom: 0;
+    }
 }
