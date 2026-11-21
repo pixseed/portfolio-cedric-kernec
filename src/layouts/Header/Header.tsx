@@ -1,22 +1,16 @@
-import styles from './header.module.scss';
-
 import Navbar from '../../components/Navbar/Navbar';
+import { requestSectionNavigation } from '../../utils/requestSectionNavigation';
 
 import logo from '../../assets/images/logos/pixseed-logo-full.png';
 
-/*
- * Informe la Navbar qu'une navigation vers l'accueil est déclenchée
- * depuis le logo du Header.
- *
- * L'événement personnalisé permet à la Navbar de mettre immédiatement
- * à jour son état actif avant le défilement vers la section `home`.
+import styles from './header.module.scss';
+
+/**
+ * Synchronise la Navbar avec la destination du logo.
+ * Le lien #home assure ensuite le retour à l'accueil.
  */
 function handleLogoClick() {
-  window.dispatchEvent(
-    new CustomEvent("navigation-request", {
-      detail: "home",
-    }),
-  );
+  requestSectionNavigation("home");
 }
 
 export default function Header() {

@@ -2,7 +2,8 @@ import { BriefcaseIcon, GraduationCapIcon } from "@phosphor-icons/react";
 
 import ActionLink from "../../../components/ActionLink/ActionLink";
 import Card from "../../../components/Cards/Cards";
-import TechnologyBadge from "../../../components/TechnologyBadge/TechnologyBadge";
+import TechnologyList from "../../../components/TechnologyList/TechnologyList";
+
 import type { JourneyEntry } from "../../../types/journey";
 import { formatJourneyDate } from "../../../utils/formatJourneyDate";
 
@@ -122,15 +123,16 @@ export default function JourneyItem({
           )}
         </p>
       </div>
-      {/* Outils associés : réutilisation des badges du référentiel partagé. */}
+      {/* Outils associés : une ligne de badges et un accès aux éléments supplémentaires. */}
       {entry.technologies && entry.technologies.length > 0 && (
-        <ul className={styles.technologies}>
-          {entry.technologies.map((technology) => (
-            <li key={technology.name}>
-              <TechnologyBadge technology={technology} variant="compact" />
-            </li>
-          ))}
-        </ul>
+        <div className={styles.technologies}>
+          <TechnologyList
+            instanceId={`journey-${entry.id}`}
+            featuredTechnologies={entry.technologies}
+            technologies={entry.technologies}
+            isActive
+          />
+        </div>
       )}
       {/* Liens complémentaires distincts de celui de l'organisme, par exemple ses réseaux sociaux. */}
       {entry.links && entry.links.length > 0 && (

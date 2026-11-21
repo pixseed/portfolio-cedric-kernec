@@ -32,17 +32,17 @@
         position: absolute;
         inset-inline: 0;
         bottom: 0;
-        height: 75%;
+        height: 85%;
 
         background: linear-gradient(
             to bottom,
             transparent,
-            vars.$neutral-950 35%,
+            vars.$neutral-950 25%,
             vars.$neutral-950 100%
         );
 
         pointer-events: none;
-        z-index: 2;
+        z-index: 1;
     }
 }
 
@@ -101,19 +101,6 @@
     @include mixins.decoration-line();
 }
 
-.avatar {
-    position: relative;
-    z-index: 1;
-
-    display: flex;
-    justify-content: center;
-
-    img {
-        width: min(280px, 100%);
-        height: auto;
-    }
-}
-
 .cta {
     display: flex;
     flex-direction: column;
@@ -128,6 +115,35 @@
 .socialMedia {
     display: flex;
     gap: vars.$spacing-4;
+}
+
+.avatar {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    justify-content: center;
+
+    img {
+        width: min(280px, 100%);
+        height: auto;
+    }
+}
+
+.codePanel {
+    display: none;
+}
+
+.codeKeyword {
+    color: vars.$primary;
+}
+
+.codeString {
+    color: vars.$accent;
+}
+
+.codeBoolean {
+    color: vars.$secondary;
 }
 
 /* ==========================================
@@ -160,7 +176,7 @@
         background: linear-gradient(
             to bottom,
             transparent,
-            vars.$neutral-950 50%,
+            vars.$neutral-950 40%,
             vars.$neutral-950 100%
         );
     }
@@ -183,6 +199,8 @@
     }
 
     .avatar {
+        padding-top: vars.$header-navigation-bottom;
+
         img {
             width: min(360px, 100%);
         }
@@ -238,7 +256,9 @@
 
     .avatar {
         flex-shrink: 0;
-        align-self: flex-end;
+        align-self: center;
+        padding-top: 0;
+        padding-bottom: vars.$flow-section;
 
         img {
             width: auto;
@@ -246,5 +266,49 @@
             max-width: clamp(510px, 48vw, 600px);
             max-height: 100svh;
         }
+    }
+}
+
+/* ==========================================
+ * Styles Hero (code panel) - DESKTOP
+ * ========================================== */
+@media (min-width: vars.$breakpoint-desktop) and (min-height: 625px) {
+    .codePanel {
+        position: absolute;
+        left: 50%;
+        translate: -50% 0;
+        bottom: -4px;
+
+        display: block;
+        width: min(26rem, 100%);
+
+        @include mixins.surface-card(
+            $background: rgba(vars.$background-secondary, 0.75),
+            $padding: vars.$spacing-4,
+            $border-color: vars.$neutral-500
+        );
+
+        transform: perspective(700px) rotateY(-12deg) rotateX(6deg) rotateZ(-2deg);
+        box-shadow:
+            0 14px 50px rgba(vars.$neutral-950, 0.9),
+            inset 0 1px 0 rgba(vars.$text-primary, 0.75);
+    }
+
+    .codePanelTitle {
+        padding-bottom: vars.$spacing-3;
+        margin-bottom: vars.$spacing-3;
+        border-bottom: 1px solid vars.$neutral-600;
+
+        color: vars.$text-secondary;
+        font-family: vars.$font-code;
+        font-size: 0.75rem;
+    }
+
+    .codePanelContent {
+        margin: 0;
+        font-family: vars.$font-code;
+        font-size: 0.75rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
     }
 }
