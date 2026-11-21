@@ -32,17 +32,17 @@
         position: absolute;
         inset-inline: 0;
         bottom: 0;
-        height: 75%;
+        height: 85%;
 
         background: linear-gradient(
             to bottom,
             transparent,
-            vars.$neutral-950 35%,
+            vars.$neutral-950 25%,
             vars.$neutral-950 100%
         );
 
         pointer-events: none;
-        z-index: 2;
+        z-index: 1;
     }
 }
 
@@ -119,7 +119,7 @@
 
 .avatar {
     position: relative;
-    z-index: 1;
+    z-index: 2;
 
     display: flex;
     justify-content: center;
@@ -176,7 +176,7 @@
         background: linear-gradient(
             to bottom,
             transparent,
-            vars.$neutral-950 50%,
+            vars.$neutral-950 40%,
             vars.$neutral-950 100%
         );
     }
@@ -199,6 +199,8 @@
     }
 
     .avatar {
+        padding-top: vars.$header-navigation-bottom;
+
         img {
             width: min(360px, 100%);
         }
@@ -254,7 +256,9 @@
 
     .avatar {
         flex-shrink: 0;
-        align-self: flex-end;
+        align-self: center;
+        padding-top: 0;
+        padding-bottom: vars.$flow-section;
 
         img {
             width: auto;
@@ -273,7 +277,7 @@
         position: absolute;
         left: 50%;
         translate: -50% 0;
-        bottom: vars.$spacing-16;
+        bottom: -4px;
 
         display: block;
         width: min(26rem, 100%);
