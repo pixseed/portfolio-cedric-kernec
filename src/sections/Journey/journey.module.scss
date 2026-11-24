@@ -10,6 +10,69 @@ $timeline-mobile-indent: vars.$spacing-8;
  * Styles Journey
  * ========================================== */
 
+.section {
+    position: relative;
+    isolation: isolate;
+}
+
+.decorationTrack {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: clip;
+
+    display: none;
+}
+
+.decoration {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+
+    background-image:
+        radial-gradient(
+            circle 22rem at left top,
+            transparent calc(100% - 1px),
+            rgba(vars.$primary, 0.20) 100%,
+            transparent calc(100% + 1px)
+        ),
+        radial-gradient(
+            circle 18rem at right bottom,
+            transparent calc(100% - 1px),
+            rgba(vars.$primary, 0.20) 100%,
+            transparent calc(100% + 1px)
+        );
+
+    background-repeat: no-repeat;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        width: vars.$spacing-3;
+        height: vars.$spacing-3;
+        border-radius: vars.$radius-sm;
+        pointer-events: none;
+    }
+
+    &::before {
+        top: 25%;
+        left: vars.$spacing-4;
+
+        background-color: rgba(vars.$primary, 0.15);
+        box-shadow: 18px 24px 0 rgba(vars.$primary, 0.25);
+    }
+
+    &::after {
+        right: vars.$spacing-4;
+        bottom: 10%;
+
+        background-color: rgba(vars.$primary, 0.15);
+        box-shadow: -18px -24px 0 rgba(vars.$primary, 0.25);
+    }
+}
+
 .header,
 .introduction {
     display: flex;
@@ -165,6 +228,15 @@ $timeline-mobile-indent: vars.$spacing-8;
     to {
         opacity: 1;
         translate: 0 0;
+    }
+}
+
+/* ==========================================
+ * Styles Journey - TABLET
+ * ========================================== */
+@media (min-width: vars.$breakpoint-tablet) {
+    .decorationTrack {
+        display: block;
     }
 }
 

@@ -179,7 +179,11 @@ export default function Journey() {
   // ===============================================================
 
   return (
-    <section id="journey">
+    <section id="journey" className={styles.section}>
+      <div className={styles.decorationTrack} aria-hidden="true">
+        <div className={styles.decoration} />
+      </div>
+
       <div className="container section-content">
         <h2 className="visually-hidden">Parcours</h2>
         <div className={styles.header}>

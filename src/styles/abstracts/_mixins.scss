@@ -25,7 +25,7 @@
         inset: 0;
         z-index: -2;
 
-        background: rgba(vars.$neutral-100, 0.1);
+        background: rgba(vars.$neutral-100, 0.15);
         -webkit-backdrop-filter: blur(18px) saturate(2);
         backdrop-filter: blur(18px) saturate(2);
     }
@@ -34,9 +34,9 @@
         inset: vars.$border-width-default;
         z-index: -1;
 
-        background: rgba(vars.$neutral-800, 0.65);
-        -webkit-backdrop-filter: blur(8px) saturate(1.2);
-        backdrop-filter: blur(8px) saturate(1.2);
+        background: rgba(vars.$neutral-800, 0.5);
+        -webkit-backdrop-filter: blur(8px) saturate(1.4);
+        backdrop-filter: blur(8px) saturate(1.4);
     }
 }
 
