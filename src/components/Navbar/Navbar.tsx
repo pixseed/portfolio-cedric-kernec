@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
-import pixseedLeafIcon from "../../assets/images/logos/pixseed-logo-leaf.png";
+import pixseedLeafIcon from "../../assets/images/logos/pixseed-logo-leaf.webp";
 
 import { PlusIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import type { NavigationItem } from "./navigationData";

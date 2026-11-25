@@ -1,6 +1,6 @@
 import { useState, type ImgHTMLAttributes } from "react";
 
-import imageUnavailable from "../../assets/images/fallbacks/image-unavailable.png";
+import imageUnavailable from "../../assets/images/fallbacks/image-unavailable.webp";
 
 type ImageWithFallbackProps = Omit<
   ImgHTMLAttributes<HTMLImageElement>,

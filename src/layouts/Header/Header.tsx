@@ -1,7 +1,7 @@
 import Navbar from '../../components/Navbar/Navbar';
 import { requestSectionNavigation } from '../../utils/requestSectionNavigation';
 
-import logo from '../../assets/images/logos/pixseed-logo-full.png';
+import logo from '../../assets/images/logos/pixseed-logo-full.webp';
 
 import styles from './header.module.scss';
 

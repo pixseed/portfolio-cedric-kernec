@@ -5,7 +5,7 @@ import {
   LinkedinLogoIcon,
 } from "@phosphor-icons/react";
 
-import logo from "../../assets/images/logos/pixseed-logo-full.png";
+import logo from "../../assets/images/logos/pixseed-logo-full.webp";
 import ActionLink from "../../components/ActionLink/ActionLink";
 import SocialLink from "../../components/SocialLink/SocialLink";
 import { requestSectionNavigation } from "../../utils/requestSectionNavigation";

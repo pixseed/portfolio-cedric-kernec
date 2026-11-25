@@ -7,7 +7,7 @@ import {
 import ActionLink from "../../components/ActionLink/ActionLink";
 import ContactForm from "./ContactForm/ContactForm";
 
-import mascot from "../../assets/images/mascot/contact-mascot.png";
+import mascot from "../../assets/images/mascot/contact-mascot.webp";
 
 import styles from "./contact.module.scss";
 

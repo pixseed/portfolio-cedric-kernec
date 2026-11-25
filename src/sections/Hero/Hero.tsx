@@ -8,7 +8,7 @@ import {
 import ActionLink from "../../components/ActionLink/ActionLink";
 import SocialLink from "../../components/SocialLink/SocialLink";
 
-import avatar from "../../assets/images/mascot/hero-mascot.png";
+import avatar from "../../assets/images/mascot/hero-mascot.webp";
 
 import styles from "./hero.module.scss";
 

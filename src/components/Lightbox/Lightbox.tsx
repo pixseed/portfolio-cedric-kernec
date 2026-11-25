@@ -4,7 +4,7 @@ import { getCircularIndex } from "../../utils/getCircularIndex";
 
 import type { ProjectImage } from "../../types/projects";
 
-import imageUnavailable from "../../assets/images/fallbacks/image-unavailable.png";
+import imageUnavailable from "../../assets/images/fallbacks/image-unavailable.webp";
 import ImageWithFallback from "../ImageWithFallback/ImageWithFallback";
 
 import styles from "./lightbox.module.scss";
