@@ -2,6 +2,7 @@ import { ArrowsOutSimpleIcon } from "@phosphor-icons/react";
 
 import ActionButton from "../../../components/ActionButton/ActionButton";
 import TechnologyList from "../../../components/TechnologyList/TechnologyList";
+import ImageWithFallback from "../../../components/ImageWithFallback/ImageWithFallback";
 
 import useScrollEdges from "../../../hooks/useScrollEdges";
 import type { Project } from "../../../types/projects";
@@ -68,7 +69,10 @@ export default function ProjectCard(props: ProjectCardProps) {
         style={isCarousel ? { anchorName: `--card-${project.id}` } : undefined}
       >
         <div className={styles.projectIllustration}>
-          <img src={project.illustration.src} alt={project.illustration.alt} />
+          <ImageWithFallback
+            src={project.illustration.src}
+            alt={project.illustration.alt}
+          />
         </div>
 
         <div className={styles.projectContent}>
