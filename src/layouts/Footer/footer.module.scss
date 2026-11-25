@@ -23,6 +23,7 @@
     gap: vars.$flow-group;
 }
 
+
 .identity {
     display: flex;
     flex-direction: column;
@@ -51,18 +52,11 @@
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-
-    img {
-        display: block;
-        height: 40px;
-        width: auto;
-        max-width: none;
-        filter: drop-shadow(2px 6px 6px vars.$neutral-950)
-            drop-shadow(0 0 4px vars.$neutral-950);
-    }
+    display: block;
+    width: min(150px, 100%);
+    height: auto;
+    margin-bottom: vars.$spacing-2;
+    translate: -6px;
 }
 
 /* ==========================================
@@ -73,7 +67,24 @@
     .main,
     .bottom {
         flex-direction: row;
-        align-items: center;
         justify-content: space-between;
+    }
+
+    .main {
+        align-items: flex-start;
+    }
+
+    .bottom {
+        align-items: flex-end;
+    }
+
+    .identity {
+        min-width: 0;
+    }
+
+    .actions {
+        flex-shrink: 0;
+        flex-direction: column;
+        align-items: flex-end;
     }
 }

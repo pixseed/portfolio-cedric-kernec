@@ -5,6 +5,7 @@ import {
   LinkedinLogoIcon,
 } from "@phosphor-icons/react";
 
+import logo from "../../assets/images/logos/pixseed-logo-full.png";
 import ActionLink from "../../components/ActionLink/ActionLink";
 import SocialLink from "../../components/SocialLink/SocialLink";
 import { requestSectionNavigation } from "../../utils/requestSectionNavigation";
@@ -28,6 +29,7 @@ export default function Footer() {
         {/* Identité et actions principales */}
         <div className={styles.main}>
           <div className={styles.identity}>
+            <img className={styles.logo} src={logo} alt="PixSeed" />
             <p className={styles.name}>Cédric Kernec</p>
             <p className={styles.profession}>Développeur web & web mobile</p>
           </div>
@@ -37,6 +39,7 @@ export default function Footer() {
               href="/documents/cv-cedric-kernec.pdf"
               download="CV-Cedric-Kernec"
               icon={DownloadSimpleIcon}
+              iconPosition="right"
               appearance="text"
             />
 
@@ -44,6 +47,7 @@ export default function Footer() {
               label="Retour en haut"
               href="#home"
               icon={ArrowUpIcon}
+              iconPosition="right"
               appearance="text"
               onClick={handleBackToTopClick}
             />
