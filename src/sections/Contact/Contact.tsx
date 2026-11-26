@@ -1,7 +1,13 @@
-import { EnvelopeIcon, GithubLogoIcon, LinkedinLogoIcon } from "@phosphor-icons/react";
+import {
+  EnvelopeIcon,
+  GithubLogoIcon,
+  LinkedinLogoIcon,
+} from "@phosphor-icons/react";
 
 import ActionLink from "../../components/ActionLink/ActionLink";
 import ContactForm from "./ContactForm/ContactForm";
+
+import mascot from "../../assets/images/mascot/contact-mascot.webp";
 
 import styles from "./contact.module.scss";
 
@@ -12,7 +18,14 @@ export default function Contact() {
         <h2 className="visually-hidden">Contact</h2>
         <div className={styles.content}>
           <div className={styles.introduction}>
-            <h3>
+            <img
+              className={styles.mascot}
+              src={mascot}
+              alt=""
+              loading="lazy"
+              draggable={false}
+            />
+            <h3 className={styles.title}>
               Échangeons sur une{" "}
               <span className="gradient-text">opportunité</span>
             </h3>

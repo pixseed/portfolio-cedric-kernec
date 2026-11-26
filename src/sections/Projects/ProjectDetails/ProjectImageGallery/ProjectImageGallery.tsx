@@ -4,6 +4,8 @@ import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import Lightbox from "../../../../components/Lightbox/Lightbox";
 import { useEmblaSelectedIndex } from "../../../../hooks/useEmblaSelectedIndex";
 
+import ImageWithFallback from "../../../../components/ImageWithFallback/ImageWithFallback";
+
 import type { Project } from "../../../../types/projects";
 
 import styles from "./projectImageGallery.module.scss";
@@ -59,13 +61,18 @@ export default function ProjectImageGallery({
 
   return (
     <>
-      <div className={`${styles.imageGallery} ${images.length > 1 ? styles.withThumbnails : ""}`} >
+      <div
+        className={`${styles.imageGallery} ${images.length > 1 ? styles.withThumbnails : ""}`}
+      >
         <div className={styles.carouselMain}>
           {/* Image principale */}
           <div className={styles.carouselViewport} ref={emblaRef}>
             <div className={styles.carouselContainer}>
               {images.map((image, index) => (
-                <div className={styles.carouselSlide} key={`${image.src}-${index}`}>
+                <div
+                  className={styles.carouselSlide}
+                  key={`${image.src}-${index}`}
+                >
                   <button
                     ref={index === activeIndex ? activeImageButtonRef : null}
                     type="button"
@@ -74,7 +81,7 @@ export default function ProjectImageGallery({
                     onClick={() => setIsLightboxOpen(true)}
                     aria-label={`Agrandir l'image ${index + 1} du projet ${project.title}`}
                   >
-                    <img
+                    <ImageWithFallback
                       src={image.src}
                       alt={image.alt}
                       draggable={false}
@@ -125,7 +132,7 @@ export default function ProjectImageGallery({
                 aria-label={`Afficher l'image ${index + 1} sur ${images.length}`}
                 aria-pressed={index === activeIndex}
               >
-                <img src={image.src} alt="" draggable="false" />
+                <ImageWithFallback src={image.src} alt="" draggable={false} />
               </button>
             ))}
           </div>

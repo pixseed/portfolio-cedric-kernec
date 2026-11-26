@@ -45,6 +45,10 @@ a {
     @include mixins.gradient-text(vars.$gradient-primary);
 }
 
+/* ==========================================
+ * Styles Globals - TABLETTE
+ * ========================================== */
+
 @media (min-width: vars.$breakpoint-tablet) {
     html {
         scroll-padding-bottom: 0;
@@ -52,5 +56,16 @@ a {
 
     body {
         padding-bottom: 0;
+
+        background-image:
+            radial-gradient(
+                ellipse 70% 100% at -15% 50%,
+                rgba(vars.$tertiary, 0.4) 0%,
+                rgba(vars.$primary, 0.2) 35%,
+                transparent 50%
+            );
+
+        background-attachment: fixed;
+        background-repeat: no-repeat;
     }
 }

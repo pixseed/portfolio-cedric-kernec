@@ -89,7 +89,11 @@ export default function Skills() {
   // Return
   // ===============================================================
   return (
-    <section id="skills">
+    <section id="skills" className={styles.section}>
+      <div className={styles.decorationTrack} aria-hidden="true">
+        <div className={styles.decoration} />
+      </div>
+
       <div className="container section-content">
         <h2 className="visually-hidden">Compétences</h2>
         <div className={styles.skillsInterface}>

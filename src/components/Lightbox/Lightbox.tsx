@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef, type MouseEvent } from "react";
-
-import styles from "./lightbox.module.scss";
-
-import type { ProjectImage } from "../../types/projects";
 import { CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
 import { getCircularIndex } from "../../utils/getCircularIndex";
 
-import imageUnavailable from "../../assets/images/fallbacks/image-unavailable.png";
+import type { ProjectImage } from "../../types/projects";
+
+import imageUnavailable from "../../assets/images/fallbacks/image-unavailable.webp";
+import ImageWithFallback from "../ImageWithFallback/ImageWithFallback";
+
+import styles from "./lightbox.module.scss";
 
 type LightboxProps = {
   images: ProjectImage[];
@@ -142,7 +143,7 @@ export default function Lightbox({
 
       <div className={styles.lightboxContent}>
         {activeImage ? (
-          <img
+          <ImageWithFallback
             src={activeImage.src}
             alt={activeImage.alt}
             draggable={false}

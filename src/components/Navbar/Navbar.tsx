@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
-import pixelsLogo from "../../assets/images/logos/pixseed-logo-pixels.png";
+import pixseedLeafIcon from "../../assets/images/logos/pixseed-logo-leaf.webp";
 
 import { PlusIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import type { NavigationItem } from "./navigationData";
@@ -575,7 +575,7 @@ export default function Navbar() {
               className={activeSection === item.id ? styles.active : ""}
               aria-current={activeSection === item.id ? "location" : undefined}
             >
-              <img src={pixelsLogo} alt="" className={styles.pixelsLogo} />
+              <img src={pixseedLeafIcon} alt="" className={styles.pixseedLeafIcon} />
               <span>{item.label}</span>
             </a>
           </li>
@@ -638,7 +638,7 @@ export default function Navbar() {
                   activeSection === item.id ? "location" : undefined
                 }
               >
-                <img src={pixelsLogo} alt="" className={styles.pixelsLogo} />
+                <img src={pixseedLeafIcon} alt="" className={styles.pixseedLeafIcon} />
                 <span>{item.label}</span>
               </a>
             </li>

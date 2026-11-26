@@ -105,9 +105,9 @@
 
 .unavailableMessage {
     position: absolute;
-    top: 50%;
+    bottom: 15%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     z-index: 1;
 
     width: max-content;

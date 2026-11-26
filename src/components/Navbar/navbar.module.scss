@@ -298,9 +298,9 @@ $navigation-spacing: vars.$navigation-spacing;
         }
     }
 
-    .pixelsLogo {
+    .pixseedLeafIcon {
         width: 0;
-        height: 1rem;
+        height: auto;
         margin-inline-end: 0;
 
         opacity: 0;
@@ -318,9 +318,9 @@ $navigation-spacing: vars.$navigation-spacing;
                 vars.$transition-easing-default;
     }
 
-    .active .pixelsLogo {
-        width: 1rem;
-        margin-inline-end: vars.$spacing-2;
+    .active .pixseedLeafIcon {
+        width: 2rem;
+        margin-inline-end: vars.$spacing-1;
         opacity: 1;
         transform: scale(1);
     }
@@ -331,7 +331,7 @@ $navigation-spacing: vars.$navigation-spacing;
 
         height: $desktop-link-height;
 
-        border: vars.$border-width-default solid vars.$border-light;
+        border: vars.$border-width-md solid vars.$primary;
         border-radius: vars.$radius-full;
 
         background: rgba(vars.$neutral-700, 0.35);

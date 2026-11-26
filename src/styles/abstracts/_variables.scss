@@ -1,7 +1,8 @@
 // Brand colors
-$primary: #f5087b;
-$secondary: #c174ff;
-$accent: #f9f786;
+$primary: #e174ff;
+$secondary: #ff63b4;
+$tertiary: #b7fff8;
+$accent: #e9ff7d;
 
 // Neutral colors
 $neutral-100: #f1f1f4;
@@ -31,8 +32,7 @@ $action-accent: $accent;
 $muted: $neutral-500;
 
 // Gradients
-$gradient-primary: linear-gradient(to right, $primary, $accent);
-$gradient-action: linear-gradient(to right, $primary 35%, $accent 100%);
+$gradient-primary: linear-gradient(to right, $primary, $secondary, $accent);
 
 // Spacing
 $spacing-1: 0.25rem;

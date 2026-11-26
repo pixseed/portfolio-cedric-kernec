@@ -5,6 +5,42 @@
  * Styles Skills
  * ========================================== */
 
+.section {
+    position: relative;
+    isolation: isolate;
+}
+
+.decorationTrack {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: clip;
+
+    display: none;
+}
+
+.decoration {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+
+    background-image: radial-gradient(
+        circle,
+        rgba(vars.$primary, 0.25) 1px,
+        transparent 1.5px
+    );
+    background-size: 24px 24px;
+
+    mask-image: linear-gradient(
+        to right,
+        black,
+        transparent 35%,
+        transparent 65%,
+        black
+    );
+}
+
 .skillsInterface {
     display: flex;
     flex-direction: column;
@@ -197,6 +233,10 @@
  * Styles Skills - DESKTOP
  * ========================================== */
 @media (min-width: vars.$breakpoint-desktop) {
+    .decorationTrack {
+        display: block;
+    }
+
     .skillsInterface {
         display: grid;
         grid-template-columns: 240px minmax(0, 1fr);
