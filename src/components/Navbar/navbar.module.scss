@@ -279,8 +279,6 @@ $navigation-spacing: vars.$navigation-spacing;
             transition:
                 border-color vars.$transition-duration-fast
                     vars.$transition-easing-default,
-                background vars.$transition-duration-fast
-                    vars.$transition-easing-default,
                 font-size vars.$transition-duration-default
                     vars.$transition-easing-default;
 

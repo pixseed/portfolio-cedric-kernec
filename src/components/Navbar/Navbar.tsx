@@ -5,6 +5,7 @@ import pixseedLeafIcon from "../../assets/images/logos/pixseed-logo-leaf.webp";
 import { PlusIcon, ListIcon, XIcon } from "@phosphor-icons/react";
 import type { NavigationItem } from "./navigationData";
 import { navigationItems } from "./navigationData";
+import SectionNavigation from "../SectionNavigation/SectionNavigation";
 
 import styles from "./navbar.module.scss";
 
@@ -483,167 +484,186 @@ export default function Navbar() {
   // Return
   // ===============================================================
   return (
-    <nav
-      ref={navbarRef}
-      className={styles.navbar}
-      aria-label="Navigation principale"
-    >
-      {/* Navigation principale mobile */}
-      <a
-        href={`#${homeItem.id}`}
-        onClick={handleMobileLinkClick}
-        className={styles.mainLink}
-        aria-label={homeItem.label}
-        aria-current={activeSection === homeItem.id ? "location" : undefined}
+    <>
+      <nav
+        ref={navbarRef}
+        className={styles.navbar}
+        aria-label="Navigation principale"
       >
-        <HomeIcon />
-        <span>{homeItem.label}</span>
-      </a>
+        {/* Navigation principale mobile */}
+        <a
+          href={`#${homeItem.id}`}
+          onClick={handleMobileLinkClick}
+          className={styles.mainLink}
+          aria-label={homeItem.label}
+          aria-current={activeSection === homeItem.id ? "location" : undefined}
+        >
+          <HomeIcon />
+          <span>{homeItem.label}</span>
+        </a>
 
-      <button
-        type="button"
-        className={styles.mobileMenuToggle}
-        onClick={handleMobileMenuToggle}
-        aria-label={
-          isMobileMenuOpen
-            ? "Fermer le menu de navigation"
-            : "Ouvrir le menu de navigation"
-        }
-        aria-expanded={isMobileMenuOpen}
-        aria-controls="mobile-navigation"
-      >
-        {isMobileMenuOpen ? <XIcon /> : <ListIcon />}
-        <span>Menu</span>
-      </button>
+        <button
+          type="button"
+          className={styles.mobileMenuToggle}
+          onClick={handleMobileMenuToggle}
+          aria-label={
+            isMobileMenuOpen
+              ? "Fermer le menu de navigation"
+              : "Ouvrir le menu de navigation"
+          }
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-navigation"
+        >
+          {isMobileMenuOpen ? <XIcon /> : <ListIcon />}
+          <span>Menu</span>
+        </button>
 
-      <a
-        href={`#${contactItem.id}`}
-        onClick={handleMobileLinkClick}
-        className={styles.mainLink}
-        aria-current={activeSection === contactItem.id ? "location" : undefined}
-      >
-        <ContactIcon />
-        <span>{contactItem.label}</span>
-      </a>
+        <a
+          href={`#${contactItem.id}`}
+          onClick={handleMobileLinkClick}
+          className={styles.mainLink}
+          aria-current={
+            activeSection === contactItem.id ? "location" : undefined
+          }
+        >
+          <ContactIcon />
+          <span>{contactItem.label}</span>
+        </a>
 
-      {/* Menu secondaire mobile */}
-      <ul
-        id="mobile-navigation"
-        className={`
+        {/* Menu secondaire mobile */}
+        <ul
+          id="mobile-navigation"
+          className={`
           ${styles.mobileDropdown}
           ${isMobileMenuOpen ? styles.open : ""}
         `}
-      >
-        {navigationItems
-          .filter((item) => item.mobileDropdown)
-          .map((item) => {
-            const Icon = item.icon;
+        >
+          {navigationItems
+            .filter((item) => item.mobileDropdown)
+            .map((item) => {
+              const Icon = item.icon;
 
-            return (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  onClick={handleMobileLinkClick}
-                  aria-current={
-                    activeSection === item.id ? "location" : undefined
-                  }
-                >
-                  <Icon />
-                  <span>{item.label}</span>
-                </a>
-              </li>
-            );
-          })}
-      </ul>
+              return (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    onClick={handleMobileLinkClick}
+                    aria-current={
+                      activeSection === item.id ? "location" : undefined
+                    }
+                  >
+                    <Icon />
+                    <span>{item.label}</span>
+                  </a>
+                </li>
+              );
+            })}
+        </ul>
 
-      {/* Navigation principale tablette et desktop */}
-      <ul ref={primaryMenuRef} className={styles.primaryMenu}>
-        <li
-          className={styles.activeIndicator}
-          aria-hidden="true"
-          style={{
-            left: activeIndicatorStyle.left,
-            width: activeIndicatorStyle.width,
-          }}
-        />
+        {/* Navigation principale tablette et desktop */}
+        <ul ref={primaryMenuRef} className={styles.primaryMenu}>
+          <li
+            className={styles.activeIndicator}
+            aria-hidden="true"
+            style={{
+              left: activeIndicatorStyle.left,
+              width: activeIndicatorStyle.width,
+            }}
+          />
 
-        {navigationItems.map((item) => (
-          <li key={item.id} className={getPrimaryMenuItemClass(item)}>
-            <a
-              href={`#${item.id}`}
-              onClick={() => handleNavigationClick(item.id)}
-              className={activeSection === item.id ? styles.active : ""}
-              aria-current={activeSection === item.id ? "location" : undefined}
-            >
-              <img src={pixseedLeafIcon} alt="" className={styles.pixseedLeafIcon} />
-              <span>{item.label}</span>
-            </a>
-          </li>
-        ))}
-
-        <li className={styles.tabletMore}>
-          <button
-            type="button"
-            onClick={handleTabletDropdownToggle}
-            aria-expanded={isTabletDropdownOpen}
-            aria-controls="tablet-dropdown"
-            aria-label={
-              isTabletDropdownOpen
-                ? "Fermer les liens de navigation supplémentaires"
-                : "Afficher les liens de navigation supplémentaires"
-            }
-            className={`
-              ${styles.tabletMoreButton}
-              ${isDropdownSectionActive ? styles.active : ""}
-            `}
-          >
-            <PlusIcon />
-          </button>
-        </li>
-      </ul>
-
-      {/* Dropdown de navigation tablette */}
-      <ul
-        ref={tabletDropdownRef}
-        id="tablet-dropdown"
-        className={`
-          ${styles.tabletDropdown} 
-          ${isTabletDropdownOpen ? styles.open : ""}
-        `}
-      >
-        <li
-          className={`
-            ${styles.dropdownActiveIndicator}
-            ${isDropdownIndicatorVisible ? styles.visible : ""}
-          `}
-          aria-hidden="true"
-          style={{
-            top: dropdownIndicatorStyle.top,
-          }}
-        />
-        {navigationItems
-          .filter((item) => item.tabletDropdown)
-          .map((item) => (
-            <li
-              key={item.id}
-              className={
-                item.tabletOptional ? styles.tabletDropdownOptional : ""
-              }
-            >
+          {navigationItems.map((item) => (
+            <li key={item.id} className={getPrimaryMenuItemClass(item)}>
               <a
                 href={`#${item.id}`}
-                onClick={() => handleTabletDropdownLinkClick(item.id)}
+                onClick={() => handleNavigationClick(item.id)}
                 className={activeSection === item.id ? styles.active : ""}
                 aria-current={
                   activeSection === item.id ? "location" : undefined
                 }
               >
-                <img src={pixseedLeafIcon} alt="" className={styles.pixseedLeafIcon} />
+                <img
+                  src={pixseedLeafIcon}
+                  alt=""
+                  className={styles.pixseedLeafIcon}
+                />
                 <span>{item.label}</span>
               </a>
             </li>
           ))}
-      </ul>
-    </nav>
+
+          <li className={styles.tabletMore}>
+            <button
+              type="button"
+              onClick={handleTabletDropdownToggle}
+              aria-expanded={isTabletDropdownOpen}
+              aria-controls="tablet-dropdown"
+              aria-label={
+                isTabletDropdownOpen
+                  ? "Fermer les liens de navigation supplémentaires"
+                  : "Afficher les liens de navigation supplémentaires"
+              }
+              className={`
+              ${styles.tabletMoreButton}
+              ${isDropdownSectionActive ? styles.active : ""}
+            `}
+            >
+              <PlusIcon />
+            </button>
+          </li>
+        </ul>
+
+        {/* Dropdown de navigation tablette */}
+        <ul
+          ref={tabletDropdownRef}
+          id="tablet-dropdown"
+          className={`
+          ${styles.tabletDropdown} 
+          ${isTabletDropdownOpen ? styles.open : ""}
+        `}
+        >
+          <li
+            className={`
+            ${styles.dropdownActiveIndicator}
+            ${isDropdownIndicatorVisible ? styles.visible : ""}
+          `}
+            aria-hidden="true"
+            style={{
+              top: dropdownIndicatorStyle.top,
+            }}
+          />
+          {navigationItems
+            .filter((item) => item.tabletDropdown)
+            .map((item) => (
+              <li
+                key={item.id}
+                className={
+                  item.tabletOptional ? styles.tabletDropdownOptional : ""
+                }
+              >
+                <a
+                  href={`#${item.id}`}
+                  onClick={() => handleTabletDropdownLinkClick(item.id)}
+                  className={activeSection === item.id ? styles.active : ""}
+                  aria-current={
+                    activeSection === item.id ? "location" : undefined
+                  }
+                >
+                  <img
+                    src={pixseedLeafIcon}
+                    alt=""
+                    className={styles.pixseedLeafIcon}
+                  />
+                  <span>{item.label}</span>
+                </a>
+              </li>
+            ))}
+        </ul>
+      </nav>
+
+      <SectionNavigation
+        activeSection={activeSection}
+        onNavigate={handleNavigationClick}
+      />
+    </>
   );
 }

@@ -266,24 +266,52 @@
 
             padding: vars.$spacing-3 vars.$spacing-4;
 
-            border: none;
+            // Réserve la bordure et contient le décor derrière le texte.
+            isolation: isolate;
+            border: vars.$border-width-default solid transparent;
             border-radius: vars.$radius-md;
 
-            transition: color vars.$transition-duration-slow
-                vars.$transition-easing-smooth;
+            transition: color vars.$transition-duration-default
+                vars.$transition-easing-default;
 
             &::after {
-                display: none;
+                display: block;
+                inset: calc(-1 * vars.$border-width-default);
+
+                width: auto;
+                height: auto;
+                transform: none;
+
+                z-index: -1;
+                border-radius: inherit;
+                pointer-events: none;
+
+                @include mixins.gradient-border-background(vars.$secondary);
+
+                opacity: 0;
+                transition: opacity vars.$transition-duration-default
+                    vars.$transition-easing-default;
+            }
+
+            &:hover:not(.active),
+            &:focus-visible {
+                color: vars.$text-primary;
+
+                &::after {
+                    opacity: 1;
+                }
             }
 
             &.active {
                 color: vars.$text-primary;
-                @include mixins.gradient-border-background(vars.$primary);
-            }
 
-            &:hover:not(.active) {
-                color: vars.$text-primary;
-                @include mixins.gradient-border-background(vars.$secondary);
+                background: transparent;
+                background-clip: border-box;
+
+                &::after {
+                    @include mixins.gradient-border-background(vars.$primary);
+                    opacity: 1;
+                }
             }
 
             &:focus-visible {
@@ -397,7 +425,50 @@
  * Styles Skills - ANIMATIONS
  * ========================================== */
 
+@keyframes domain-content-enter {
+    from {
+        opacity: 0;
+        translate: 0 vars.$spacing-3;
+    }
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@keyframes domain-illustration-enter {
+    from {
+        opacity: 0;
+        translate: vars.$spacing-8 0;
+    }
+
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+    .domainHeader,
+    .technologies,
+    .cards {
+        animation: domain-content-enter vars.$transition-duration-default
+            vars.$transition-easing-default both;
+    }
+
+    .technologies {
+        animation-delay: 80ms;
+    }
+
+    .cards {
+        animation-delay: 160ms;
+    }
+
+    .domainIllustration {
+        animation: domain-illustration-enter vars.$transition-duration-default
+            vars.$transition-easing-default 80ms both;
+    }
+
     @supports (animation-timeline: view()) {
         .skillsInterface {
             @include mixins.scroll-animation(
