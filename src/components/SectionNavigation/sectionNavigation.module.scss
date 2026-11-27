@@ -62,6 +62,11 @@
 
         &[aria-current="location"] {
             color: vars.$accent;
+
+            .dot {
+                outline: vars.$border-width-default solid currentColor;
+                outline-offset: 3px;
+            }
         }
     }
 
