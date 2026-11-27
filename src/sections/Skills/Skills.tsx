@@ -155,6 +155,7 @@ export default function Skills() {
           {/* Contenu du domaine */}
           {selectedDomain && (
             <div
+              key={selectedDomain.id}
               className={`${styles.domainContent} ${styles[selectedDomain.id]}`}
             >
               <div className={styles.domainHeader}>
