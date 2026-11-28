@@ -8,7 +8,7 @@
     display: none;
 }
 
-@media (min-width: vars.$breakpoint-desktop) {
+@media (min-width: calc(vars.$container-max-width + 4 * vars.$spacing-8)) {
     .navigation {
         position: fixed;
         top: 50%;
