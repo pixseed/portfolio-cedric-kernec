@@ -5,7 +5,6 @@ import {
   SquaresFourIcon,
 } from "@phosphor-icons/react";
 import useEmblaCarousel from "embla-carousel-react";
-
 import { useState, useEffect, useRef, useCallback } from "react";
 
 import type { Project, ProjectCategory } from "../../types/projects";
@@ -13,12 +12,14 @@ import { projects } from "../../data/projectsData";
 import ProjectCard from "./ProjectCard/ProjectCard";
 import ActionButton from "../../components/ActionButton/ActionButton";
 
-import styles from "./projects.module.scss";
 import Modal from "../../components/Modal/Modal";
 import ProjectDetails from "./ProjectDetails/ProjectDetails";
 import ProjectsGallery from "./ProjectsGallery/ProjectsGallery";
 import { getCircularIndex } from "../../utils/getCircularIndex";
 import { useEmblaSelectedIndex } from "../../hooks/useEmblaSelectedIndex";
+import useSwipeNavigation from "../../hooks/useSwipeNavigation";
+
+import styles from "./projects.module.scss";
 
 export default function Projects() {
   // ===============================================================
@@ -45,8 +46,8 @@ export default function Projects() {
       // Supprime l'animation de navigation lorsque les mouvements sont réduits.
       "(prefers-reduced-motion: reduce)": {
         duration: 0,
-      }
-    }
+      },
+    },
   });
 
   const activeIndex = useEmblaSelectedIndex(emblaApi);
@@ -139,8 +140,7 @@ export default function Projects() {
         emblaApi?.scrollTo(index, true);
 
         const button = emblaApi
-          .slideNodes()[index]
-          ?.querySelector<HTMLButtonElement>("[data-project-action] button");
+          .slideNodes()[index]?.querySelector<HTMLButtonElement>("[data-project-action] button");
 
         requestAnimationFrame(() => {
           button?.focus({ preventScroll: true });
@@ -179,6 +179,16 @@ export default function Projects() {
     },
     [selectedProject, navigableProjects],
   );
+
+  // Réutilise la navigation entre projets en excluant les galeries
+  // et les éléments interactifs du suivi tactile.
+  const projectSwipeHandlers = useSwipeNavigation({
+    onPrevious: () => handleNavigateProject(-1),
+    onNext: () => handleNavigateProject(1),
+    enabled: selectedProject !== null && navigableProjects.length > 1,
+    ignoreSelector:
+      "[data-swipe-ignore], [data-lightbox], a, button, input, textarea, select, [contenteditable]",
+  });
 
   // ===============================================================
   // Effects
@@ -405,7 +415,9 @@ export default function Projects() {
         preserveScrollKey="gallery"
       >
         {selectedProject ? (
-          <ProjectDetails project={selectedProject} />
+          <div className={styles.projectSwipeArea} {...projectSwipeHandlers}>
+            <ProjectDetails project={selectedProject} />
+          </div>
         ) : (
           <ProjectsGallery
             projects={projects}

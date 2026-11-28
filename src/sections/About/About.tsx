@@ -1,6 +1,7 @@
-import { useState, useRef } from "react";
-import type { PointerEvent } from "react";
+import { useState } from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
+
+import useSwipeNavigation from "../../hooks/useSwipeNavigation";
 
 import ActionButton from "../../components/ActionButton/ActionButton";
 import Card from "../../components/Cards/Cards";
@@ -15,19 +16,6 @@ export default function About() {
   // ===============================================================
 
   const [activeIndex, setActiveIndex] = useState(0);
-
-  // ===============================================================
-  // Refs
-  // ===============================================================
-
-  /**
-   * Mémorise le pointeur et les coordonnées de départ du balayage.
-   */
-  const swipeStartRef = useRef<{
-    pointerId: number;
-    x: number;
-    y: number;
-  } | null>(null);
 
   // ===============================================================
   // Derived data
@@ -50,56 +38,11 @@ export default function About() {
     setActiveIndex((index) => (index + 1) % axisItems.length);
   }
 
-  /**
-   * Enregistre le départ d'un geste tactile ou au stylet.
-   * Ignore la souris et les pointeurs secondaires.
-   */
-  function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
-    if (event.pointerType === "mouse" || !event.isPrimary) return;
-
-    swipeStartRef.current = {
-      pointerId: event.pointerId,
-      x: event.clientX,
-      y: event.clientY,
-    };
-  }
-
-  /**
-   * Change d'axe lorsque le geste suivi se termine par un balayage
-   * suffisamment long et principalement horizontal.
-   */
-  function handlePointerUp(event: PointerEvent<HTMLDivElement>) {
-    const start = swipeStartRef.current;
-
-    // Ne traite que le pointeur dont le départ a été enregistré.
-    if (!start || start.pointerId !== event.pointerId) return;
-
-    // Termine le suivi avant d'évaluer le déplacement.
-    swipeStartRef.current = null;
-
-    const distanceX = event.clientX - start.x;
-    const distanceY = event.clientY - start.y;
-
-    // Exige au moins 48 px horizontalement et une direction assez nette
-    // pour ne pas confondre un geste diagonal avec un changement d'axe.
-    if (
-      Math.abs(distanceX) < 48 ||
-      Math.abs(distanceX) <= Math.abs(distanceY) * 1.5
-    ) {
-      return;
-    }
-
-    if (distanceX < 0) {
-      handleNext();
-    } else {
-      handlePrevious();
-    }
-  }
-
-  function handlePointerCancel() {
-    // Le navigateur peut reprendre le geste pour défiler ou zoomer.
-    swipeStartRef.current = null;
-  }
+  // Associe les balayages aux mêmes actions que les boutons du carrousel.
+  const swipeHandlers = useSwipeNavigation({
+    onPrevious: handlePrevious,
+    onNext: handleNext,
+  });
 
   // ===============================================================
   // Return
@@ -139,12 +82,7 @@ export default function About() {
             aria-roledescription="carrousel"
             aria-label="Les trois axes de mon approche"
           >
-            <div
-              className={styles.carouselViewport}
-              onPointerDown={handlePointerDown}
-              onPointerUp={handlePointerUp}
-              onPointerCancel={handlePointerCancel}
-            >
+            <div className={styles.carouselViewport} {...swipeHandlers}>
               <div className={styles.carouselTrack}>
                 {axisItems.map((item, index) => (
                   <div

@@ -121,6 +121,17 @@
     @include mixins.glass-surface();
 }
 
+.swipeImage {
+    --image-enter-offset: #{vars.$spacing-8};
+
+    // Laisse le navigateur gérer le défilement vertical et le zoom.
+    touch-action: pan-y pinch-zoom;
+
+    &[data-direction="-1"] {
+        --image-enter-offset: #{-1 * vars.$spacing-8};
+    }
+}
+
 /* ==========================================
  * Styles Lightbox - TABLET LARGE
  * ========================================== */
@@ -146,5 +157,29 @@
 
     .nextButton {
         right: vars.$spacing-4;
+    }
+}
+
+/* ==========================================
+ * Lightbox - Animations
+ * ========================================== */
+
+@keyframes lightbox-image-enter {
+    from {
+        opacity: 0;
+        translate: var(--image-enter-offset) 0;
+    }
+
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .swipeImage {
+        animation: lightbox-image-enter
+            vars.$transition-duration-fast
+            vars.$transition-easing-default;
     }
 }

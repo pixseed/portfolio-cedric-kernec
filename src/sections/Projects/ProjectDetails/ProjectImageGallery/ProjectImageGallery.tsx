@@ -62,6 +62,7 @@ export default function ProjectImageGallery({
   return (
     <>
       <div
+        data-swipe-ignore
         className={`${styles.imageGallery} ${images.length > 1 ? styles.withThumbnails : ""}`}
       >
         <div className={styles.carouselMain}>
