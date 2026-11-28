@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useRef, type MouseEvent } from "react";
+import { useState, useCallback, useEffect, useRef, type MouseEvent } from "react";
 import { CaretLeftIcon, CaretRightIcon, XIcon } from "@phosphor-icons/react";
 import { getCircularIndex } from "../../utils/getCircularIndex";
 
 import type { ProjectImage } from "../../types/projects";
+
+import useSwipeNavigation from "../../hooks/useSwipeNavigation";
 
 import imageUnavailable from "../../assets/images/fallbacks/image-unavailable.webp";
 import ImageWithFallback from "../ImageWithFallback/ImageWithFallback";
@@ -27,6 +29,13 @@ export default function Lightbox({
   onNavigate,
 }: LightboxProps) {
   // ===============================================================
+  // State
+  // ===============================================================
+
+  // Conserve le sens du dernier changement pour orienter l'animation.
+  const [navigationDirection, setNavigationDirection] = useState<-1 | 1>(1);
+
+  // ===============================================================
   // Refs
   // ===============================================================
 
@@ -37,6 +46,7 @@ export default function Lightbox({
   // ===============================================================
   // Derived data
   // ===============================================================
+
   const activeImage = images[activeIndex];
 
   // ===============================================================
@@ -47,10 +57,19 @@ export default function Lightbox({
     (direction: -1 | 1) => {
       const nextIndex = getCircularIndex(activeIndex, direction, images.length);
 
+      setNavigationDirection(direction);
       onNavigate(nextIndex);
     },
     [activeIndex, images.length, onNavigate],
   );
+
+  // Active le balyage entre images lorsque la visionneuse ouverte
+  // contient une image active et plusieurs visuels.
+  const swipeHandlers = useSwipeNavigation({
+    onPrevious: () => handleNavigate(-1),
+    onNext: () => handleNavigate(1),
+    enabled: isOpen && Boolean(activeImage) && images.length > 1,
+  });
 
   function handleBackdropClick(event: MouseEvent<HTMLDialogElement>) {
     if (event.target === event.currentTarget) {
@@ -144,9 +163,13 @@ export default function Lightbox({
       <div className={styles.lightboxContent}>
         {activeImage ? (
           <ImageWithFallback
+            key={`${activeIndex}-${activeImage.src}`}
             src={activeImage.src}
             alt={activeImage.alt}
             draggable={false}
+            data-direction={navigationDirection}
+            className={styles.swipeImage}
+            {...swipeHandlers}
           />
         ) : (
           <>

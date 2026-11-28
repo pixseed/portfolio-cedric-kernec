@@ -150,6 +150,11 @@ $carousel-side-spacing: vars.$spacing-12;
     display: none;
 }
 
+.projectSwipeArea {
+    // Conserve le défilement vertical et le zoom natifs.
+    touch-action: pan-y pinch-zoom;
+}
+
 @keyframes projects-content-enter {
     from {
         opacity: 0;
